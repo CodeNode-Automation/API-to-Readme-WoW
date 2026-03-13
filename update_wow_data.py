@@ -4,6 +4,8 @@ import base64
 import time
 import re
 from dotenv import load_dotenv
+# html script
+from update_wow_html import generate_html_dashboard
 
 load_dotenv()
 
@@ -275,12 +277,13 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
     svg_content += "\n</svg>"
 
     # Use the character's name to create a unique file (e.g., "thert_ui.svg")
+    os.makedirs("asset", exist_ok=True)
     safe_name = name.lower()
-    filename = f"{safe_name}_ui.svg"
+    filename = f"asset/{safe_name}_ui.svg"
     
     with open(filename, "w", encoding="utf-8") as file:
         file.write(svg_content)
-    print(f"{filename} generated successfully!")
+    print(f"   -> {filename} generated successfully!")
 
 # main call to functions
 if __name__ == "__main__":
@@ -288,7 +291,10 @@ if __name__ == "__main__":
     token = get_access_token()
     if token:
         realm = "thunderstrike"
-        characters = ["thert", "jakov", "soales", "shise"]
+        characters = ["thert", "jakov", "soales"]
+        
+        # data for html page
+        roster_data = []
 
         for char in characters:
             print(f"--- Fetching {char} profile, stats, and equipment... ---")
@@ -338,11 +344,20 @@ if __name__ == "__main__":
                         "name": item_name,
                         "icon_data": base64_data,
                         "quality": quality_type, 
-                        "is_fallback": is_fallback
+                        "is_fallback": is_fallback,
+                        "item_id": item_id
                     }
 
             # INDENTED THIS BLOCK: final - generate the svg for display for THIS character
             if profile:
                 generate_equipment_svg(profile, equipped_dict, stats)
+
+                roster_data.append({
+                    "profile": profile,
+                    "equipped": equipped_dict
+                })
             
             print(f"--- Finished processing {char} ---\n")
+
+        if roster_data:
+            generate_html_dashboard(roster_data)
