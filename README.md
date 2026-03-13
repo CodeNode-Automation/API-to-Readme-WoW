@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="asset/CodeNode-WoW3.png" alt="WoW API to README" width="400">
+  <img src="asset/CodeNode-WoW.gif" alt="WoW API to README" width="400">
 </p>
 
 <p align="center">
