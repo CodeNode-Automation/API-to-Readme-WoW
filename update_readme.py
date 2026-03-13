@@ -274,67 +274,75 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
 
     svg_content += "\n</svg>"
 
-    with open("character_ui.svg", "w", encoding="utf-8") as file:
+    # Use the character's name to create a unique file (e.g., "thert_ui.svg")
+    safe_name = name.lower()
+    filename = f"{safe_name}_ui.svg"
+    
+    with open(filename, "w", encoding="utf-8") as file:
         file.write(svg_content)
-    print("character_ui.svg generated successfully!")
+    print(f"{filename} generated successfully!")
 
 # main call to functions
 if __name__ == "__main__":
     print("Authenticating to Blizzard API service...")
     token = get_access_token()
     if token:
-        realm, char = "thunderstrike", "thert"
-        
-        print("Fetching character profile, stats, and equipment...")
-        profile = fetch_wow_endpoint(token, realm, char)
-        stats = fetch_wow_endpoint(token, realm, char, "statistics")
-        equipment = fetch_wow_endpoint(token, realm, char, "equipment")
-        
-        equipped_dict = {}
-        # fallback image for broken equipment image icons
-        FALLBACK_URL = "https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg"
-        fallback_base64 = get_base64_image(FALLBACK_URL)
+        realm = "thunderstrike"
+        characters = ["thert", "jakov", "soales", "shise"]
 
-        if equipment and 'equipped_items' in equipment:
-            print("Fetching and encoding item icons (this may take 10-20 seconds)...")
-            for item in equipment['equipped_items']:
-                slot_type = item.get('slot', {}).get('type', '')
-                item_name = item.get('name', {}).get('en_US', 'Empty')
-                item_id = item.get('item', {}).get('id')
-                
-                # --- GET QUALITY ---
-                item_href = item.get('item', {}).get('key', {}).get('href')
-                quality_type = item.get('quality', {}).get('type')
-                if not quality_type:
-                    quality_type = fetch_item_quality(token, item_href, item_id)
-                quality_type = quality_type.upper() if quality_type else "COMMON"
-                
-                media_href = item.get('media', {}).get('key', {}).get('href')
-                
-                icon_url = None
-                
-                if media_href:
-                    icon_url = fetch_blizzard_media_href(token, media_href)
-                if not icon_url and item_id:
-                    icon_url = fetch_item_icon_url(token, item_id) 
-                if not icon_url and item_id:
-                    icon_url = fetch_wowhead_icon_url(item_id)
-                
-                base64_data = get_base64_image(icon_url) if icon_url else None
-                
-                is_fallback = False 
-                if not base64_data:
-                    base64_data = fallback_base64
-                    is_fallback = True
+        for char in characters:
+            print(f"--- Fetching {char} profile, stats, and equipment... ---")
+            profile = fetch_wow_endpoint(token, realm, char)
+            stats = fetch_wow_endpoint(token, realm, char, "statistics")
+            equipment = fetch_wow_endpoint(token, realm, char, "equipment")
+            
+            equipped_dict = {}
+            
+            # fallback image for broken equipment image icons
+            FALLBACK_URL = "https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg"
+            fallback_base64 = get_base64_image(FALLBACK_URL)
+
+            if equipment and 'equipped_items' in equipment:
+                print(f"Fetching and encoding item icons for {char}...")
+                for item in equipment['equipped_items']:
+                    slot_type = item.get('slot', {}).get('type', '')
+                    item_name = item.get('name', {}).get('en_US', 'Empty')
+                    item_id = item.get('item', {}).get('id')
                     
-                # Store it ONCE with the quality key included
-                equipped_dict[slot_type] = {
-                    "name": item_name,
-                    "icon_data": base64_data,
-                    "quality": quality_type, 
-                    "is_fallback": is_fallback
-                }
+                    # --- GET QUALITY ---
+                    item_href = item.get('item', {}).get('key', {}).get('href')
+                    quality_type = item.get('quality', {}).get('type')
+                    if not quality_type:
+                        quality_type = fetch_item_quality(token, item_href, item_id)
+                    quality_type = quality_type.upper() if quality_type else "COMMON"
+                    
+                    media_href = item.get('media', {}).get('key', {}).get('href')
+                    icon_url = None
+                    
+                    if media_href:
+                        icon_url = fetch_blizzard_media_href(token, media_href)
+                    if not icon_url and item_id:
+                        icon_url = fetch_item_icon_url(token, item_id) 
+                    if not icon_url and item_id:
+                        icon_url = fetch_wowhead_icon_url(item_id)
+                    
+                    base64_data = get_base64_image(icon_url) if icon_url else None
+                    
+                    is_fallback = False 
+                    if not base64_data:
+                        base64_data = fallback_base64
+                        is_fallback = True
+                        
+                    # Store it ONCE with the quality key included
+                    equipped_dict[slot_type] = {
+                        "name": item_name,
+                        "icon_data": base64_data,
+                        "quality": quality_type, 
+                        "is_fallback": is_fallback
+                    }
 
-        # final - generate the svg for display
-        if profile:
-            generate_equipment_svg(profile, equipped_dict, stats)
+            # INDENTED THIS BLOCK: final - generate the svg for display for THIS character
+            if profile:
+                generate_equipment_svg(profile, equipped_dict, stats)
+            
+            print(f"--- Finished processing {char} ---\n")

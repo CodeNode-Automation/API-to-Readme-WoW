@@ -31,10 +31,18 @@ Welcome to my **CodeNode-Automation** repository! This project serves as a pract
 
 ---
 
+<div align="center">
+
 ## 📊 Live Character Dashboard
 *This graphic is generated and updated entirely by the Python pipeline.*
 
-![WoW Character Dashboard](character_ui.svg)
+![WoW Character Dashboard](thert_ui.svg)
+
+![WoW Character Dashboard](jakov_ui.svg)
+
+![WoW Character Dashboard](soales_ui.svg)
+
+</div>
 
 ---
 
