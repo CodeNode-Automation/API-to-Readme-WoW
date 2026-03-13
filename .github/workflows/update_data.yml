@@ -39,6 +39,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add asset/*_ui.svg index.html html_dashboard.py
+          git add asset/*_ui.svg index.html render/html_dashboard.py
           # Only commit if there are actually changes to the SVG
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update WoW character data" && git push)
