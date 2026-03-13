@@ -34,9 +34,24 @@ async def fetch_character_data(session, token, char, history_data):
     profile_task = fetch_wow_endpoint(session, token, REALM, char)
     stats_task = fetch_wow_endpoint(session, token, REALM, char, "statistics")
     equipment_task = fetch_wow_endpoint(session, token, REALM, char, "equipment")
+    media_task = fetch_wow_endpoint(session, token, REALM, char, "character-media") # <-- NEW TASK
     
-    profile, stats, equipment = await asyncio.gather(profile_task, stats_task, equipment_task)
+    # Wait for all 4 to finish
+    profile, stats, equipment, media = await asyncio.gather(profile_task, stats_task, equipment_task, media_task)
     equipped_dict = await process_equipment(session, token, equipment, char)
+
+    # --- EXTRACT CHARACTER RENDER ---
+    render_url = None
+    if media and 'assets' in media:
+        # Try to get the full body render first
+        for asset in media['assets']:
+            if asset.get('key') == 'main-raw':
+                render_url = asset.get('value')
+        # Fallback to the portrait avatar if the full body is missing
+        if not render_url:
+            for asset in media['assets']:
+                if asset.get('key') == 'avatar':
+                    render_url = asset.get('value')
 
     past_gear = history_data.get(char, {})
     upgrade_count = 0
@@ -53,6 +68,7 @@ async def fetch_character_data(session, token, char, history_data):
 
     generate_equipment_svg(profile, equipped_dict, stats)
 
+    # --- ASSEMBLE THE CLEAN LOG BLOCK ---
     log = f"\n[{char.upper()}] ✅ Processing Complete!\n"
     log += f"   ┣ 🎒 Items Found: {len(equipped_dict)}\n"
     if upgrade_count > 0:
@@ -63,14 +79,14 @@ async def fetch_character_data(session, token, char, history_data):
         log += f"   ┣ ⏳ Upgrades: None today.\n"
     log += f"   ┗ 🎨 SVG Map: asset/{char.lower()}_ui.svg updated."
     
-    # Print it all at once so it never overlaps!
     print(log)
 
     return {
         "char": char,
         "profile": profile,
         "equipped": equipped_dict,
-        "stats": stats
+        "stats": stats,
+        "render_url": render_url  # <-- Pass it to the HTML
     }
 
 async def main_async():
