@@ -33,7 +33,7 @@ jobs:
         env:
           BLIZZARD_CLIENT_ID: ${{ secrets.BLIZZARD_CLIENT_ID }}
           BLIZZARD_CLIENT_SECRET: ${{ secrets.BLIZZARD_CLIENT_SECRET }}
-        run: python update_wow_data.py
+        run: python main.py
 
       - name: Commit and Push Changes
         run: |

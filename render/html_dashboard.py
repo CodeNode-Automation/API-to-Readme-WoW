@@ -7,17 +7,58 @@ def generate_html_dashboard(roster_data):
     <title>WoW Classic Roster Dashboard</title>
     <script>const whTooltips = {colorLinks: false, iconizeLinks: false, renameLinks: false};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
-    <style>
-        body { background-color: #121212; color: #eee; font-family: 'Arial', sans-serif; display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; padding: 40px;}
-        .char-card { background: #1a1a1a; border: 2px solid #333; border-radius: 10px; padding: 20px; width: 380px; box-shadow: 0 4px 8px rgba(0,0,0,0.5);}
+<style>
+        body { 
+            background-color: #121212; 
+            color: #eee; 
+            font-family: 'Arial', sans-serif; 
+            display: flex; 
+            flex-wrap: wrap; 
+            justify-content: center; 
+            align-items: flex-start; /* Stops cards from stretching to match each other's height */
+            gap: 30px; 
+            padding: 40px;
+            margin: 0;
+        }
+        .char-card { 
+            background: #1a1a1a; 
+            border: 2px solid #333; 
+            border-radius: 10px; 
+            padding: 20px; 
+            width: 100%; 
+            max-width: 420px; /* Responsive width instead of a fixed 380px */
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+        }
         .header { text-align: center; margin-bottom: 20px; border-bottom: 1px solid #333; padding-bottom: 15px; }
         .header h2 { color: #ffd100; margin: 0; font-size: 28px; }
         .header p { color: #ffb000; margin: 5px 0 0 0; font-size: 14px; }
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
-        .item-slot { display: flex; align-items: center; background: #222; padding: 5px 10px; border-radius: 5px; border: 1px solid #444; }
-        .item-slot img { width: 32px; height: 32px; border: 1px solid #111; border-radius: 4px; margin-right: 10px; }
-        .item-slot a { text-decoration: none; font-weight: bold; font-size: 13px; font-family: Verdana, sans-serif; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;}
+        .grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 10px; 
+        }
+        .item-slot { 
+            display: flex; 
+            align-items: center; 
+            background: #222; 
+            padding: 6px; 
+            border-radius: 5px; 
+            border: 1px solid #444; 
+            min-width: 0; /* CRITICAL: Allows the text truncation to work inside a grid */
+        }
+        .item-slot img { width: 32px; height: 32px; border: 1px solid #111; border-radius: 4px; margin-right: 10px; flex-shrink: 0; }
+        .item-slot a { 
+            text-decoration: none; 
+            font-weight: bold; 
+            font-size: 12px; 
+            font-family: Verdana, sans-serif; 
+            white-space: nowrap; 
+            overflow: hidden; 
+            text-overflow: ellipsis;
+            display: block;
+        }
         .item-slot a:hover { text-decoration: underline; }
+        
         /* WoW Rarity Colors */
         .POOR { color: #9d9d9d !important; }
         .COMMON { color: #ffffff !important; }
@@ -25,6 +66,11 @@ def generate_html_dashboard(roster_data):
         .RARE { color: #0070dd !important; }
         .EPIC { color: #a335ee !important; }
         .LEGENDARY { color: #ff8000 !important; }
+        
+        /* Mobile Responsiveness */
+        @media (max-width: 480px) {
+            .grid { grid-template-columns: 1fr; } /* Stacks items in 1 column on tiny screens */
+        }
     </style>
 </head>
 <body>
@@ -65,7 +111,7 @@ def generate_html_dashboard(roster_data):
                 html += f"""
             <div class="item-slot">
                 <img src="{img_src}" alt="icon">
-                <a href="https://www.wowhead.com/classic/item={item_id}" class="{quality}" data-wowhead="domain=classic" target="_blank" rel="noopener noreferrer">{name_txt}</a>
+                <a href="https://www.wowhead.com/item={item_id}" class="{quality}" target="_blank" rel="noopener noreferrer">{name_txt}</a>
             </div>"""
             
         html += """
