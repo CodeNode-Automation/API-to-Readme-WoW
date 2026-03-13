@@ -115,4 +115,3 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
     
     with open(filename, "w", encoding="utf-8") as file:
         file.write(svg_content)
-    print(f"   -> {filename} generated successfully!")

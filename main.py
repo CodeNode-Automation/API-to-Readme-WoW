@@ -1,5 +1,8 @@
 import json
 import os
+import asyncio
+import aiohttp
+import sys
 from wow.auth import get_access_token
 from wow.api import fetch_wow_endpoint
 from wow.items import process_equipment
@@ -25,48 +28,84 @@ def save_history(history_data):
     with open(HISTORY_FILE, "w") as f:
         json.dump(history_data, f, indent=4)
 
-def main():
-    token = get_access_token()
-    roster_data = []
+async def fetch_character_data(session, token, char, history_data):
+    print(f"[{char.upper()}] 📡 Firing simultaneous API requests...")
     
-    # --- Load yesterday's gear ---
+    profile_task = fetch_wow_endpoint(session, token, REALM, char)
+    stats_task = fetch_wow_endpoint(session, token, REALM, char, "statistics")
+    equipment_task = fetch_wow_endpoint(session, token, REALM, char, "equipment")
+    
+    profile, stats, equipment = await asyncio.gather(profile_task, stats_task, equipment_task)
+    equipped_dict = await process_equipment(session, token, equipment, char)
+
+    past_gear = history_data.get(char, {})
+    upgrade_count = 0
+    upgrades = []
+    
+    for slot, data in equipped_dict.items():
+        past_item_id = past_gear.get(slot, {}).get("item_id")
+        if past_gear and past_item_id != data.get("item_id"):
+            data["is_new"] = True
+            upgrade_count += 1
+            upgrades.append(data['name'])
+        else:
+            data["is_new"] = False
+
+    generate_equipment_svg(profile, equipped_dict, stats)
+
+    log = f"\n[{char.upper()}] ✅ Processing Complete!\n"
+    log += f"   ┣ 🎒 Items Found: {len(equipped_dict)}\n"
+    if upgrade_count > 0:
+        log += f"   ┣ 🌟 Upgrades: {upgrade_count} detected!\n"
+        for upg in upgrades:
+            log += f"   ┃  ┗ {upg}\n"
+    else:
+        log += f"   ┣ ⏳ Upgrades: None today.\n"
+    log += f"   ┗ 🎨 SVG Map: asset/{char.lower()}_ui.svg updated."
+    
+    # Print it all at once so it never overlaps!
+    print(log)
+
+    return {
+        "char": char,
+        "profile": profile,
+        "equipped": equipped_dict,
+        "stats": stats
+    }
+
+async def main_async():
+    print("\n🔑 Authenticating with Blizzard API...")
+    token = get_access_token()
+    if not token:
+        print("❌ Failed to authenticate with Blizzard.")
+        return
+    print("✅ Authentication successful!\n")
+
+    print("📂 Loading Time Machine history...")
     history_data = load_history()
+    roster_data = []
 
-    for char in CHARACTERS:
-        print(f"--- Fetching {char} data... ---")
-        profile = fetch_wow_endpoint(token, REALM, char)
-        stats = fetch_wow_endpoint(token, REALM, char, "statistics")
-        equipment = fetch_wow_endpoint(token, REALM, char, "equipment")
-
-        equipped_dict = process_equipment(token, equipment, char)
-
-        # --- THE TIME MACHINE LOGIC ---
-        past_gear = history_data.get(char, {})
-        for slot, data in equipped_dict.items():
-            past_item_id = past_gear.get(slot, {}).get("item_id")
-            
-            # Mark as new if the item ID changed (and it's not the very first time running)
-            if past_gear and past_item_id != data.get("item_id"):
-                data["is_new"] = True
-            else:
-                data["is_new"] = False
+    print("🚀 Opening Async HTTP Session...\n")
+    async with aiohttp.ClientSession() as session:
+        tasks = [fetch_character_data(session, token, char, history_data) for char in CHARACTERS]
+        results = await asyncio.gather(*tasks)
         
-        # Overwrite history with today's gear for this character
-        history_data[char] = equipped_dict
+        for result in results:
+            history_data[result["char"]] = result["equipped"]
+            roster_data.append(result)
 
-        generate_equipment_svg(profile, equipped_dict, stats)
-
-        roster_data.append({
-            "profile": profile,
-            "equipped": equipped_dict,
-            "stats": stats
-        })
-
-    # --- Save today's gear for tomorrow ---
+    print("\n===========================================")
+    print("💾 Saving today's gear to Time Machine history...")
     save_history(history_data)
 
-    print("\nGenerating HTML Dashboard...")
+    print("🌐 Generating final HTML Dashboard...")
     generate_html_dashboard(roster_data)
+    print("🎉 ALL DONE! The pipeline ran successfully.")
+
+def main():
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+    asyncio.run(main_async())
 
 if __name__ == "__main__":
     main()
