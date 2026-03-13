@@ -8,7 +8,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  update-readme:
+  auto-update-wow-data:
     runs-on: ubuntu-latest
     
     # We need to give the Action permission to push code back to the repo
@@ -39,6 +39,6 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add asset/*_ui.svg index.html update_wow_html.py
+          git add asset/*_ui.svg index.html html_dashboard.py
           # Only commit if there are actually changes to the SVG
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update WoW character data" && git push)
