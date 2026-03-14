@@ -4,11 +4,27 @@ from wow.images import (
     fetch_wowhead_icon_url,
     get_base64_image
 )
-
 from wow.quality import fetch_item_quality
 from config import FALLBACK_ICON
 
 async def process_equipment(session, token, equipment, char_name):
+    """
+    Parses the character equipment payload and resolves metadata for each equipped item.
+    
+    This function iterates through the equipped items, safely extracting item names, 
+    identifiers, quality tiers, and icon assets. It utilizes a waterfall approach 
+    to fetch item icons and applies a fallback image if resolution fails.
+    
+    Args:
+        session (aiohttp.ClientSession): The active asynchronous HTTP session.
+        token (str): The OAuth access token for Blizzard API authentication.
+        equipment (dict): The raw equipment data payload from the Blizzard API.
+        char_name (str): The name of the character being processed.
+        
+    Returns:
+        dict: A mapping of equipment slot types to their respective parsed item data 
+              (name, base64 icon, quality, fallback status, and item ID).
+    """
     equipped_dict = {}
     fallback_base64 = await get_base64_image(session, FALLBACK_ICON)
 
@@ -17,17 +33,21 @@ async def process_equipment(session, token, equipment, char_name):
         
         for item in items:
             slot_type = item.get('slot', {}).get('type', '')
-            item_name = item.get('name', {}).get('en_US', 'Empty')
+            
+            # Safely extract the item name, accounting for varying API localization formats
+            name_data = item.get('name', 'Empty')
+            item_name = name_data if isinstance(name_data, str) else name_data.get('en_US', 'Empty')
+            
             item_id = item.get('item', {}).get('id')
             
-            # --- GET QUALITY ---
+            # Resolve item quality, fetching dynamically if omitted from the initial payload
             item_href = item.get('item', {}).get('key', {}).get('href')
             quality_type = item.get('quality', {}).get('type')
             if not quality_type:
                 quality_type = await fetch_item_quality(session, token, item_href, item_id)
             quality_type = quality_type.upper() if quality_type else "COMMON"
             
-            # --- GET ICON ---
+            # Implement waterfall resolution for item icon URLs
             media_href = item.get('media', {}).get('key', {}).get('href')
             icon_url = None
             
@@ -42,7 +62,6 @@ async def process_equipment(session, token, equipment, char_name):
             
             is_fallback = False 
             if not base64_data:
-                print(f"      ⚠️ WARNING: Could not find icon for {item_name}. Using fallback.")
                 base64_data = fallback_base64
                 is_fallback = True
 

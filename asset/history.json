@@ -22,7 +22,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 28075,
-            "is_new": true
+            "is_new": false
         },
         "SHIRT": {
             "name": "Apprentice's Shirt",
@@ -62,7 +62,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 25516,
-            "is_new": true
+            "is_new": false
         },
         "WRIST": {
             "name": "Breezecloud Bracers",
@@ -134,7 +134,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 28063,
-            "is_new": true
+            "is_new": false
         },
         "TABARD": {
             "name": "Guild Tabard",

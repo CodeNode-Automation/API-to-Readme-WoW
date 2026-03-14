@@ -1,5 +1,18 @@
 async def fetch_item_quality(session, token, item_href, item_id):
-    # 1. Try Blizzard's direct item link
+    """
+    Resolves the rarity/quality tier of an item using a waterfall fallback strategy.
+    
+    Args:
+        session (aiohttp.ClientSession): The active asynchronous HTTP session.
+        token (str): The OAuth access token for Blizzard API authentication.
+        item_href (str): The direct HATEOAS URL to the item's API endpoint.
+        item_id (int | str): The unique identifier for the item.
+        
+    Returns:
+        str: The determined quality string (e.g., 'COMMON', 'RARE', 'EPIC'), defaulting 
+             to 'COMMON' if all resolution attempts fail.
+    """
+    # Attempt primary resolution via the provided direct API link
     if item_href:
         headers = {"Authorization": f"Bearer {token}"}
         try:
@@ -10,7 +23,7 @@ async def fetch_item_quality(session, token, item_href, item_id):
         except Exception:
             pass
             
-    # 2. Try Namespace Waterfall
+    # Fallback 1: Iterate through valid Classic namespaces
     namespaces = ["static-classicann-eu", "static-classic1x-eu", "static-classic-eu", "static-eu"]
     for ns in namespaces:
         url = f"https://eu.api.blizzard.com/data/wow/item/{item_id}"
@@ -24,7 +37,7 @@ async def fetch_item_quality(session, token, item_href, item_id):
         except Exception:
             continue
             
-    # 3. Wowhead Tooltip JSON Fallback
+    # Fallback 2: Query Wowhead's external tooltip API and map the integer response
     try:
         url = f"https://www.wowhead.com/tooltip/item/{item_id}"
         headers = {"User-Agent": "Mozilla/5.0", "Accept": "application/json"}
@@ -37,4 +50,5 @@ async def fetch_item_quality(session, token, item_href, item_id):
     except Exception:
         pass
         
+    # Default fallback if all resolution attempts fail
     return "COMMON"

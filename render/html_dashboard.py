@@ -1,19 +1,35 @@
 from datetime import datetime
 
-def generate_html_dashboard(roster_data):
+def generate_html_dashboard(roster_data, realm_data=None):
+    if not realm_data:
+        realm_data = {"status": "Unknown", "population": "Unknown", "has_queue": False}
+
     CLASS_COLORS = {
         "Druid": "#FF7C0A", "Hunter": "#ABD473", "Mage": "#3FC7EB", 
         "Paladin": "#F48CBA", "Priest": "#FFFFFF", "Rogue": "#FFF468",
         "Shaman": "#0070DE", "Warlock": "#8788EE", "Warrior": "#C69B6D"
     }
-
     POWER_COLORS = {
         "Warrior": "#e74c3c", "Rogue": "#f1c40f",
     }
-
     last_updated_iso = datetime.utcnow().isoformat() + "Z"
 
-    nav_links = ""
+    # Configure realm status indicators
+    status_color = "#2ecc71" if realm_data.get('status') == "Up" else "#e74c3c"
+    r_type = realm_data.get('type', 'PvP')
+    
+    # Differentiate realm type by color
+    type_color = "#e74c3c" if "PvP" in r_type else "#3498db"
+
+    nav_links = f"""
+        <div class="realm-status">
+            🌍 <span>Thunderstrike</span> | 
+            Status: <span style="color: {status_color};">{realm_data.get('status', 'Unknown')}</span> | 
+            Pop: <span style="color: #f1c40f;">{realm_data.get('population', 'Unknown')}</span> | 
+            Type: <span style="color: {type_color};">{r_type}</span>
+        </div>
+    """
+
     for char in roster_data:
         c_name = char.get("profile", {}).get("name", "Unknown")
         nav_links += f'<a href="#{c_name.lower()}">{c_name}</a>\n'
@@ -50,9 +66,19 @@ def generate_html_dashboard(roster_data):
         .navbar {{
             position: sticky; top: 0; width: 100%; z-index: 100;
             background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(12px);
-            border-bottom: 1px solid #333; display: flex; justify-content: center; 
-            gap: 20px; padding: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.6);
+            border-bottom: 1px solid #333; display: flex; justify-content: center; align-items: center;
+            gap: 15px; padding: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.6); flex-wrap: wrap;
         }}
+        
+        /* Navbar realm layout */
+        .realm-status {{
+            color: #bbb; font-family: 'Roboto', sans-serif;
+            font-size: 14px; font-weight: bold; letter-spacing: 0.5px;
+            padding: 6px 15px; border-right: 2px solid #333; margin-right: 5px;
+            display: flex; align-items: center; gap: 6px;
+        }}
+        .realm-status span:first-child {{ color: #fff; font-family: 'Cinzel', serif; }}
+
         .navbar a {{
             color: #ccc; text-decoration: none; font-family: 'Cinzel', serif;
             font-size: 16px; font-weight: bold; letter-spacing: 1px;
@@ -60,26 +86,19 @@ def generate_html_dashboard(roster_data):
         }}
         .navbar a:hover {{ background: rgba(255, 255, 255, 0.1); color: #fff; transform: translateY(-2px); }}
         
-        /* --- STAGGERED CASCADE ANIMATION --- */
         .char-card {{ 
             background: linear-gradient(145deg, rgba(22,22,22,0.95), rgba(26,26,26,0.95)),
                         repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
             border: 1px solid #333; border-radius: 12px; 
             padding: 25px; width: 100%; max-width: 900px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.8);
-            margin-top: 50px; scroll-margin-top: 90px;
-            
-            /* Initial state for the animation */
-            opacity: 0; 
-            transform: translateY(40px);
+            margin-top: 50px; scroll-margin-top: 110px;
+            opacity: 0; transform: translateY(40px);
             animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
-            transition: transform 0.4s ease, box-shadow 0.4s ease; /* Hover transition */
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
         }}
-        @keyframes fadeInUp {{
-            to {{ opacity: 1; transform: translateY(0); }}
-        }}
+        @keyframes fadeInUp {{ to {{ opacity: 1; transform: translateY(0); }} }}
         
-        /* Hover state overrides animation transform, so we use a container trick or just careful CSS */
         .char-card:hover {{
             transform: translateY(-4px) !important;
             box-shadow: 0 15px 40px rgba(0,0,0,1), 0 0 15px rgba(255,255,255,0.03), inset 0 0 20px rgba(0,0,0,0.8);
@@ -122,27 +141,17 @@ def generate_html_dashboard(roster_data):
             transform-origin: left; animation: fillBar 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
             box-shadow: inset 0 8px 6px rgba(255,255,255,0.25), inset 0 -4px 6px rgba(0,0,0,0.4);
         }}
-        @keyframes fillBar {{
-            0% {{ transform: scaleX(0); opacity: 0.5; }}
-            100% {{ transform: scaleX(1); opacity: 1; }}
-        }}
+        @keyframes fillBar {{ 0% {{ transform: scaleX(0); opacity: 0.5; }} 100% {{ transform: scaleX(1); opacity: 1; }} }}
         .fill-hp {{ background: linear-gradient(to right, #1d8348, #2ecc71); }}
         .bar-text {{
-            position: absolute; width: 100%; text-align: center;
-            font-size: 12px; font-weight: 700; line-height: 22px;
+            position: absolute; width: 100%; text-align: center; font-size: 12px; font-weight: 700; line-height: 22px;
             color: #fff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; z-index: 2;
         }}
 
-        /* --- RPG STAT STYLING --- */
         .stat-row {{ display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; align-items: center; }}
         .stat-label {{ color: #bbb; display: flex; align-items: center; gap: 6px; }}
         .stat-val {{ font-weight: 700; text-shadow: 1px 1px 2px #000; font-size: 15px; }}
-        
-        .stat-str {{ color: #ff4d4d; }} /* Red */
-        .stat-agi {{ color: #2ecc71; }} /* Green */
-        .stat-sta {{ color: #f1c40f; }} /* Yellow */
-        .stat-int {{ color: #3498db; }} /* Blue */
-        .stat-spi {{ color: #9b59b6; }} /* Purple */
+        .stat-str {{ color: #ff4d4d; }} .stat-agi {{ color: #2ecc71; }} .stat-sta {{ color: #f1c40f; }} .stat-int {{ color: #3498db; }} .stat-spi {{ color: #9b59b6; }}
 
         .gear-section {{ flex: 1; }} 
         .grid {{ display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }}
@@ -154,18 +163,12 @@ def generate_html_dashboard(roster_data):
             min-width: 0; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
         }}
         
-        /* --- EMBOSSED ICON BORDERS --- */
         .item-slot img {{ 
             width: 36px; height: 36px; border: 1px solid #111; border-radius: 4px; 
-            margin-right: 12px; flex-shrink: 0; 
-            box-shadow: 0 2px 5px rgba(0,0,0,0.9), inset 0 0 5px rgba(0,0,0,0.5); 
+            margin-right: 12px; flex-shrink: 0; box-shadow: 0 2px 5px rgba(0,0,0,0.9), inset 0 0 5px rgba(0,0,0,0.5); 
         }}
-        .icon-POOR {{ border-color: #9d9d9d !important; }}
-        .icon-COMMON {{ border-color: #ffffff !important; }}
-        .icon-UNCOMMON {{ border-color: #1eff00 !important; }}
-        .icon-RARE {{ border-color: #0070dd !important; }}
-        .icon-EPIC {{ border-color: #a335ee !important; }}
-        .icon-LEGENDARY {{ border-color: #ff8000 !important; }}
+        .icon-POOR {{ border-color: #9d9d9d !important; }} .icon-COMMON {{ border-color: #ffffff !important; }} .icon-UNCOMMON {{ border-color: #1eff00 !important; }}
+        .icon-RARE {{ border-color: #0070dd !important; }} .icon-EPIC {{ border-color: #a335ee !important; }} .icon-LEGENDARY {{ border-color: #ff8000 !important; }}
 
         .item-slot a {{ text-decoration: none; font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; z-index: 2; text-shadow: 1px 1px 2px #000; }}
         .item-slot a:hover {{ text-decoration: underline; }}
@@ -175,13 +178,8 @@ def generate_html_dashboard(roster_data):
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
             transform: skewX(-25deg); animation: shimmer 4s infinite; z-index: 1; pointer-events: none;
         }}
-        @keyframes shimmer {{
-            0% {{ left: -100%; }}
-            20% {{ left: 200%; }}
-            100% {{ left: 200%; }}
-        }}
+        @keyframes shimmer {{ 0% {{ left: -100%; }} 20% {{ left: 200%; }} 100% {{ left: 200%; }} }}
 
-        /* --- AMBIENT RARITY GRADIENTS --- */
         .bg-POOR {{ background: linear-gradient(90deg, rgba(157,157,157,0.08) 0%, rgba(20,20,20,0.85) 60%) !important; }}
         .bg-COMMON {{ background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(20,20,20,0.85) 60%) !important; }}
         .bg-UNCOMMON {{ background: linear-gradient(90deg, rgba(30,255,0,0.08) 0%, rgba(20,20,20,0.85) 60%) !important; }}
@@ -189,57 +187,34 @@ def generate_html_dashboard(roster_data):
         .bg-EPIC {{ background: linear-gradient(90deg, rgba(163,53,238,0.12) 0%, rgba(20,20,20,0.85) 60%) !important; }}
         .bg-LEGENDARY {{ background: linear-gradient(90deg, rgba(255,128,0,0.15) 0%, rgba(20,20,20,0.85) 60%) !important; }}
 
-        .border-POOR {{ border-left: 3px solid #9d9d9d !important; }}
-        .border-POOR:hover {{ border-color: #9d9d9d; box-shadow: 0 0 12px rgba(157, 157, 157, 0.3), inset 0 0 8px rgba(157, 157, 157, 0.1); transform: translateX(3px); }}
-        
-        .border-COMMON {{ border-left: 3px solid #ffffff !important; }}
-        .border-COMMON:hover {{ border-color: #ffffff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.1); transform: translateX(3px); }}
-        
-        .border-UNCOMMON {{ border-left: 3px solid #1eff00 !important; }}
-        .border-UNCOMMON:hover {{ border-color: #1eff00; box-shadow: 0 0 12px rgba(30, 255, 0, 0.3), inset 0 0 8px rgba(30, 255, 0, 0.1); transform: translateX(3px); }}
-        
-        .border-RARE {{ border-left: 3px solid #0070dd !important; }}
-        .border-RARE:hover {{ border-color: #0070dd; box-shadow: 0 0 12px rgba(0, 112, 221, 0.3), inset 0 0 8px rgba(0, 112, 221, 0.1); transform: translateX(3px); }}
-        
-        .border-EPIC {{ border-left: 3px solid #a335ee !important; }}
-        .border-EPIC:hover {{ border-color: #a335ee; box-shadow: 0 0 12px rgba(163, 53, 238, 0.4), inset 0 0 8px rgba(163, 53, 238, 0.1); transform: translateX(3px); }}
-        
-        .border-LEGENDARY {{ border-left: 3px solid #ff8000 !important; }}
-        .border-LEGENDARY:hover {{ border-color: #ff8000; box-shadow: 0 0 12px rgba(255, 128, 0, 0.4), inset 0 0 8px rgba(255, 128, 0, 0.1); transform: translateX(3px); }}
+        .border-POOR {{ border-left: 3px solid #9d9d9d !important; }} .border-POOR:hover {{ border-color: #9d9d9d; box-shadow: 0 0 12px rgba(157, 157, 157, 0.3), inset 0 0 8px rgba(157, 157, 157, 0.1); transform: translateX(3px); }}
+        .border-COMMON {{ border-left: 3px solid #ffffff !important; }} .border-COMMON:hover {{ border-color: #ffffff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.1); transform: translateX(3px); }}
+        .border-UNCOMMON {{ border-left: 3px solid #1eff00 !important; }} .border-UNCOMMON:hover {{ border-color: #1eff00; box-shadow: 0 0 12px rgba(30, 255, 0, 0.3), inset 0 0 8px rgba(30, 255, 0, 0.1); transform: translateX(3px); }}
+        .border-RARE {{ border-left: 3px solid #0070dd !important; }} .border-RARE:hover {{ border-color: #0070dd; box-shadow: 0 0 12px rgba(0, 112, 221, 0.3), inset 0 0 8px rgba(0, 112, 221, 0.1); transform: translateX(3px); }}
+        .border-EPIC {{ border-left: 3px solid #a335ee !important; }} .border-EPIC:hover {{ border-color: #a335ee; box-shadow: 0 0 12px rgba(163, 53, 238, 0.4), inset 0 0 8px rgba(163, 53, 238, 0.1); transform: translateX(3px); }}
+        .border-LEGENDARY {{ border-left: 3px solid #ff8000 !important; }} .border-LEGENDARY:hover {{ border-color: #ff8000; box-shadow: 0 0 12px rgba(255, 128, 0, 0.4), inset 0 0 8px rgba(255, 128, 0, 0.1); transform: translateX(3px); }}
 
         .empty-slot {{ opacity: 0.6; border-left: 3px solid #333 !important; background: rgba(10, 10, 10, 0.4); }}
         .empty-slot:hover {{ transform: none; background: rgba(10, 10, 10, 0.4); border-color: #333; box-shadow: none; }}
         .empty-slot img {{ filter: grayscale(100%) opacity(50%); border-color: #222; }}
         .empty-slot span {{ color: #666; font-size: 13px; font-weight: 700; font-style: italic; }}
 
-        .new-badge {{
-            background-color: #e60000; color: white; font-size: 9px; font-weight: bold;
-            padding: 2px 6px; border-radius: 4px; margin-left: auto; z-index: 2;
-            box-shadow: 0 0 8px #e60000; animation: pulse 1.5s infinite;
-        }}
-        @keyframes pulse {{
-            0% {{ box-shadow: 0 0 0 0 rgba(230, 0, 0, 0.7); }}
-            70% {{ box-shadow: 0 0 0 5px rgba(230, 0, 0, 0); }}
-            100% {{ box-shadow: 0 0 0 0 rgba(230, 0, 0, 0); }}
-        }}
+        .new-badge {{ background-color: #e60000; color: white; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; margin-left: auto; z-index: 2; box-shadow: 0 0 8px #e60000; animation: pulse 1.5s infinite; }}
+        @keyframes pulse {{ 0% {{ box-shadow: 0 0 0 0 rgba(230, 0, 0, 0.7); }} 70% {{ box-shadow: 0 0 0 5px rgba(230, 0, 0, 0); }} 100% {{ box-shadow: 0 0 0 0 rgba(230, 0, 0, 0); }} }}
         
-        .POOR {{ color: #9d9d9d !important; }}
-        .COMMON {{ color: #ffffff !important; }}
-        .UNCOMMON {{ color: #1eff00 !important; }}
-        .RARE {{ color: #0070dd !important; }}
-        .EPIC {{ color: #a335ee !important; }}
-        .LEGENDARY {{ color: #ff8000 !important; }}
+        .POOR {{ color: #9d9d9d !important; }} .COMMON {{ color: #ffffff !important; }} .UNCOMMON {{ color: #1eff00 !important; }} .RARE {{ color: #0070dd !important; }} .EPIC {{ color: #a335ee !important; }} .LEGENDARY {{ color: #ff8000 !important; }}
         
         .dashboard-footer {{ text-align: center; padding: 40px; color: #666; font-size: 14px; width: 100%; border-top: 1px solid #222; margin-top: 40px; }}
 
         @media (max-width: 800px) {{
+            .navbar {{ flex-direction: column; gap: 8px; padding: 10px; }}
+            .realm-status {{ border-right: none; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 5px; margin-right: 0; }}
             .card-content {{ flex-direction: column; }}
             .sidebar {{ flex: auto; width: 100%; box-sizing: border-box; }}
             .character-portrait img {{ max-width: 250px; }}
         }}
         @media (max-width: 480px) {{
             .grid {{ grid-template-columns: 1fr; }}
-            .navbar a {{ font-size: 14px; padding: 5px 10px; }}
         }}
     </style>
 </head>
@@ -250,7 +225,6 @@ def generate_html_dashboard(roster_data):
     </div>
 """
 
-    # Use enumerate to inject a staggering animation delay (0.0s, 0.2s, 0.4s...)
     for idx, char_info in enumerate(roster_data):
         p = char_info.get("profile", {})
         eq = char_info.get("equipped", {})
@@ -258,8 +232,16 @@ def generate_html_dashboard(roster_data):
         
         name = p.get('name', 'Unknown')
         level = p.get('level', '??')
-        race = p.get('race', {}).get('name', {}).get('en_US', '')
-        c_class = p.get('character_class', {}).get('name', {}).get('en_US', 'Unknown')
+        
+        # Safely extract race and class data
+        race_data = p.get('race', {}).get('name', '')
+        race = race_data if isinstance(race_data, str) else race_data.get('en_US', '')
+        
+        class_data = p.get('character_class', {}).get('name', 'Unknown')
+        c_class = class_data if isinstance(class_data, str) else class_data.get('en_US', 'Unknown')
+        
+        # Extract guild information
+        guild = p.get('guild', {}).get('name')
         
         class_hex = CLASS_COLORS.get(c_class, "#ffd100")
         power_color = POWER_COLORS.get(c_class, "#3498db")
@@ -276,10 +258,14 @@ def generate_html_dashboard(roster_data):
         render_url = char_info.get("render_url", "")
         portrait_html = f'<div class="character-portrait"><img src="{render_url}" alt="{name} Render" style="box-shadow: 0 0 25px {class_hex}40, 0 6px 12px rgba(0,0,0,0.8); border-color: {class_hex};"></div>' if render_url else ''
 
+        # Format guild tag for display
+        guild_html = f'<div style="color: {class_hex}; font-size: 16px; font-weight: 700; margin-top: 5px; letter-spacing: 1px; text-shadow: 1px 1px 2px #000;">&lt;{guild}&gt;</div>' if guild else ''
+
         html += f"""
     <div id="{name.lower()}" class="char-card" style="border-top: 3px solid {class_hex}; animation-delay: {delay_seconds}s;">
         <div class="header">
             <h2 style="color: {class_hex};">{name}</h2>
+            {guild_html}
             <div class="badge-container">
                 <span class="badge">Level {level}</span>
                 <span class="badge">{race}</span>
@@ -332,11 +318,10 @@ def generate_html_dashboard(roster_data):
                 is_new = data.get("is_new", False)
                 new_tag = '<span class="new-badge">NEW!</span>' if is_new else ''
                 
-                # Notice the new 'bg-{quality}' class on the slot, and 'icon-{quality}' on the img
                 html += f"""
                     <div class="item-slot border-{quality} bg-{quality}">
                         <img src="{img_src}" alt="icon" class="icon-{quality}">
-                        <a href="https://www.wowhead.com/item={item_id}" class="{quality}" target="_blank" rel="noopener noreferrer">{name_txt}</a>
+                        <a href="https://www.wowhead.com/wotlk/item={item_id}" class="{quality}" target="_blank" rel="noopener noreferrer">{name_txt}</a>
                         {new_tag}
                     </div>"""
             else:
@@ -357,7 +342,6 @@ def generate_html_dashboard(roster_data):
     <div class="dashboard-footer">
         Automatically generated via GitHub Actions • Last updated: <span id="update-time"></span>
     </div>
-
     <script>
         const rawDate = new Date("{last_updated_iso}");
         const options = {{ month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' }};
