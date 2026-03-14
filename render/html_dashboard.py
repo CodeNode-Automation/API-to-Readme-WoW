@@ -1,6 +1,10 @@
 from datetime import datetime
 
 def generate_html_dashboard(roster_data, realm_data=None):
+    """
+    Generates the static HTML dashboard mapping all character and realm data.
+    Includes mobile-responsive CSS and Wowhead external tooltips.
+    """
     if not realm_data:
         realm_data = {"status": "Unknown", "population": "Unknown", "has_queue": False}
 
@@ -21,6 +25,7 @@ def generate_html_dashboard(roster_data, realm_data=None):
     # Differentiate realm type by color
     type_color = "#e74c3c" if "PvP" in r_type else "#3498db"
 
+    # Build the Navbar HTML with a specific container for the character links to fix mobile stacking
     nav_links = f"""
         <div class="realm-status">
             🌍 <span>Thunderstrike</span> | 
@@ -28,11 +33,14 @@ def generate_html_dashboard(roster_data, realm_data=None):
             Pop: <span style="color: #f1c40f;">{realm_data.get('population', 'Unknown')}</span> | 
             Type: <span style="color: {type_color};">{r_type}</span>
         </div>
+        <div class="nav-characters">
     """
 
     for char in roster_data:
         c_name = char.get("profile", {}).get("name", "Unknown")
         nav_links += f'<a href="#{c_name.lower()}">{c_name}</a>\n'
+        
+    nav_links += "</div>"
 
     html = f"""<!DOCTYPE html>
 <html lang="en">
@@ -75,9 +83,14 @@ def generate_html_dashboard(roster_data, realm_data=None):
             color: #bbb; font-family: 'Roboto', sans-serif;
             font-size: 14px; font-weight: bold; letter-spacing: 0.5px;
             padding: 6px 15px; border-right: 2px solid #333; margin-right: 5px;
-            display: flex; align-items: center; gap: 6px;
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
         }}
         .realm-status span:first-child {{ color: #fff; font-family: 'Cinzel', serif; }}
+
+        /* New container to keep characters horizontal on mobile */
+        .nav-characters {{
+            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+        }}
 
         .navbar a {{
             color: #ccc; text-decoration: none; font-family: 'Cinzel', serif;
@@ -206,9 +219,12 @@ def generate_html_dashboard(roster_data, realm_data=None):
         
         .dashboard-footer {{ text-align: center; padding: 40px; color: #666; font-size: 14px; width: 100%; border-top: 1px solid #222; margin-top: 40px; }}
 
+        /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 800px) {{
-            .navbar {{ flex-direction: column; gap: 8px; padding: 10px; }}
-            .realm-status {{ border-right: none; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 5px; margin-right: 0; }}
+            .navbar {{ flex-direction: column; gap: 12px; padding: 12px; }}
+            .realm-status {{ width: 100%; justify-content: center; border-right: none; border-bottom: 1px solid #333; padding-bottom: 12px; margin-right: 0; }}
+            .nav-characters {{ gap: 8px; }}
+            .navbar a {{ padding: 6px 14px; font-size: 14px; }}
             .card-content {{ flex-direction: column; }}
             .sidebar {{ flex: auto; width: 100%; box-sizing: border-box; }}
             .character-portrait img {{ max-width: 250px; }}

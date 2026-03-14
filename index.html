@@ -39,9 +39,14 @@
             color: #bbb; font-family: 'Roboto', sans-serif;
             font-size: 14px; font-weight: bold; letter-spacing: 0.5px;
             padding: 6px 15px; border-right: 2px solid #333; margin-right: 5px;
-            display: flex; align-items: center; gap: 6px;
+            display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
         }
         .realm-status span:first-child { color: #fff; font-family: 'Cinzel', serif; }
+
+        /* New container to keep characters horizontal on mobile */
+        .nav-characters {
+            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+        }
 
         .navbar a {
             color: #ccc; text-decoration: none; font-family: 'Cinzel', serif;
@@ -170,9 +175,12 @@
         
         .dashboard-footer { text-align: center; padding: 40px; color: #666; font-size: 14px; width: 100%; border-top: 1px solid #222; margin-top: 40px; }
 
+        /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 800px) {
-            .navbar { flex-direction: column; gap: 8px; padding: 10px; }
-            .realm-status { border-right: none; border-bottom: 1px solid #333; padding-bottom: 10px; margin-bottom: 5px; margin-right: 0; }
+            .navbar { flex-direction: column; gap: 12px; padding: 12px; }
+            .realm-status { width: 100%; justify-content: center; border-right: none; border-bottom: 1px solid #333; padding-bottom: 12px; margin-right: 0; }
+            .nav-characters { gap: 8px; }
+            .navbar a { padding: 6px 14px; font-size: 14px; }
             .card-content { flex-direction: column; }
             .sidebar { flex: auto; width: 100%; box-sizing: border-box; }
             .character-portrait img { max-width: 250px; }
@@ -192,10 +200,11 @@
             Pop: <span style="color: #f1c40f;">Full</span> | 
             Type: <span style="color: #3498db;">PvE</span>
         </div>
+        <div class="nav-characters">
     <a href="#thert">Thert</a>
 <a href="#jakov">Jakov</a>
 <a href="#soales">Soales</a>
-
+</div>
     </div>
 
     <div id="thert" class="char-card" style="border-top: 3px solid #3FC7EB; animation-delay: 0.0s;">
@@ -216,19 +225,19 @@
                     <h3>Core Stats</h3>
                     <div class="resource-bar">
                         <div class="bar-fill fill-hp"></div>
-                        <span class="bar-text">Health: 4120</span>
+                        <span class="bar-text">Health: 4200</span>
                     </div>
                     <div class="resource-bar">
                         <div class="bar-fill" style="background: linear-gradient(to right, #3498db, #0a0a0a);"></div>
-                        <span class="bar-text">Power: 6354</span>
+                        <span class="bar-text">Power: 6144</span>
                     </div>
                     
                     <div style="height: 15px;"></div>
                     <div class="stat-row"><span class="stat-label">⚔️ Strength</span> <span class="stat-val stat-str">31</span></div>
                     <div class="stat-row"><span class="stat-label">🏹 Agility</span> <span class="stat-val stat-agi">36</span></div>
-                    <div class="stat-row"><span class="stat-label">🛡️ Stamina</span> <span class="stat-val stat-sta">223</span></div>
-                    <div class="stat-row"><span class="stat-label">🧠 Intellect</span> <span class="stat-val stat-int">334</span></div>
-                    <div class="stat-row"><span class="stat-label">✨ Spirit</span> <span class="stat-val stat-spi">222</span></div>
+                    <div class="stat-row"><span class="stat-label">🛡️ Stamina</span> <span class="stat-val stat-sta">231</span></div>
+                    <div class="stat-row"><span class="stat-label">🧠 Intellect</span> <span class="stat-val stat-int">320</span></div>
+                    <div class="stat-row"><span class="stat-label">✨ Spirit</span> <span class="stat-val stat-spi">235</span></div>
                 </div>
             </div>
 
@@ -240,10 +249,10 @@
                         <a href="https://www.wowhead.com/wotlk/item=29927" class="UNCOMMON" target="_blank" rel="noopener noreferrer">Shadowbrim Travel Hat</a>
                         
                     </div>
-                    <div class="item-slot border-RARE bg-RARE">
-                        <img src="data:image/jpeg;base64,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" alt="icon" class="icon-RARE">
-                        <a href="https://www.wowhead.com/wotlk/item=34416" class="RARE" target="_blank" rel="noopener noreferrer">Gloves of the Dune</a>
-                        
+                    <div class="item-slot border-UNCOMMON bg-UNCOMMON">
+                        <img src="data:image/jpeg;base64,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" alt="icon" class="icon-UNCOMMON">
+                        <a href="https://www.wowhead.com/wotlk/item=25613" class="UNCOMMON" target="_blank" rel="noopener noreferrer">Feralfen Mystic's Handwraps</a>
+                        <span class="new-badge">NEW!</span>
                     </div>
                     <div class="item-slot border-UNCOMMON bg-UNCOMMON">
                         <img src="data:image/jpeg;base64,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" alt="icon" class="icon-UNCOMMON">
@@ -300,10 +309,10 @@
                         <a href="https://www.wowhead.com/wotlk/item=5976" class="COMMON" target="_blank" rel="noopener noreferrer">Guild Tabard</a>
                         
                     </div>
-                    <div class="item-slot border-UNCOMMON bg-UNCOMMON">
-                        <img src="data:image/jpeg;base64,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" alt="icon" class="icon-UNCOMMON">
-                        <a href="https://www.wowhead.com/wotlk/item=11122" class="UNCOMMON" target="_blank" rel="noopener noreferrer">Carrot on a Stick</a>
-                        
+                    <div class="item-slot border-RARE bg-RARE">
+                        <img src="data:image/jpeg;base64,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" alt="icon" class="icon-RARE">
+                        <a href="https://www.wowhead.com/wotlk/item=28109" class="RARE" target="_blank" rel="noopener noreferrer">Essence Infused Mushroom</a>
+                        <span class="new-badge">NEW!</span>
                     </div>
                     <div class="item-slot border-UNCOMMON bg-UNCOMMON">
                         <img src="data:image/jpeg;base64,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" alt="icon" class="icon-UNCOMMON">
@@ -596,7 +605,7 @@
         Automatically generated via GitHub Actions • Last updated: <span id="update-time"></span>
     </div>
     <script>
-        const rawDate = new Date("2026-03-14T07:48:56.672348Z");
+        const rawDate = new Date("2026-03-14T13:20:07.678739Z");
         const options = { month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' };
         document.getElementById("update-time").textContent = rawDate.toLocaleString(undefined, options);
     </script>
