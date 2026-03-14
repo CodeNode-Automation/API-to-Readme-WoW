@@ -114,7 +114,8 @@ async def get_base64_image(session, url):
         return None
         
     # Standardize image domains if pointing to a deprecated or restricted render URL
-    if "render.worldofwarcraft.com" in url:
+    # Make sure we only apply this logic to item 'icons', not character portraits!
+    if "render.worldofwarcraft.com" in url and "icons" in url:
         try:
             icon_name = url.split('/')[-1].split('.')[0]
             url = f"https://wow.zamimg.com/images/wow/icons/large/{icon_name}.jpg"

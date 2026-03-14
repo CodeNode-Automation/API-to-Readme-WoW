@@ -1,20 +1,22 @@
 import os
 
-def generate_equipment_svg(profile, equipped_dict, stats_data):
+def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=None):
     """
     Generates an SVG character card based on profile, equipment, and core stats.
+    Includes dynamic class coloring, holographic ambient glow, drop shadows, and a faction watermark.
     
     Args:
-        profile (dict): The character's core profile data (name, level, race, class, guild).
-        equipped_dict (dict): Parsed equipment dictionary containing item names, qualities, and Base64 icons.
-        stats_data (dict): The character's core statistics (health, power, attributes).
+        profile (dict): The character's core profile data.
+        equipped_dict (dict): Parsed equipment dictionary.
+        stats_data (dict): The character's core statistics.
+        portrait_base64 (str): Base64 encoded string of the character's 3D render.
     """
     
     name = profile.get('name', 'Unknown')
     level = profile.get('level', '??')
     guild = profile.get('guild', {}).get('name')
     
-    # HTML entity encoding is required to prevent XML parsing errors in the SVG.
+    # HTML entity encoding for safe SVG rendering
     guild_text = f"&lt;{guild}&gt;" if guild else ""
     
     race_data = profile.get('race', {}).get('name', 'Unknown Race')
@@ -23,21 +25,80 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
     class_data = profile.get('character_class', {}).get('name', 'Class')
     char_class = class_data if isinstance(class_data, str) else class_data.get('en_US', 'Class')
     
+    # Map class to standard HEX color for dynamic styling
+    CLASS_COLORS = {
+        "Druid": "#FF7C0A", "Hunter": "#ABD473", "Mage": "#3FC7EB", 
+        "Paladin": "#F48CBA", "Priest": "#FFFFFF", "Rogue": "#FFF468",
+        "Shaman": "#0070DE", "Warlock": "#8788EE", "Warrior": "#C69B6D"
+    }
+    class_hex = CLASS_COLORS.get(char_class, "#ffd100")
+    
+    # --- FACTION WATERMARK LOGIC ---
+    # Map the character's race to their corresponding faction and color
+    alliance_races = ["Human", "Dwarf", "Night Elf", "Gnome", "Draenei", "Worgen"]
+    horde_races = ["Orc", "Undead", "Tauren", "Troll", "Blood Elf", "Goblin"]
+    
+    if race in alliance_races:
+        faction = "ALLIANCE"
+        faction_color = "#0078ff"
+    elif race in horde_races:
+        faction = "HORDE"
+        faction_color = "#cc0000"
+    else:
+        faction = "AZEROTH"
+        faction_color = "#ffffff"
+    
     def get_y(index): 
-        """Calculates the vertical (y-axis) offset based on slot index."""
+        """Calculates vertical offset based on slot index."""
         return 120 + (index * 45)
 
-    # Initialize SVG with base styling and header elements
+    # Initialize SVG with definitions for Glow, Shadows, and Clipping
     svg_content = f"""<svg width="600" height="550" xmlns="http://www.w3.org/2000/svg">
-        <rect width="100%" height="100%" fill="#1a1a1a" rx="10"/>
-        <rect x="5" y="5" width="590" height="540" fill="none" stroke="#4a4a4a" stroke-width="3" rx="8"/>
+        <defs>
+            <clipPath id="circleView">
+                <circle cx="300" cy="120" r="45" />
+            </clipPath>
+            
+            <radialGradient id="ambientGlow" cx="50%" cy="25%" r="50%">
+                <stop offset="0%" stop-color="{class_hex}" stop-opacity="0.25" />
+                <stop offset="100%" stop-color="#1a1a1a" stop-opacity="0" />
+            </radialGradient>
+            
+            <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.8"/>
+            </filter>
+            <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+                <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="{class_hex}" flood-opacity="0.5"/>
+            </filter>
+        </defs>
         
-        <text x="300" y="35" font-family="Arial, sans-serif" font-size="24" fill="#ffd100" font-weight="bold" text-anchor="middle">{name}</text>
-        <text x="300" y="55" font-family="Arial, sans-serif" font-size="14" fill="#3FC7EB" font-weight="bold" text-anchor="middle">{guild_text}</text>
-        <text x="300" y="75" font-family="Arial, sans-serif" font-size="16" fill="#ffb000" text-anchor="middle">Level {level} {race} {char_class}</text>
+        <rect width="100%" height="100%" fill="#1a1a1a" rx="10"/>
+        <rect width="100%" height="100%" fill="url(#ambientGlow)" rx="10"/>
+        
+        <text x="300" y="360" font-family="Arial, sans-serif" font-weight="900" font-size="110" fill="{faction_color}" opacity="0.04" text-anchor="middle" transform="rotate(-30 300 350)">{faction}</text>
+        
+        <rect x="5" y="5" width="590" height="540" fill="none" stroke="{class_hex}" stroke-width="3" rx="8" stroke-opacity="0.5"/>
+        
+        <text x="300" y="35" font-family="Arial, sans-serif" font-size="24" fill="{class_hex}" font-weight="bold" text-anchor="middle" filter="url(#shadow)">{name}</text>
+        <text x="300" y="55" font-family="Arial, sans-serif" font-size="14" fill="#ffd100" font-weight="bold" text-anchor="middle" filter="url(#shadow)">{guild_text}</text>
+        <text x="300" y="72" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb" text-anchor="middle">Level {level} {race} {char_class}</text>
     """
 
-    # Parse core statistics, defaulting to 0 if data is missing
+    # --- INJECT CHARACTER PORTRAIT WITH GLOW ---
+    if portrait_base64:
+        svg_content += f"""
+        <circle cx="300" cy="120" r="47" fill="{class_hex}" filter="url(#glow)"/>
+        <circle cx="300" cy="120" r="45" fill="#111" />
+        <image x="250" y="70" width="100" height="100" href="{portrait_base64}" clip-path="url(#circleView)" preserveAspectRatio="xMidYMid slice" />
+        """
+    else:
+        svg_content += f"""
+        <circle cx="300" cy="120" r="47" fill="{class_hex}" filter="url(#glow)"/>
+        <circle cx="300" cy="120" r="45" fill="#222" />
+        <text x="300" y="125" font-family="Arial, sans-serif" font-size="14" fill="#777" text-anchor="middle">No Image</text>
+        """
+
+    # Parse core statistics
     health = stats_data.get('health', 0) if stats_data else 0
     mana = stats_data.get('power', 0) if stats_data else 0
     strength = stats_data.get('strength', {}).get('effective', 0) if stats_data else 0
@@ -46,27 +107,26 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
     intellect = stats_data.get('intellect', {}).get('effective', 0) if stats_data else 0
     spirit = stats_data.get('spirit', {}).get('effective', 0) if stats_data else 0
 
-    # Core Stats UI Box
-    svg_content += """
-        <rect x="210" y="110" width="180" height="280" fill="#222" rx="5" stroke="#444"/>
-        <text x="300" y="135" font-family="Arial, sans-serif" font-size="16" fill="#ffb000" font-weight="bold" text-anchor="middle">Core Stats</text>
-        <line x1="220" y1="145" x2="380" y2="145" stroke="#444" stroke-width="1"/>
+    # Core Stats UI Box with Shadow Filter
+    svg_content += f"""
+        <rect x="220" y="180" width="160" height="230" fill="#222" rx="5" stroke="{class_hex}" stroke-opacity="0.4" filter="url(#shadow)"/>
+        <text x="300" y="205" font-family="Arial, sans-serif" font-size="16" fill="{class_hex}" font-weight="bold" text-anchor="middle">Core Stats</text>
+        <line x1="230" y1="215" x2="370" y2="215" stroke="#444" stroke-width="1"/>
     """
 
     def draw_stat(stat_name, stat_val, y_pos, color="#ffffff"):
-        """Generates the SVG `<text>` elements for individual character attributes."""
         return f"""
-        <text x="230" y="{y_pos}" font-family="Arial, sans-serif" font-size="14" fill="#ffd100">{stat_name}:</text>
-        <text x="370" y="{y_pos}" font-family="Arial, sans-serif" font-size="14" fill="{color}" text-anchor="end">{stat_val}</text>
+        <text x="235" y="{y_pos}" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">{stat_name}:</text>
+        <text x="365" y="{y_pos}" font-family="Arial, sans-serif" font-size="14" fill="{color}" font-weight="bold" text-anchor="end">{stat_val}</text>
         """
 
-    svg_content += draw_stat("Health", health, 170, "#00ff00")
-    svg_content += draw_stat("Mana", mana, 195, "#00ccff")
-    svg_content += draw_stat("Strength", strength, 230)
-    svg_content += draw_stat("Agility", agility, 255)
-    svg_content += draw_stat("Stamina", stamina, 280)
-    svg_content += draw_stat("Intellect", intellect, 305)
-    svg_content += draw_stat("Spirit", spirit, 330)
+    svg_content += draw_stat("Health", health, 240, "#00ff00")
+    svg_content += draw_stat("Mana", mana, 265, "#00ccff")
+    svg_content += draw_stat("Strength", strength, 295)
+    svg_content += draw_stat("Agility", agility, 320)
+    svg_content += draw_stat("Stamina", stamina, 345)
+    svg_content += draw_stat("Intellect", intellect, 370)
+    svg_content += draw_stat("Spirit", spirit, 395)
 
     QUALITY_COLORS = {
         "POOR": "#9d9d9d", "COMMON": "#ffffff", "UNCOMMON": "#1eff00",
@@ -74,18 +134,6 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
     }
 
     def draw_slot(slot_key, x_img, x_text, y, align="left", is_bottom=False):
-        """
-        Generates the SVG elements for an equipment slot, displaying either the
-        equipped item or a visual placeholder if the slot is empty.
-        
-        Args:
-            slot_key (str): The equipment slot identifier (e.g., 'HEAD').
-            x_img (int): The x-coordinate for the item icon.
-            x_text (int): The x-coordinate for the item name text.
-            y (int): The base y-coordinate for the slot elements.
-            align (str): Text alignment ('left', 'right', or 'center').
-            is_bottom (bool): Flag indicating if the slot is on the bottom row.
-        """
         data = equipped_dict.get(slot_key)
         
         if align == "right":
@@ -102,25 +150,24 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
         if not data:
             empty_label = "Empty" if is_bottom else "Empty Slot"
             return f"""
-        <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#111" stroke="#333" stroke-dasharray="3,3" rx="4"/>
+        <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#111" stroke="#333" stroke-dasharray="3,3" rx="4" filter="url(#shadow)"/>
         <text x="{x_img + 17.5}" y="{y - 3}" font-family="Arial, sans-serif" font-size="20" fill="#444" text-anchor="middle" font-weight="bold">?</text>
         <text x="{x_text}" y="{y_text}" font-family="Arial, sans-serif" font-size="12" fill="#666" {text_anchor} font-style="italic">{empty_label}</text>
         """
             
-        # Sanitize item names to prevent XML parsing errors
         item_name = data["name"][:18].replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
         base64_img = data["icon_data"]
         quality = data.get("quality", "COMMON")
         text_color = QUALITY_COLORS.get(quality, "#ffffff")
         
-        # Dim text color if relying on fallback assets
         if data.get("is_fallback"):
             text_color = "#999999"
         
+        # Draw the slot with drop shadows and a subtle border matching the item's rarity color!
         return f"""
-        <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#333" stroke="#555"/>
+        <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#333" stroke="{text_color}" stroke-opacity="0.5" filter="url(#shadow)"/>
         <image x="{x_img}" y="{y - 25}" width="35" height="35" href="{base64_img}" />
-        <text x="{x_text}" y="{y_text}" font-family="Arial, sans-serif" font-size="12" fill="{text_color}" {text_anchor}>{item_name}</text>
+        <text x="{x_text}" y="{y_text}" font-family="Arial, sans-serif" font-size="12" fill="{text_color}" {text_anchor} filter="url(#shadow)">{item_name}</text>
         """
     
     # Left column rendering
@@ -140,7 +187,6 @@ def generate_equipment_svg(profile, equipped_dict, stats_data):
 
     svg_content += "\n</svg>"
 
-    # Ensure output directory exists before writing
     os.makedirs("asset", exist_ok=True)
     safe_name = name.lower()
     filename = f"asset/{safe_name}_ui.svg"

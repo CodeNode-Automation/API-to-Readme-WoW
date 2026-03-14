@@ -8,6 +8,7 @@ import os
 import asyncio
 import aiohttp
 import sys
+from datetime import datetime, timezone
 
 from wow.auth import get_access_token
 from wow.api import fetch_realm_data
@@ -16,40 +17,27 @@ from render.html_dashboard import generate_html_dashboard
 from config import REALM, CHARACTERS
 
 HISTORY_FILE = "asset/history.json"
+TIMELINE_FILE = "asset/timeline.json"
 
-def load_history():
-    """
-    Loads the historical equipment state from the local JSON file.
-    
-    Returns:
-        dict: The parsed historical data, or an empty dictionary if the file 
-              does not exist or contains invalid JSON.
-    """
-    if os.path.exists(HISTORY_FILE):
+def load_json_file(filepath):
+    """Utility to load a local JSON state file safely."""
+    if os.path.exists(filepath):
         try:
-            with open(HISTORY_FILE, "r") as f:
+            with open(filepath, "r") as f:
                 return json.load(f)
         except json.JSONDecodeError:
-            return {}
-    return {}
+            return {} if "history" in filepath else []
+    return {} if "history" in filepath else []
 
-def save_history(history_data):
-    """
-    Saves the updated equipment state to the local JSON file.
-    
-    Args:
-        history_data (dict): The current equipment data to persist.
-    """
+def save_json_file(filepath, data):
+    """Utility to persist data back to a local JSON file."""
     os.makedirs("asset", exist_ok=True)
-    with open(HISTORY_FILE, "w") as f:
-        json.dump(history_data, f, indent=4)
+    with open(filepath, "w") as f:
+        json.dump(data, f, indent=4)
 
 async def main_async():
     """
     Core asynchronous orchestrator for the dashboard pipeline.
-    
-    Authenticates with the Blizzard API, fetches realm and character data 
-    concurrently, updates historical records, and triggers the dashboard rendering.
     """
     print("\n🔑 Authenticating with Blizzard API...")
     token = get_access_token()
@@ -58,8 +46,9 @@ async def main_async():
         return
     print("✅ Authentication successful!\n")
 
-    print("📂 Loading Time Machine history...")
-    history_data = load_history()
+    print("📂 Loading Time Machine & Timeline history...")
+    history_data = load_json_file(HISTORY_FILE)
+    timeline_data = load_json_file(TIMELINE_FILE)
     roster_data = []
 
     print("🚀 Opening Async HTTP Session...\n")
@@ -74,19 +63,35 @@ async def main_async():
         for result in results:
             history_data[result["char"]] = result["equipped"]
             roster_data.append(result)
+            
+            # Extract class for color coordination in the timeline
+            c_class = result["profile"].get("character_class", {}).get("name", "Unknown")
+            if isinstance(c_class, dict): c_class = c_class.get("en_US", "Unknown")
+            
+            # Push new upgrades to the beginning of the timeline list
+            for upg in result.get("upgrades", []):
+                timeline_data.insert(0, {
+                    "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
+                    "character": result["char"].title(),
+                    "class": c_class,
+                    "item": upg
+                })
+
+    # Keep timeline lean by truncating to the last 50 events
+    timeline_data = timeline_data[:50]
 
     print("\n===========================================")
     print("💾 Saving today's gear to Time Machine history...")
-    save_history(history_data)
+    save_json_file(HISTORY_FILE, history_data)
+    save_json_file(TIMELINE_FILE, timeline_data)
 
     print("🌐 Generating final HTML Dashboard...")
-    generate_html_dashboard(roster_data, realm_data)
+    generate_html_dashboard(roster_data, realm_data, timeline_data)
     print("🎉 ALL DONE! The pipeline ran successfully.")
 
 def main():
     """
     Synchronous wrapper to configure the event loop and execute the main asynchronous pipeline.
-    Includes a specific policy override for Windows environments to prevent standard loop closure errors.
     """
     if sys.platform == 'win32':
         asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())

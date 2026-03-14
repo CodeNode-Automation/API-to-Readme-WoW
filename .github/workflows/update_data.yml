@@ -2,9 +2,8 @@ name: Update WoW Character Data
 
 on:
   schedule:
-    # 23:00 UTC is 00:00 CET (Midnight in Germany during Winter/Standard time)
-    # Note: During Summer time (CEST), this will run at 01:00 AM local time.
-    - cron: '0 23 * * *'
+    # Runs at 11:00 UTC (12:00 PM CET) and 23:00 UTC (12:00 AM CET)
+    - cron: '0 11,23 * * *'
   workflow_dispatch:
 
 jobs:
@@ -39,6 +38,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add main.py render/html_dashboard.py asset/*_ui.svg asset/history.json index.html
-          # Only commit if there are actually changes to the SVG
+          
+          # Add all Python files, assets (SVGs, history.json, timeline.json), and the HTML page
+          git add *.py wow/*.py render/*.py asset/* index.html
+          
+          # Only commit if there are actually changes
           git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update WoW character data" && git push)

@@ -1,6 +1,7 @@
 import asyncio
 from wow.api import fetch_wow_endpoint
 from wow.items import process_equipment
+from wow.images import get_base64_image
 from render.svg_renderer import generate_equipment_svg
 from config import REALM
 
@@ -20,7 +21,7 @@ async def fetch_character_data(session, token, char, history_data):
 
     Returns:
         dict: A structured payload containing the character's profile, parsed 
-              equipment, statistics, and media render URL.
+              equipment, statistics, media render URL, and a list of new upgrades.
     """
     print(f"[{char.upper()}] 📡 Firing simultaneous API requests...")
     
@@ -46,6 +47,9 @@ async def fetch_character_data(session, token, char, history_data):
                 if asset.get('key') == 'avatar':
                     render_url = asset.get('value')
 
+    # Convert the render URL into a Base64 string so the SVG can embed it directly
+    portrait_base64 = await get_base64_image(session, render_url) if render_url else None
+
     # Compare current equipment against historical state to detect new upgrades
     past_gear = history_data.get(char, {})
     upgrade_count = 0
@@ -56,12 +60,12 @@ async def fetch_character_data(session, token, char, history_data):
         if past_gear and past_item_id != data.get("item_id"):
             data["is_new"] = True
             upgrade_count += 1
-            upgrades.append(data['name'])
+            upgrades.append(data)  # Append the full item dictionary for the timeline
         else:
             data["is_new"] = False
 
-    # Generate the static SVG asset using the compiled dataset
-    generate_equipment_svg(profile, equipped_dict, stats)
+    # Generate the static SVG asset using the compiled dataset and portrait
+    generate_equipment_svg(profile, equipped_dict, stats, portrait_base64)
 
     # Compile execution logs for standard output
     guild = profile.get("guild", {}).get("name", "No Guild")
@@ -72,7 +76,7 @@ async def fetch_character_data(session, token, char, history_data):
     if upgrade_count > 0:
         log += f"   ┣ 🌟 Upgrades: {upgrade_count} detected!\n"
         for upg in upgrades:
-            log += f"   ┃  ┗ {upg}\n"
+            log += f"   ┃  ┗ {upg['name']}\n"
     else:
         log += f"   ┣ ⏳ Upgrades: None today.\n"
     log += f"   ┗ 🎨 SVG Map: asset/{char.lower()}_ui.svg updated."
@@ -85,5 +89,6 @@ async def fetch_character_data(session, token, char, history_data):
         "profile": profile,
         "equipped": equipped_dict,
         "stats": stats,
-        "render_url": render_url
+        "render_url": render_url,
+        "upgrades": upgrades
     }

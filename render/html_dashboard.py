@@ -1,12 +1,14 @@
-from datetime import datetime
+from datetime import datetime, timezone
 
-def generate_html_dashboard(roster_data, realm_data=None):
+def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     """
     Generates the static HTML dashboard mapping all character and realm data.
-    Includes mobile-responsive CSS and Wowhead external tooltips.
+    Includes mobile-responsive CSS, Wowhead tooltips, and a Loot Timeline feed.
     """
     if not realm_data:
         realm_data = {"status": "Unknown", "population": "Unknown", "has_queue": False}
+    if not timeline_data:
+        timeline_data = []
 
     CLASS_COLORS = {
         "Druid": "#FF7C0A", "Hunter": "#ABD473", "Mage": "#3FC7EB", 
@@ -16,16 +18,12 @@ def generate_html_dashboard(roster_data, realm_data=None):
     POWER_COLORS = {
         "Warrior": "#e74c3c", "Rogue": "#f1c40f",
     }
-    last_updated_iso = datetime.utcnow().isoformat() + "Z"
+    last_updated_iso = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
-    # Configure realm status indicators
     status_color = "#2ecc71" if realm_data.get('status') == "Up" else "#e74c3c"
     r_type = realm_data.get('type', 'PvP')
-    
-    # Differentiate realm type by color
     type_color = "#e74c3c" if "PvP" in r_type else "#3498db"
 
-    # Build the Navbar HTML with a specific container for the character links to fix mobile stacking
     nav_links = f"""
         <div class="realm-status">
             🌍 <span>Thunderstrike</span> | 
@@ -78,7 +76,6 @@ def generate_html_dashboard(roster_data, realm_data=None):
             gap: 15px; padding: 15px 0; box-shadow: 0 4px 15px rgba(0,0,0,0.6); flex-wrap: wrap;
         }}
         
-        /* Navbar realm layout */
         .realm-status {{
             color: #bbb; font-family: 'Roboto', sans-serif;
             font-size: 14px; font-weight: bold; letter-spacing: 0.5px;
@@ -87,10 +84,7 @@ def generate_html_dashboard(roster_data, realm_data=None):
         }}
         .realm-status span:first-child {{ color: #fff; font-family: 'Cinzel', serif; }}
 
-        /* New container to keep characters horizontal on mobile */
-        .nav-characters {{
-            display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;
-        }}
+        .nav-characters {{ display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }}
 
         .navbar a {{
             color: #ccc; text-decoration: none; font-family: 'Cinzel', serif;
@@ -217,9 +211,41 @@ def generate_html_dashboard(roster_data, realm_data=None):
         
         .POOR {{ color: #9d9d9d !important; }} .COMMON {{ color: #ffffff !important; }} .UNCOMMON {{ color: #1eff00 !important; }} .RARE {{ color: #0070dd !important; }} .EPIC {{ color: #a335ee !important; }} .LEGENDARY {{ color: #ff8000 !important; }}
         
+        /* --- TIMELINE UI --- */
+        .timeline-container {{
+            width: 100%; max-width: 900px;
+            background: linear-gradient(145deg, rgba(22,22,22,0.95), rgba(26,26,26,0.95));
+            border: 1px solid #333; border-radius: 12px;
+            margin-top: 40px; padding: 25px; box-sizing: border-box;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.8);
+        }}
+        .timeline-title {{
+            font-family: 'Cinzel', serif; color: #ffd100; font-size: 24px;
+            text-align: center; margin-top: 0; border-bottom: 1px solid #444; padding-bottom: 15px;
+            text-shadow: 1px 1px 2px #000;
+        }}
+        .timeline-feed {{
+            display: flex; flex-direction: column; gap: 12px; margin-top: 20px;
+        }}
+        .timeline-event {{
+            display: flex; align-items: center; background: rgba(0,0,0,0.5);
+            border-left: 3px solid #555; padding: 10px 15px; border-radius: 6px;
+            gap: 15px; font-size: 14px; transition: background 0.3s ease;
+        }}
+        .timeline-event:hover {{ background: rgba(255,255,255,0.05); border-color: #ffd100; }}
+        .event-date {{ color: #888; font-size: 12px; min-width: 50px; font-weight: bold; }}
+        .event-char {{ font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 1px; font-size: 15px; }}
+        .event-action {{ color: #aaa; font-style: italic; font-size: 13px; }}
+        .event-item {{
+            display: flex; align-items: center; background: rgba(20,20,20,0.8);
+            padding: 4px 12px; border-radius: 4px; border: 1px solid #333; gap: 10px;
+        }}
+        .event-item img {{ width: 24px; height: 24px; border-radius: 4px; border: 1px solid #111; }}
+        .event-item a {{ text-decoration: none; font-weight: 700; font-size: 13px; text-shadow: 1px 1px 2px #000;}}
+        .event-item a:hover {{ text-decoration: underline; }}
+
         .dashboard-footer {{ text-align: center; padding: 40px; color: #666; font-size: 14px; width: 100%; border-top: 1px solid #222; margin-top: 40px; }}
 
-        /* --- MOBILE RESPONSIVE FIXES --- */
         @media (max-width: 800px) {{
             .navbar {{ flex-direction: column; gap: 12px; padding: 12px; }}
             .realm-status {{ width: 100%; justify-content: center; border-right: none; border-bottom: 1px solid #333; padding-bottom: 12px; margin-right: 0; }}
@@ -228,6 +254,8 @@ def generate_html_dashboard(roster_data, realm_data=None):
             .card-content {{ flex-direction: column; }}
             .sidebar {{ flex: auto; width: 100%; box-sizing: border-box; }}
             .character-portrait img {{ max-width: 250px; }}
+            .timeline-event {{ flex-direction: column; align-items: flex-start; gap: 8px; }}
+            .event-item {{ width: 100%; box-sizing: border-box; }}
         }}
         @media (max-width: 480px) {{
             .grid {{ grid-template-columns: 1fr; }}
@@ -249,14 +277,12 @@ def generate_html_dashboard(roster_data, realm_data=None):
         name = p.get('name', 'Unknown')
         level = p.get('level', '??')
         
-        # Safely extract race and class data
         race_data = p.get('race', {}).get('name', '')
         race = race_data if isinstance(race_data, str) else race_data.get('en_US', '')
         
         class_data = p.get('character_class', {}).get('name', 'Unknown')
         c_class = class_data if isinstance(class_data, str) else class_data.get('en_US', 'Unknown')
         
-        # Extract guild information
         guild = p.get('guild', {}).get('name')
         
         class_hex = CLASS_COLORS.get(c_class, "#ffd100")
@@ -274,7 +300,6 @@ def generate_html_dashboard(roster_data, realm_data=None):
         render_url = char_info.get("render_url", "")
         portrait_html = f'<div class="character-portrait"><img src="{render_url}" alt="{name} Render" style="box-shadow: 0 0 25px {class_hex}40, 0 6px 12px rgba(0,0,0,0.8); border-color: {class_hex};"></div>' if render_url else ''
 
-        # Format guild tag for display
         guild_html = f'<div style="color: {class_hex}; font-size: 16px; font-weight: 700; margin-top: 5px; letter-spacing: 1px; text-shadow: 1px 1px 2px #000;">&lt;{guild}&gt;</div>' if guild else ''
 
         html += f"""
@@ -354,6 +379,49 @@ def generate_html_dashboard(roster_data, realm_data=None):
     </div>
     """
     
+    # --- RENDER TIMELINE FEED ---
+    if timeline_data:
+        html += """
+    <div class="timeline-container">
+        <h2 class="timeline-title">📜 Recent Upgrades</h2>
+        <div class="timeline-feed">
+"""
+        # Render the 20 most recent timeline events
+        for event in timeline_data[:20]:
+            char_name = event.get("character", "Unknown")
+            c_class = event.get("class", "Unknown")
+            item = event.get("item", {})
+            ts = event.get("timestamp", "")
+            
+            class_hex = CLASS_COLORS.get(c_class, "#ffd100")
+            item_name = item.get("name", "Unknown")
+            item_id = item.get("item_id", "")
+            quality = item.get("quality", "COMMON")
+            img_src = item.get("icon_data", "")
+            
+            # Format date beautifully (e.g. "Mar 14")
+            try:
+                dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
+                date_str = dt.strftime("%b %d")
+            except Exception:
+                date_str = ts[:10]
+            
+            html += f"""
+            <div class="timeline-event">
+                <span class="event-date">{date_str}</span>
+                <span class="event-char" style="color: {class_hex};">{char_name}</span>
+                <span class="event-action">acquired</span>
+                <div class="event-item border-{quality} bg-{quality}">
+                    <img src="{img_src}" alt="icon" class="icon-{quality}">
+                    <a href="https://www.wowhead.com/wotlk/item={item_id}" class="{quality}" target="_blank" rel="noopener noreferrer">{item_name}</a>
+                </div>
+            </div>"""
+        
+        html += """
+        </div>
+    </div>
+"""
+
     html += f"""
     <div class="dashboard-footer">
         Automatically generated via GitHub Actions • Last updated: <span id="update-time"></span>
