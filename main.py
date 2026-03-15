@@ -12,7 +12,7 @@ from datetime import datetime, timezone
 
 from wow.auth import get_access_token
 from wow.api import fetch_realm_data
-from wow.character import fetch_character_data
+from wow.character import fetch_character_data, update_character_state
 from render.html_dashboard import generate_html_dashboard
 from config import REALM, CHARACTERS
 
@@ -61,21 +61,15 @@ async def main_async():
         results = await asyncio.gather(*tasks)
         
         for result in results:
-            history_data[result["char"]] = result["equipped"]
-            roster_data.append(result)
-            
-            # Extract class for color coordination in the timeline
-            c_class = result["profile"].get("character_class", {}).get("name", "Unknown")
-            if isinstance(c_class, dict): c_class = c_class.get("en_US", "Unknown")
-            
-            # Push new upgrades to the beginning of the timeline list
-            for upg in result.get("upgrades", []):
-                timeline_data.insert(0, {
-                    "timestamp": datetime.now(timezone.utc).isoformat().replace("+00:00", "Z"),
-                    "character": result["char"].title(),
-                    "class": c_class,
-                    "item": upg
-                })
+            if result:
+                # Delegate historical state and timeline tracking to character.py
+                history_data, timeline_data = update_character_state(result, history_data, timeline_data)
+                
+                # Announce if the character leveled up
+                if result.get("level_up"):
+                    print(f"   ⭐ LEVEL UP! {result['char'].title()} has reached Level {result['level_up']}!")
+                
+                roster_data.append(result)
 
     # Keep timeline lean by truncating to the last 50 events
     timeline_data = timeline_data[:50]

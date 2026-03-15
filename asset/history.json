@@ -143,7 +143,8 @@
             "is_fallback": false,
             "item_id": 5976,
             "is_new": false
-        }
+        },
+        "level": 64
     },
     "jakov": {
         "SHOULDER": {
@@ -249,7 +250,8 @@
             "is_fallback": false,
             "item_id": 6315,
             "is_new": false
-        }
+        },
+        "level": 27
     },
     "soales": {
         "CHEST": {
@@ -323,6 +325,7 @@
             "is_fallback": false,
             "item_id": 5187,
             "is_new": false
-        }
+        },
+        "level": 25
     }
 }

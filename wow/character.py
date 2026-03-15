@@ -4,6 +4,7 @@ from wow.items import process_equipment
 from wow.images import get_base64_image
 from render.svg_renderer import generate_equipment_svg
 from config import REALM
+from datetime import datetime, timezone
 
 async def fetch_character_data(session, token, char, history_data):
     """
@@ -11,17 +12,18 @@ async def fetch_character_data(session, token, char, history_data):
     
     This function fetches the core profile, statistics, equipment, and media assets 
     concurrently. It also processes the equipment dictionary, compares it against 
-    historical data to flag new items, and triggers the SVG asset generation.
+    historical data to flag new items, tracks level progression, and triggers the SVG asset generation.
 
     Args:
         session (aiohttp.ClientSession): The active HTTP session.
         token (str): The OAuth access token for Blizzard API authentication.
         char (str): The character's name.
-        history_data (dict): Historical equipment data used to detect upgrades.
+        history_data (dict): Historical data used to detect upgrades and level-ups.
 
     Returns:
         dict: A structured payload containing the character's profile, parsed 
-              equipment, statistics, media render URL, and a list of new upgrades.
+              equipment, statistics, media render URL, a list of new upgrades,
+              and recent level-up data.
     """
     print(f"[{char.upper()}] 📡 Firing simultaneous API requests...")
     
@@ -56,13 +58,24 @@ async def fetch_character_data(session, token, char, history_data):
     upgrades = []
     
     for slot, data in equipped_dict.items():
-        past_item_id = past_gear.get(slot, {}).get("item_id")
+        # Using .get() safely handles items and prevents KeyError on missing slots
+        past_item_id = past_gear.get(slot, {}).get("item_id") if isinstance(past_gear.get(slot), dict) else None
+        
         if past_gear and past_item_id != data.get("item_id"):
             data["is_new"] = True
             upgrade_count += 1
             upgrades.append(data)  # Append the full item dictionary for the timeline
         else:
             data["is_new"] = False
+
+    # Track character level progression
+    current_level = profile.get("level", 0)
+    past_level = past_gear.get("level", 0)
+    level_up = None
+    
+    # Only trigger a level-up event if we have historical data (past_level > 0) and the level has increased
+    if past_level > 0 and current_level > past_level:
+        level_up = current_level
 
     # Generate the static SVG asset using the compiled dataset and portrait
     generate_equipment_svg(profile, equipped_dict, stats, portrait_base64)
@@ -73,6 +86,10 @@ async def fetch_character_data(session, token, char, history_data):
     log = f"\n[{char.upper()}] ✅ Processing Complete!\n"
     log += f"   ┣ 🛡️ Guild: <{guild}>\n"
     log += f"   ┣ 🎒 Items Found: {len(equipped_dict)}\n"
+    
+    if level_up:
+        log += f"   ┣ ⭐ LEVEL UP! Character reached Level {level_up}!\n"
+        
     if upgrade_count > 0:
         log += f"   ┣ 🌟 Upgrades: {upgrade_count} detected!\n"
         for upg in upgrades:
@@ -83,12 +100,59 @@ async def fetch_character_data(session, token, char, history_data):
     
     print(log)
 
-    # Return the normalized data payload for downstream HTML generation
+    # Return the normalized data payload for downstream HTML generation and state tracking
     return {
         "char": char,
         "profile": profile,
         "equipped": equipped_dict,
         "stats": stats,
         "render_url": render_url,
-        "upgrades": upgrades
+        "upgrades": upgrades,
+        "level_up": level_up,
+        "current_level": current_level
     }
+
+def update_character_state(char_data, history_data, timeline_data):
+    """
+    Updates the historical state and timeline feed with new gear upgrades and level-ups.
+    
+    Args:
+        char_data (dict): The processed payload returned from fetch_character_data.
+        history_data (dict): The current state of history.json.
+        timeline_data (list): The current state of timeline.json.
+        
+    Returns:
+        tuple: The updated (history_data, timeline_data).
+    """
+    char_name = char_data["char"].title()
+    char_class = char_data["profile"].get("character_class", {}).get("name", "Unknown")
+    
+    # Generate a single timestamp for all events in this execution cycle
+    timestamp = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
+
+    # 1. Process Level-Ups
+    if char_data.get("level_up"):
+        timeline_data.insert(0, {
+            "timestamp": timestamp,
+            "character": char_name,
+            "class": char_class,
+            "type": "level_up",
+            "level": char_data["level_up"]
+        })
+
+    # 2. Process Gear Upgrades
+    for upgrade in char_data.get("upgrades", []):
+        timeline_data.insert(0, {
+            "timestamp": timestamp,
+            "character": char_name,
+            "class": char_class,
+            "type": "item",
+            "item": upgrade
+        })
+
+    # 3. Update the persistent historical state
+    # Save the new equipment mapping and the current level to track future changes
+    history_data[char_data["char"]] = char_data["equipped"]
+    history_data[char_data["char"]]["level"] = char_data.get("current_level", 0)
+
+    return history_data, timeline_data

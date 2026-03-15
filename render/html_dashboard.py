@@ -383,30 +383,50 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     if timeline_data:
         html += """
     <div class="timeline-container">
-        <h2 class="timeline-title">📜 Recent Upgrades</h2>
+        <h2 class="timeline-title">📜 Recent Activity</h2>
         <div class="timeline-feed">
 """
         # Render the 20 most recent timeline events
         for event in timeline_data[:20]:
             char_name = event.get("character", "Unknown")
             c_class = event.get("class", "Unknown")
-            item = event.get("item", {})
             ts = event.get("timestamp", "")
             
-            class_hex = CLASS_COLORS.get(c_class, "#ffd100")
-            item_name = item.get("name", "Unknown")
-            item_id = item.get("item_id", "")
-            quality = item.get("quality", "COMMON")
-            img_src = item.get("icon_data", "")
+            # Identify the type of event, defaulting to "item" for backward compatibility with older logs
+            event_type = event.get("type", "item") 
             
-            # Format date beautifully (e.g. "Mar 14")
+            class_hex = CLASS_COLORS.get(c_class, "#ffd100")
+            
+            # Format date beautifully (e.g., "Mar 14")
             try:
                 dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
                 date_str = dt.strftime("%b %d")
             except Exception:
                 date_str = ts[:10]
             
-            html += f"""
+            # Route A: Render a Level-Up Event
+            if event_type == "level_up":
+                level = event.get("level", "??")
+                html += f"""
+            <div class="timeline-event" style="border-left-color: {class_hex};">
+                <span class="event-date">{date_str}</span>
+                <span class="event-char" style="color: {class_hex};">{char_name}</span>
+                <span class="event-action">reached</span>
+                <div class="event-item" style="background: linear-gradient(90deg, rgba(255,209,0,0.15) 0%, rgba(20,20,20,0.85) 60%); border-color: #ffd100;">
+                    <span style="font-size: 16px; margin: 0 5px;">⭐</span>
+                    <span style="color: #ffd100; font-weight: 700; text-shadow: 1px 1px 2px #000;">Level {level}</span>
+                </div>
+            </div>"""
+            
+            # Route B: Render an Item Upgrade Event
+            else:
+                item = event.get("item", {})
+                item_name = item.get("name", "Unknown")
+                item_id = item.get("item_id", "")
+                quality = item.get("quality", "COMMON")
+                img_src = item.get("icon_data", "")
+                
+                html += f"""
             <div class="timeline-event">
                 <span class="event-date">{date_str}</span>
                 <span class="event-char" style="color: {class_hex};">{char_name}</span>
