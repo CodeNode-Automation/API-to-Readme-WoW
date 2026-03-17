@@ -23,7 +23,7 @@ async def process_equipment(session, token, equipment, char_name):
         
     Returns:
         dict: A mapping of equipment slot types to their respective parsed item data 
-              (name, base64 icon, quality, fallback status, and item ID).
+              (name, base64 icon, quality, fallback status, item ID, and item level).
     """
     equipped_dict = {}
     fallback_base64 = await get_base64_image(session, FALLBACK_ICON)
@@ -39,6 +39,9 @@ async def process_equipment(session, token, equipment, char_name):
             item_name = name_data if isinstance(name_data, str) else name_data.get('en_US', 'Empty')
             
             item_id = item.get('item', {}).get('id')
+            
+            # Extract Item Level
+            item_level = item.get('level', {}).get('value', 0)
             
             # Resolve item quality, fetching dynamically if omitted from the initial payload
             item_href = item.get('item', {}).get('key', {}).get('href')
@@ -70,7 +73,8 @@ async def process_equipment(session, token, equipment, char_name):
                 "icon_data": base64_data,
                 "quality": quality_type,
                 "is_fallback": is_fallback,
-                "item_id": item_id
+                "item_id": item_id,
+                "item_level": item_level
             }
 
     return equipped_dict

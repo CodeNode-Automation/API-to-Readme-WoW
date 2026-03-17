@@ -6,6 +6,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 29927,
+            "item_level": 0,
             "is_new": false
         },
         "NECK": {
@@ -14,6 +15,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 28027,
+            "item_level": 0,
             "is_new": false
         },
         "SHOULDER": {
@@ -22,6 +24,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 28075,
+            "item_level": 0,
             "is_new": false
         },
         "SHIRT": {
@@ -30,6 +33,7 @@
             "quality": "COMMON",
             "is_fallback": false,
             "item_id": 6096,
+            "item_level": 0,
             "is_new": false
         },
         "CHEST": {
@@ -38,6 +42,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 28052,
+            "item_level": 0,
             "is_new": false
         },
         "WAIST": {
@@ -46,6 +51,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 25982,
+            "item_level": 0,
             "is_new": false
         },
         "LEGS": {
@@ -54,6 +60,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 25711,
+            "item_level": 0,
             "is_new": false
         },
         "FEET": {
@@ -62,6 +69,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 25516,
+            "item_level": 0,
             "is_new": false
         },
         "WRIST": {
@@ -70,6 +78,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 11875,
+            "item_level": 0,
             "is_new": false
         },
         "HANDS": {
@@ -78,6 +87,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 25613,
+            "item_level": 0,
             "is_new": false
         },
         "FINGER_1": {
@@ -86,6 +96,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 24154,
+            "item_level": 0,
             "is_new": false
         },
         "FINGER_2": {
@@ -94,6 +105,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 27734,
+            "item_level": 0,
             "is_new": false
         },
         "TRINKET_1": {
@@ -102,6 +114,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 28109,
+            "item_level": 0,
             "is_new": false
         },
         "TRINKET_2": {
@@ -110,6 +123,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 28040,
+            "item_level": 0,
             "is_new": false
         },
         "BACK": {
@@ -118,6 +132,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 25489,
+            "item_level": 0,
             "is_new": false
         },
         "MAIN_HAND": {
@@ -126,6 +141,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 25985,
+            "item_level": 0,
             "is_new": false
         },
         "RANGED": {
@@ -134,6 +150,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 28063,
+            "item_level": 0,
             "is_new": false
         },
         "TABARD": {
@@ -142,9 +159,10 @@
             "quality": "COMMON",
             "is_fallback": false,
             "item_id": 5976,
+            "item_level": 0,
             "is_new": false
         },
-        "level": 64
+        "level": 65
     },
     "jakov": {
         "SHOULDER": {
@@ -153,6 +171,7 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 5254,
+            "item_level": 0,
             "is_new": false
         },
         "SHIRT": {
@@ -161,6 +180,7 @@
             "quality": "COMMON",
             "is_fallback": false,
             "item_id": 23345,
+            "item_level": 0,
             "is_new": false
         },
         "CHEST": {
@@ -169,6 +189,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 6552,
+            "item_level": 0,
             "is_new": false
         },
         "WAIST": {
@@ -177,30 +198,34 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 15399,
+            "item_level": 0,
             "is_new": false
         },
         "LEGS": {
-            "name": "Gypsy Trousers of Agility",
-            "icon_data": "data:image/jpeg;base64,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",
+            "name": "Dervish Leggings of the Monkey",
+            "icon_data": "data:image/jpeg;base64,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",
             "quality": "UNCOMMON",
             "is_fallback": false,
-            "item_id": 9756,
+            "item_id": 6607,
+            "item_level": 0,
             "is_new": false
         },
         "FEET": {
-            "name": "Seer's Boots",
-            "icon_data": "data:image/jpeg;base64,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",
+            "name": "Mariner Boots",
+            "icon_data": "data:image/jpeg;base64,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",
             "quality": "UNCOMMON",
             "is_fallback": false,
-            "item_id": 2983,
+            "item_id": 2949,
+            "item_level": 0,
             "is_new": false
         },
         "WRIST": {
-            "name": "Maatparm's Fungus Lined Cuffs",
-            "icon_data": "data:image/jpeg;base64,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",
+            "name": "Forest Leather Bracers",
+            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAGwAAAgIDAQAAAAAAAAAAAAAAAAYFBwIECAP/xAAyEAABAwMDAgQFAgcBAAAAAAABAgMEAAURBhIhEzEiQVGBBxRSYXEVwQgWMkKRkqHw/8QAGQEAAwEBAQAAAAAAAAAAAAAAAQIDAAQF/8QAHxEAAgICAwADAAAAAAAAAAAAAAECEQMEEiExIjJB/9oADAMBAAIRAxEAPwDjeVJkS5T0qU+6/IfWpx11xZUtxajkqUTySSSST615Vt2+3TrgsohxXHiBk7RwPftWf6VPEjoORnG15x4xgf5oWC0aNFNlk0m6t5p+VscbHiLQOM/Ymm9ek4Ey4uzIloRDaVjYyFlwIwAO588gnj1qM9iERHkSEq16Kuk87PmYMd3Gem89tVXvqH4d6psdtXcpUAOwm+Vvx1hxKQTwo45AOe9Pn8mqB6iW8HuF+Y++aZtH3iRYHkQr80bhZVrShxSxlyMPJwdgoA4Jz2HNSx7Sk6Asl+nO8KS/BnMS463Gn47qXG1IWpCkqScggpIIII7ggiiutv4p/gvYz8P42utI9DrREFyb8q3talMkjLu3cQlSe5x3544orsKnP7mpDYbx+lRoDMm2R0oQWiNpXlIKlZHmc+eauXQsHTet7aTFQ3KbCQp2Mrh1rIOcH6hjPHf8VQd0Sh64syO6X4zahzn7VNaMv110fqBq92t1xCkDDiEnwuJweCPOgmLHzsty66FmaNvMKJcZHzluuCN0CcBkKOBuaUPJYPH/AI0/2LSC1QnpbsVBQ02pYbV/U4oDgfbtVjXO42P4qfBlt1D0ZmWthK4jiWSnozE7VgAHsCoo4PcK9hRVq18/Ks7QmPu/MJ8LqEeHkcc4/f1ryd/Xm2pQ8JZFx7J+DcrTKnMMpgdRsRiuYXGQgtv8eBOD279/TyqA1TJjBExS1NIHgZSkjOcjKsD3H/airvqiQQre6GW++1Pekm9Xdx84bKyOeSc0kcDnPnVE5S/SwtKasROsDGm58xa24aVsoG7alxpQIAPHBG/j7Yoqr9Nym4wu1wUshphrxL7+LBwBRXso6ou0L1gZRc7Iw+VAOwnOiv12K5SfY8UwMR2S0pKyNoGAcdyKR9H3RFsu6fmMmJIHRkDP9h8/yO/tTTeUyLXJLDi+ohQ3Mug5DqDyFD2IpPrIV9MsX4Yaldgadl2Z0lxrfvSSogpUjnI59CP9RSnPuRTfbiIRIbdfLgIOSSrk+2a1NGKcNvukhBRnqBO5R4HhyfeoS63pi2ynkIHXfOBxwAfvWkrVCTuqQztutxX25txifOxkE9Rov9LdwceLy5x2pQu2qEoQtiG2hSio5WTkBJ7JHrj1peut0m3N4uS3ir0SOEj8CtKioJIMcfXyJGfeZkuP8sSlpg43NtjAWR5n1NFR1FOUSoycbW2socQpCgSCFDBBBwaY7PqVoWxFovkd2ZCaVvjLbXtejq9Ek+R9KKKzVhaJF7VsCDb2olnir2IJKUu9s/Ur6j+1J0p9yTIckPK3OOK3KP3oorAo8qy2q+k+fl6d6KKDYG6MksPKICWXCVKCQAk8k9h+TRRRQ5A5H//Z",
             "quality": "UNCOMMON",
             "is_fallback": false,
-            "item_id": 26014,
+            "item_id": 3202,
+            "item_level": 0,
             "is_new": false
         },
         "HANDS": {
@@ -209,22 +234,25 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 9780,
+            "item_level": 0,
             "is_new": false
         },
         "FINGER_1": {
-            "name": "Lavishly Jeweled Ring",
-            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAGwAAAgMBAQEAAAAAAAAAAAAAAAcFBggEAQL/xAAzEAABAwMCBQMCBQMFAAAAAAABAgMEAAURBiEHEjFBURMiYRSRIzJCcaEVUmJjgcHR8P/EABoBAAIDAQEAAAAAAAAAAAAAAAQFAAMGAQL/xAArEQABAwMCAwcFAAAAAAAAAAABAAIDBBEhEkEFEzEUImFxkbHwQlGB0eH/2gAMAwEAAhEDEQA/AM22aPIu7z8l15brzpLji3FEqWonJJJ6kk1btOht9AtMo8uSQ04eiVHOx/xNU3RSHHcIbe5V83QnYppv6W069cGXHosF5ws45ilGc56Y89vvWhpYAGBzcHdbbhj9bAXdFFp0ww0lLUlkoWkkKJG370z5VuhSIKH/AEwuQppKVK/UrAwD5rntDtqEyMzqIyIjABHrNs+ocfKcjbp0zTQ0dMgXHRdyadjW5cmCFPxgWgsOtkbA9zgjofcP5owSCMGwv0Tkywxs1RDUMdPHHXN/FImZpK3qkfVyW+Ztn3FsjHMrsP2/6qi6vs8UJXMdd55DiuZWT38CntreHMgybW9GEZce4276hcdbftU6lXKsJ3ykEEEdcZx2zVSuejrTOgomOS5IbWOdKWkDm+ASehHQ110TZIzoaMqPibUM1NGPgSJgWyaXkzYDzjLzCg4hxslK0KG4Ukg5BB70Uwr5a41sacVAhoaSP1POlxR/22Hfx96KC7FG0AOGUkmomau8oPhtpUzFfVystw2iFZ6FZH/Fa54UcOXDZfrdSNLbjSAFs2/JQoj+9agQR5Cf2J8UiuHxcjWdhYBCm1BST5x0P8U7YPGhdptEp3UsH6lTDQUw7Hwkvq2HKodEkkj3DbHarqrXHE1kW/qg615o4WRsxqyT5JmS7TF+gUhbipLSMENTECSlOBjYK38d6oWpdKWkn6q32KO4+lWUmFIVEWnPXAOU+MdKSt/1rqbU6nrredQzojTrpEaHEeLLTaeuPnoNzknrXNoPiXc9LTkxJFzm3e184C0Sl+qpCSfcpC9iDuTg8wPTbrQzaSaNtwcoSKnq42cyIkX2v/fcKe4gxloiIjOStRNNtrKlRbkrnDWcHmQ6n2qT22P75NVePqBVuhM2wlDyE8xThPKeo2+epNa5n2GzahsCmQhl2LPi4S+lP6VJylSfHXNY/vFmXb502zS/c5FdUwtShnJSSM/xVlNUl97bLlPxWohla9zrjcWH6ULe5CZ7y1EENeCaK47ytKIYkoaLaHCW3EDcNujqnPg/mHwaKJeLnK0D6ppyM3Vt06+FIYZyFAfNSnEiK7H09YsqCkyyt3mxvkJSMfyfvSu0bqZtcphLjnKkqAUrPY+f/ea0BJt8jXPDT+gQ3ku3yxvLlQYhUAuTGUPxEIHdSVEH7DvUmcCwO2B90v4o9tTTNkb9J91mJ2fNdWtt55RQ0tQSnsN9+lfEa8pa5kLIr3VcN6I+uVHaJYcJK8D8h75HbeqhAYuN9vEe22qK9MmSnA2wy0nmUtR7AULLPy/NK+2lgFit18CeId7m8MrDHdtkZ9EdpUZt1xax7ULUhKcjY4SEj7UqeMupE6n4hSXrZGbbcWr0MMKwmQtIwpZ+Bg75xgZqbvUwcN9DWrQFtcRKvSI3JJeaJUY/rZUsJ/1FKUrlHUJwdsilZenFWiAqOh5JkOpIlLbJIAyPwknwOpPc/AFdghBcX2sqaenNQ4k4aOvz59/OM1remGrY1Zbar1YbKi4/IKcKkvY3X8J7AeAKKoWobmXVlI6UV5nqgHWVlTV9+zegURCmPw5HIsKQtCsEHYgjqCPNNnQvE+fZ348sKd+ojKHpPNY5kDBByDsrIOMHY9KKKF4fO+5bsh6OpkjJAOCmxJ13wc1W9GnamhuxZ74CX5Ntc9BKlDI5lsr2RsMkgq3AwTnFdw1poLSkJ1vh3ZYKLk8C2q4yFN/hAjrtlR8coAG2TnuUUwjia8XPpsi2UsTwX2/CVF9uvLc5NwEoy5Mjm9WUW/T3UfcUJySObbKjucY2G1UTUl7DiChKvjY0UVJ3ljMIitfyWcuPAVIcU5IfCUJK1qVhKUjJJPQAUUUVm3OLjcrPk3K//9k=",
-            "quality": "RARE",
+            "name": "Meadow Ring of the Tiger",
+            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAGwABAAIDAQEAAAAAAAAAAAAAAAYIAwUHAgT/xAA1EAABAwMDAgIIAwkAAAAAAAABAgMEAAURBgchEjEiQQgTFDJRYXGBFZHBFiMkJjNCUmJy/8QAGQEAAgMBAAAAAAAAAAAAAAAAAwQAAgUB/8QAKREAAgEDAgUCBwAAAAAAAAAAAQIAAxExBCEFEhNB8BSBMlFxkbHB0f/aAAwDAQACEQMRAD8AptJfflSXZMl5x991ZW444oqUtROSok8kk85rHSlSSKV3jZTbnaybZfxDca830vvtpdDVsjrLMBlSylC5DgQoAr6SQAcBIOeSMdkjPbLbOWaVO0/pOJqGe2lp1uU++mS6UujLbuVDCEgnp8AH9vmqkX4hRVgu9ztgy702RC5wJU607b7g3aMZNu0TqKSx6v1gcbtrpSpP+p6cKPyGSaj10t0+1y1Q7lCkwpKPeZkNKbWn6pUAatdePSP1zcnC7FYVCaKipCWOlOB8PECSPmag+4GpU7pWaVHv9uYav8JhTsCUhAQtzHJaOAM5AwB2+4FV9awbdNvr+pjrxQFrcpt7f0zgkWQ/FktSorzjD7Kw4062opWhQOQpJHIIPIIpWKlaE1YqZ7N7f3PcnXMPTduKmkOEqkSenKWGwCSo/lgfOoZVxfRkYt22exd63IujI9rnf0cpyVpB6WkDHcKWefhjnGDhfVVjSS4yYGvU6ayQ7yaz07tTo9O123zUf2xbRbmKwFllKh4isngurGck+6McDjFYdZvTtPMqRJcbZmllMaI0l5txSGs9ZWekqwO3TnBPVx7tajXd6lSn5Dsl5bs+5OKkSnCfInIA+pz59sCodS9HS3szQWj5irO3fHtMjjzzjhccdWtZ7qUok/nXa22GP2R0PqRDRamT1yWZAxhLpZWlAWPLkHnAHOfrXF4ESTPmswobKnpD6w222nupROAK7dvNKj2Bm1aZjuK/ly1CMs8YMl1IK8EcdiDnGcg57VbVm7Igzv8Aa1vzBa5QwVBmcMWcrUfic0rzSnpoRVuN55Rt3o77fWOI7+4dYSp4pQEhwpQFEEf9qz8yM1UerJ2W9o3O2Ut1giFLmorAUBUdbnU482MoCkZ5Jx0jHPJ+VIa4fAxwDvM/iAPICMSveoXC5epeeyHC2OOwTx+lfBU6u1hgzpKnHlyIE0Dpfb9TlKlDjOCcgnzFbjSLFjsDKn2bKm63dJ6m356v4dggHxeqHCuf8iRRTqAqbC587yLraa0xYbjzM2O1trb0LZXNdXlKE3h5pTdihODJ6iCC+tJHujPHI8xwSK5/ra9O3K4PJXIW+4t1Tsh1RyXHCSST8eSefia2GttWy7nOkOOzfbZbw6XZAGAkDjpRjAAxxwMAcCoZXKFJiTUqZPnnzzL0KTO/VqZ7RSlKbjs9OIW24ptxKkLSSFJUMEEeRrPbpsq3y0Soby2XkHKVp8qUrhAOxnCARYyQy9d3qWlPtbcSQtIIC3EKKufvitJcrtOnjpfeIbHZtHhQPsP1pSqLSRcCDWhTQ3VZ8FKUokLPTaFuOJbbSpa1EBKUjJJPkKUpUkn/2Q==",
+            "quality": "UNCOMMON",
             "is_fallback": false,
-            "item_id": 1156,
+            "item_id": 12006,
+            "item_level": 0,
             "is_new": false
         },
         "FINGER_2": {
-            "name": "Lead Band of the Whale",
-            "icon_data": "data:image/jpeg;base64,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",
+            "name": "Monkey Ring",
+            "icon_data": "data:image/jpeg;base64,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",
             "quality": "UNCOMMON",
             "is_fallback": false,
-            "item_id": 11981,
+            "item_id": 6748,
+            "item_level": 0,
             "is_new": false
         },
         "BACK": {
@@ -233,33 +261,55 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 6575,
+            "item_level": 0,
             "is_new": false
         },
         "MAIN_HAND": {
-            "name": "Haunting Blade",
-            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcGCAEDBAUC/8QALxAAAQMDBAECBAYDAQAAAAAAAQIDBAURIQAGEjEHE0EUIlGRIzJCYXGBFTOh0f/EABsBAAEFAQEAAAAAAAAAAAAAAAMBAgQFBgAH/8QALBEAAQMDAwIEBgMAAAAAAAAAAQIDEQAEIQUSMUFhE1FxwQYigZHw8aGx4f/aAAwDAQACEQMRAD8AZXlfbYn7dgbcq8RMqM1IccfSkG7gJJDiD2Md/Q/tqj3krYUza0ky43OTSnFfI7bLRP6V/wDvR/nGr4bR8kU7yzsSHuSlPNNyoTINWp4Wn1oEgA2cSLk8CpKuKv1Jwc3SFTumlwp8WRLjxmFu8eVQhoSC1wPTqEm54HopP5T3ggmzSE3CNqsHzpGUAqjzql+jTD8o7Fj0gqrO3w45SefCQ1lSoTnQCiclBPSvrgm9rrzUBxpTatqqetBQYVRo0aNDptbYsh+JKalRX3GJDKw4062spWhQNwpJGQQRcEaNatGurql/iXyBWvHG72K/SOLzdi1MhOk+jMZOFNrHv9Qc2IBz1q0tVmU6oUqn722q9ygTwVIusLVGcIHqMOj3IJsUnChkY6pXqeeIPIS9lVJ2LUY71R27PUlNRgpXa469VsHAdT2Di9rE2J0Zl3ZijsOJSYVwabj0lRmuvsRkNvt3TIjLHNtxB97EWUgj2OoPuXx7tmtOtztv16l7cdcJ+IgVaX6bSTj5mVkG6c5Scj+LamO+YaIrwVFnMyWktplQZjKrB1pYulQvkY7Sejf6X1DKZXpdenxac4zGQ84rh69uSjg+xxc2A0txebvlXk1r06c1dICHTB6Hn3r7neCJsLY1X3cre2150KmMlxxumyTKc5EfIlQThHJRAybjJtjKe09Kc5LgwK9SKepYXV6YuLwJT+IoKBsb4uRcC1iPbvSPWhxta2nElC0EpUlQsQR2CNCwUBQETVDrGlK090J5B6/bv3rLTDrrTjqEKUhu3NQGE36vo1L9sxfhqBZ1BKqkpZQLEWS2LA/dR0asE2IU2lQOTzjj8EU06PcKbQtsTIk9vL+IP1qF63wIkmfPjwITC5EqS6lllpAupxaiAlIHuSSBrRrbDkyYcpuVEkOx5DSgpt1pZStBHuCMg6raqatZ5d8dbmp1UpMWPQps6HEocOK+8ykhtTqAQscs45H/ALbS5lU1kvhmVBXAlNAKQQngtB9jxNsdaVI3JuIKCxXqqFBXMH4xy/L6994GdMrxVuqu7wns7K3Ev/LwXGlFiVKXZynFKFWc9W1ym/AEKJBwBkjQXWPFVKDBra6X8RNnaw61M4mvXn8ZzfKSylMpq3rEYDmcOJt9fcDo65KxsmnbgE2svCQ29D9MOojpuZil34i1rhVwbqsbjPfffOoNeheohaKTPcYb9VZiT23OKL25kA4BP9/trNFqtdiyZCGH1pkVIhlTDCscbcUoH3+50NNyphUPpIB/v/DFbRWmsX6QkJ3DkyMD17+nfpNQypuOofaK2WmnG2+LUUH/AEMjtR/c2tf/AJo0bypkSibedeRIU3UHZAYkMOpIdNuV8nofLn7HvJoid7nzLMT+fT0rNa3qjumXPgJGYk5nnjpzAzwOAkQJK4NrDP8AOu6hRIM2ptxqjU002Or80hTKnAn+hnRo0avPAYM07aP4Z2DNpS36d5ERXpoQLxGSzBKVWva7qlcvfIFsHOsVDYlYoERpuBS3IzL6fnXGBfcX3hTqbpFjfAto0akN2wfSoSQQOler6LZW9oyh1CBKpzmeSMGa9DbtUqO1tszqdU48aBEkJJV6v4bryhkEknNsAf3i5vrgf3ftLbqZDTTcSriXHbejuF7i5DfAvxuMKFzkXt1nB0aNRVtBkhrnbgE9Pbr780uva6/pZ8K3AAgE85M9fT91GN7s7t3HCFar0r4/1GU8VAp5JSAOKrJAHXf1vnOjRo0+5aLKhtUcgHOckCia18NWaltrMyUg8/qv/9k=",
+            "name": "Armor Piercer",
+            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAHAABAAIDAQEBAAAAAAAAAAAAAAYHAwQIAQIF/8QALxAAAgEEAQEHAwIHAAAAAAAAAQIDAAQFEQYhBxITIjFBUSMyYTNCCBQWQ1JTgf/EABgBAQADAQAAAAAAAAAAAAAAAAACBAUD/8QAJBEAAgICAAUFAQAAAAAAAAAAAAECAwQREiExQaETMmGx0fD/2gAMAwEAAhEDEQA/AON7u4uLu6lu7ueW4uJnaSWWVyzyOTssxPUkk7JNYqUoBSleorO4RFLMx0ABsk0B5Vs9nnZKJrD+pe0C4uMJhI41nSzVNXt7Gx0rKp/TjJ/uN93ogYkVNOx/seuMTHFm8xjIMjyF08W0xd4FW3x0Wtm6uy3TajREZ9NrvzeUanIrtshm2trLKXeZmluC891N0F7dN0D9z9qKAddegG+npUJTSfD3JKLa2R3lj20lqLnCY2LjdhiVE0KW7nxvF6+G7ynzNIT3da1oKenwqK9pefhuHj4/jJ2ltLN2a5nBIF3OdAtr/Fdd1fwN+9KmRITSlS/s67OuS86NzLh47ODH2bxre5C+ukgtrXvnSl2Y76n2UMfxQEThjkmmSGGN5JHYKiINsxPQAAeprqfsJ7Hm47La5XIx295y6bvNDaOVMWGQAEyzn0EoB3o/YPXroVudh3Zxj7RpX4N4eVvIVLX/ADfJQNDYYwKpLLZxP98o/wBrb7ug2gDVlm1iyuGn4/xCW6g4w0rnK5u4/Uy8ykl/qbH0V926b2QPcmrk5KojvudaqnY9EK59ya1g49Na42WY4mWRvEupBuTN3KsfMevS3X1HXzE7O6ormGZk4/hgySd3MZNPpd0+a2tz6uD7M/2j3C7+RVj5ia1zOUuMpkS8OExdu87BQVH8unRVA190jEAe4HzoVznybL3Gdzl1lLno0zkom+kaeioPwBof8qGHTKMfUs9z8fBO+xN8MeiPzaUpV0riuk+JcKl49PBwu3vJ7vKWtwb/ACAtl0ZC8Sdy3TZ0QAAzMQANn4FUPwjBJyTk1piZcpZ4qGVmaW8u37sUMaqXdiffSqdD3Oh712N2iYTM8cx+b5FxjOWOSss/As9/dWsHdmRBoeHHJvRhPuV83Qht6rhkylGtuPU61RTlzIhzvkl0nHJsNZ3VxOtrItvKqzBLSPvHXhRoBp33stId+h1rezmtu0+bH8Zt+I3eWnhxJiS2uUjhDqsYBJXQ1ouV1sHemJ+ageSGSy1ja2GGsRLFbO9xdXCr9ISkdF36EoPjfU1oc75FhMPwOHH2NvEOQF/AmdnDMVYs0k4PySqoN9VBPodGsrExpTlxvkvsu32xjHS5s3f4kM5Da8Zw+Exs0TLmVGTuWiGgYB5beP5HQFiOhBPpVC1luZ57mUy3Eryuf3O2zWKtwzRSlKAszshh4xikvszyKOR8nBIEx8DxB4lYBu94sewSD9v46++qkvGOYw49MpaG+gtLG+hZxB3i0cAPeDqi/J2NAfNKVRrhu5zb6/hr3SUMVQS/t+SuuVc95Dm9WoyEltjotpBbWw8FAn5C9TvWzsnrUTpSrxkClKUB9Ro8kixxqzuxAVVGySfYUpSgP//Z",
             "quality": "RARE",
             "is_fallback": false,
-            "item_id": 6641,
+            "item_id": 6679,
+            "item_level": 0,
             "is_new": false
         },
         "RANGED": {
-            "name": "Steelarrow Crossbow",
-            "icon_data": "data:image/jpeg;base64,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",
+            "name": "Whipwood Recurve Bow",
+            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAGwABAQADAQEBAAAAAAAAAAAAAAYDBQcEAgj/xAAvEAABAwMDAwIFAwUAAAAAAAABAgMEAAURBhIhEzFBBzIVIlFhcQgUgSNScqHB/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAQFA//EACcRAAEEAQMDAwUAAAAAAAAAAAEAAgMEERIhMQVB8BMUIjNhkaHB/9oADAMBAAIRAxEAPwD8by5EiXKdly33ZEh5anHXXVlS3Fk5KlE8kknJJrFSlCEpSlCEr12eEq43OPCQvYXl7QrGcffFeZtCnFpQhJUpRwAPNdy9D9GWu36tZevzrclJhfuMApLXO7jOD2wRnjzilLlpteMk874T1Ck+1IAB8RjKn9N6PTZnr6+7LcU/BbKI0hA6ZafBCkKRzncMFWRjA85Iwr3akcal6Yud4RfENOr3LML9vhZBX02yFZyBtKcYH/TSsqszpWZdytrtZteTS3jz7rmmnLBLvanVMuMsMMlIceeVhIKjhKR5KiRgAf6q1jek05DDcm4yXo0dxJKFqjKTyPck9yFDvjHIyRwDVB6dsuS4zDMe0R5EO3pTJltssMuurR33KQ5grJ7ZSRx+KpNU+oPSYbFvfdjWiO4h6OgOqJiutKSrDe8bkp3AgIVynetPIwaQk6hYdPoYMDz9nlOQ9Kj9v6kh3K1Nq/T5JmQkTUzUBhaMpU6+E7uccJ27s/bHHmsSPTCyWGXHRc5ECaZE1iG7GaklTwbdUWypCduQpJUlQOD2I81M371enzdzcWAEI3Z6jjyuoR9ODx/B7Vp7Prd5mSZ0gLTKQrc0ptzAQcY3AHPz8nCvGftTT4rWkkuU+F8AeMrq970vpTRy7qmM4yLpCDSoWRucQ6oEnueQhaU+TlK/OKmLnKnQi/e1PCPBkqKeoz/UaacdwpxtJ7qHJJAyEk478mCRdpV+urUJlA6kh0lT7hypKT7lEnwE5yfoK30XWUO7W25aYk7LfbZ62ltqKQUtut7UpcBPtykHcO3PBHYrx0pB9Tc9++yfk6mzUGxDA/G602tNVi6QI9nixWG7fEc3xzsy4MpAUnceduc4B57ZpUxcYb0Ca5EfLZW2RkoWFJIIyCCPBBFKsRRNjbpaos0rpHlzuV163ynYNtTHbaldaMUgSGGjlI2jcgqHZPIV3HtP1rnWt7x8UueWnd7SRkkH3K+p8dgP4qzY1G5aNHS3kXNTc2WSBBcIWhaHApJIAOUqSOcnIyAPzyup1GtiR0jh53Vjqd3MbYWnbv8AxKUqk9M9Kv601tbtPtOiO0+srlSDgJjsIG51wk8DCQcZwCcDzVVxDRkqEkNv4NpVc9eW51zV0439yWEn5lj6blDbnv8AKfBqbqw9Wr3BvWq1fCWg1aYDSYNvA7lhobUqJ8k8qz96j6yhBLdR5KEpSlbIWSQXuqpL+/qI+UhecjHjmsdKUIJylWVimMWDQNykNSEm5XtQiJQnGW4yTucz/koJH4T9+FKzkbqABR2UaeeTSlK0QvptC3HEttpUtaiAlKRkknwKUpQhf//Z",
             "quality": "UNCOMMON",
             "is_fallback": false,
-            "item_id": 6315,
+            "item_id": 3037,
+            "item_level": 0,
             "is_new": false
         },
-        "level": 27
+        "TABARD": {
+            "name": "Guild Tabard",
+            "icon_data": "data:image/jpeg;base64,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",
+            "quality": "COMMON",
+            "is_fallback": false,
+            "item_id": 5976,
+            "item_level": 0,
+            "is_new": false
+        },
+        "level": 30
     },
     "soales": {
+        "SHOULDER": {
+            "name": "Forest Leather Mantle",
+            "icon_data": "data:image/jpeg;base64,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",
+            "quality": "UNCOMMON",
+            "is_fallback": false,
+            "item_id": 4709,
+            "item_level": 0,
+            "is_new": false
+        },
         "CHEST": {
             "name": "Black Whelp Tunic",
             "icon_data": "data:image/jpeg;base64,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",
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 20575,
+            "item_level": 0,
             "is_new": false
         },
         "WAIST": {
@@ -268,6 +318,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 5609,
+            "item_level": 0,
             "is_new": false
         },
         "LEGS": {
@@ -276,6 +327,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 15312,
+            "item_level": 0,
             "is_new": false
         },
         "FEET": {
@@ -284,6 +336,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 4788,
+            "item_level": 0,
             "is_new": false
         },
         "WRIST": {
@@ -292,6 +345,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 14561,
+            "item_level": 0,
             "is_new": false
         },
         "HANDS": {
@@ -300,6 +354,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 5629,
+            "item_level": 0,
             "is_new": false
         },
         "FINGER_1": {
@@ -308,6 +363,16 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 5622,
+            "item_level": 0,
+            "is_new": false
+        },
+        "FINGER_2": {
+            "name": "Defias Renegade Ring",
+            "icon_data": "data:image/jpeg;base64,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",
+            "quality": "UNCOMMON",
+            "is_fallback": false,
+            "item_id": 1076,
+            "item_level": 0,
             "is_new": false
         },
         "BACK": {
@@ -316,6 +381,7 @@
             "quality": "UNCOMMON",
             "is_fallback": false,
             "item_id": 6575,
+            "item_level": 0,
             "is_new": false
         },
         "MAIN_HAND": {
@@ -324,8 +390,9 @@
             "quality": "RARE",
             "is_fallback": false,
             "item_id": 5187,
+            "item_level": 0,
             "is_new": false
         },
-        "level": 25
+        "level": 27
     }
 }

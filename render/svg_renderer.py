@@ -1,5 +1,27 @@
 import os
 
+# Official TBC Classic Experience Requirements per level
+TBC_XP = {
+    1: 400, 2: 900, 3: 1400, 4: 2100, 5: 2800, 6: 3600, 7: 4500, 8: 5400, 9: 6500, 10: 7600,
+    11: 8800, 12: 10100, 13: 11400, 14: 12900, 15: 14400, 16: 16000, 17: 17700, 18: 19400, 19: 21300, 20: 23200,
+    21: 25200, 22: 27300, 23: 29400, 24: 31700, 25: 34000, 26: 36400, 27: 38900, 28: 41400, 29: 44300, 30: 47400,
+    31: 50800, 32: 54500, 33: 58600, 34: 62800, 35: 67100, 36: 71600, 37: 76100, 38: 80800, 39: 85700, 40: 90700,
+    41: 95800, 42: 101000, 43: 106300, 44: 111800, 45: 117500, 46: 123200, 47: 129100, 48: 135100, 49: 141200, 50: 147500,
+    51: 153900, 52: 160400, 53: 167100, 54: 173900, 55: 180800, 56: 187900, 57: 195000, 58: 202300, 59: 209800,
+    60: 494000, 61: 517000, 62: 550000, 63: 587000, 64: 632000, 65: 684000, 66: 745000, 67: 815000, 68: 895000, 69: 985000
+}
+
+# Authentic Blizzard UI textures for empty equipment slots
+EMPTY_SLOT_ICONS = {
+    'HEAD': 'inventoryslot_head', 'NECK': 'inventoryslot_neck', 'SHOULDER': 'inventoryslot_shoulder',
+    'BACK': 'inventoryslot_chest', 'CHEST': 'inventoryslot_chest', 'SHIRT': 'inventoryslot_shirt',
+    'TABARD': 'inventoryslot_tabard', 'WRIST': 'inventoryslot_wrists', 'HANDS': 'inventoryslot_hands',
+    'WAIST': 'inventoryslot_waist', 'LEGS': 'inventoryslot_legs', 'FEET': 'inventoryslot_feet',
+    'FINGER_1': 'inventoryslot_finger', 'FINGER_2': 'inventoryslot_finger', 
+    'TRINKET_1': 'inventoryslot_trinket', 'TRINKET_2': 'inventoryslot_trinket',
+    'MAIN_HAND': 'inventoryslot_mainhand', 'OFF_HAND': 'inventoryslot_offhand', 'RANGED': 'inventoryslot_ranged'
+}
+
 def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=None):
     """
     Generates an SVG character card based on profile, equipment, and core stats.
@@ -18,7 +40,39 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
     
     # HTML entity encoding for safe SVG rendering
     guild_text = f"&lt;{guild}&gt;" if guild else ""
+
+    # --- Use Blizzard's official equipped item level ---
+    avg_ilvl = profile.get('equipped_item_level', 0)
+
+    # --- Calculate Experience & Rested ---
+    xp = profile.get('experience', 0)
+    rested_xp = profile.get('rested_experience', 0)
     
+    max_xp = profile.get('next_level_experience', profile.get('experience_max', 0))
+    
+    # Fallback to TBC XP table if API omits the max XP and character is under 70
+    if max_xp <= 0 and isinstance(level, int) and level < 70:
+        max_xp = TBC_XP.get(level, 0)
+    
+    # Handle max level characters to prevent division by zero
+    if max_xp <= 0:
+        max_xp = 1
+        xp_percent = 100
+        rested_percent = 0
+        xp_label = "Max Level"
+    else:
+        xp_percent = min((xp / max_xp) * 100, 100)
+        rested_percent = min(((xp + rested_xp) / max_xp) * 100, 100)
+        
+        if rested_xp > 0:
+            xp_label = f"{xp:,} / {max_xp:,} XP (+{rested_xp:,} Rested)"
+        else:
+            xp_label = f"{xp:,} / {max_xp:,} XP"
+            
+    # Calculate widths based on percentages (560px max width)
+    xp_bar_width = (xp_percent / 100) * 560
+    rested_bar_width = (rested_percent / 100) * 560
+
     race_data = profile.get('race', {}).get('name', 'Unknown Race')
     race = race_data if isinstance(race_data, str) else race_data.get('en_US', 'Unknown Race')
     
@@ -52,7 +106,7 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
         """Calculates vertical offset based on slot index."""
         return 120 + (index * 45)
 
-    # Initialize SVG with definitions for Glow, Shadows, and Clipping
+    # Initialize SVG with definitions for Glow, Shadows, Clipping, and Breathing Auras
     svg_content = f"""<svg width="600" height="550" xmlns="http://www.w3.org/2000/svg">
         <defs>
             <clipPath id="circleView">
@@ -67,8 +121,23 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
             <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
                 <feDropShadow dx="0" dy="5" stdDeviation="5" flood-color="#000000" flood-opacity="0.8"/>
             </filter>
+            
             <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
                 <feDropShadow dx="0" dy="0" stdDeviation="8" flood-color="{class_hex}" flood-opacity="0.5"/>
+            </filter>
+
+            <filter id="epicGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="0" stdDeviation="4" flood-color="#a335ee" flood-opacity="0.6">
+                    <animate attributeName="stdDeviation" values="4; 10; 4" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="flood-opacity" values="0.5; 0.9; 0.5" dur="3s" repeatCount="indefinite"/>
+                </feDropShadow>
+            </filter>
+            
+            <filter id="legGlow" x="-30%" y="-30%" width="160%" height="160%">
+                <feDropShadow dx="0" dy="0" stdDeviation="5" flood-color="#ff8000" flood-opacity="0.7">
+                    <animate attributeName="stdDeviation" values="5; 12; 5" dur="3s" repeatCount="indefinite"/>
+                    <animate attributeName="flood-opacity" values="0.6; 1.0; 0.6" dur="3s" repeatCount="indefinite"/>
+                </feDropShadow>
             </filter>
         </defs>
         
@@ -82,6 +151,8 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
         <text x="300" y="35" font-family="Arial, sans-serif" font-size="24" fill="{class_hex}" font-weight="bold" text-anchor="middle" filter="url(#shadow)">{name}</text>
         <text x="300" y="55" font-family="Arial, sans-serif" font-size="14" fill="#ffd100" font-weight="bold" text-anchor="middle" filter="url(#shadow)">{guild_text}</text>
         <text x="300" y="72" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb" text-anchor="middle">Level {level} {race} {char_class}</text>
+        
+        <text x="580" y="35" font-family="Arial, sans-serif" font-size="16" fill="#ff8000" font-weight="bold" text-anchor="end" filter="url(#shadow)">iLvl {avg_ilvl}</text>
     """
 
     # --- INJECT CHARACTER PORTRAIT WITH GLOW ---
@@ -146,12 +217,14 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
             text_anchor = 'text-anchor="start"'
             y_text = y - 5
 
-        # Render empty slot placeholder
+        # Render empty slot placeholder with authentic background textures
         if not data:
             empty_label = "Empty" if is_bottom else "Empty Slot"
+            empty_icon = EMPTY_SLOT_ICONS.get(slot_key, 'inv_misc_questionmark')
+            empty_url = f"https://wow.zamimg.com/images/wow/icons/large/{empty_icon}.jpg"
             return f"""
         <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#111" stroke="#333" stroke-dasharray="3,3" rx="4" filter="url(#shadow)"/>
-        <text x="{x_img + 17.5}" y="{y - 3}" font-family="Arial, sans-serif" font-size="20" fill="#444" text-anchor="middle" font-weight="bold">?</text>
+        <image x="{x_img}" y="{y - 25}" width="35" height="35" href="{empty_url}" opacity="0.25" />
         <text x="{x_text}" y="{y_text}" font-family="Arial, sans-serif" font-size="12" fill="#666" {text_anchor} font-style="italic">{empty_label}</text>
         """
             
@@ -162,10 +235,13 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
         
         if data.get("is_fallback"):
             text_color = "#999999"
+            
+        # Select the appropriate dynamic glowing filter for high-tier items
+        filter_id = "epicGlow" if quality == "EPIC" else "legGlow" if quality == "LEGENDARY" else "shadow"
         
-        # Draw the slot with drop shadows and a subtle border matching the item's rarity color!
+        # Draw the slot with drop shadows/auras and a subtle border matching the item's rarity color
         return f"""
-        <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#333" stroke="{text_color}" stroke-opacity="0.5" filter="url(#shadow)"/>
+        <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#333" stroke="{text_color}" stroke-opacity="0.8" filter="url(#{filter_id})"/>
         <image x="{x_img}" y="{y - 25}" width="35" height="35" href="{base64_img}" />
         <text x="{x_text}" y="{y_text}" font-family="Arial, sans-serif" font-size="12" fill="{text_color}" {text_anchor} filter="url(#shadow)">{item_name}</text>
         """
@@ -184,6 +260,22 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
     svg_content += draw_slot('MAIN_HAND', x_img=152.5, x_text=170, y=480, align="center", is_bottom=True)
     svg_content += draw_slot('OFF_HAND',  x_img=282.5, x_text=300, y=480, align="center", is_bottom=True)
     svg_content += draw_slot('RANGED',    x_img=412.5, x_text=430, y=480, align="center", is_bottom=True)
+
+    # --- Render Experience Bar at the Bottom (Now with Glossy Tube Overlay) ---
+    svg_content += f"""
+        <rect x="20" y="528" width="560" height="14" rx="4" fill="#111111" stroke="#333333" stroke-width="1" filter="url(#shadow)"/>
+    """
+    
+    if rested_xp > 0:
+        svg_content += f"""
+        <rect x="20" y="528" width="{rested_bar_width}" height="14" rx="4" fill="#3498db" stroke="#2980b9" stroke-width="1"/>
+        """
+        
+    svg_content += f"""
+        <rect x="20" y="528" width="{xp_bar_width}" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
+        <rect x="20" y="528" width="560" height="6" rx="3" fill="#ffffff" opacity="0.15" pointer-events="none"/>
+        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">{xp_label}</text>
+    """
 
     svg_content += "\n</svg>"
 

@@ -1,4 +1,27 @@
+import random
 from datetime import datetime, timezone
+
+# Official TBC Classic Experience Requirements per level
+TBC_XP = {
+    1: 400, 2: 900, 3: 1400, 4: 2100, 5: 2800, 6: 3600, 7: 4500, 8: 5400, 9: 6500, 10: 7600,
+    11: 8800, 12: 10100, 13: 11400, 14: 12900, 15: 14400, 16: 16000, 17: 17700, 18: 19400, 19: 21300, 20: 23200,
+    21: 25200, 22: 27300, 23: 29400, 24: 31700, 25: 34000, 26: 36400, 27: 38900, 28: 41400, 29: 44300, 30: 47400,
+    31: 50800, 32: 54500, 33: 58600, 34: 62800, 35: 67100, 36: 71600, 37: 76100, 38: 80800, 39: 85700, 40: 90700,
+    41: 95800, 42: 101000, 43: 106300, 44: 111800, 45: 117500, 46: 123200, 47: 129100, 48: 135100, 49: 141200, 50: 147500,
+    51: 153900, 52: 160400, 53: 167100, 54: 173900, 55: 180800, 56: 187900, 57: 195000, 58: 202300, 59: 209800,
+    60: 494000, 61: 517000, 62: 550000, 63: 587000, 64: 632000, 65: 684000, 66: 745000, 67: 815000, 68: 895000, 69: 985000
+}
+
+# Authentic Blizzard UI textures for empty equipment slots
+EMPTY_SLOT_ICONS = {
+    'HEAD': 'inventoryslot_head', 'NECK': 'inventoryslot_neck', 'SHOULDER': 'inventoryslot_shoulder',
+    'BACK': 'inventoryslot_chest', 'CHEST': 'inventoryslot_chest', 'SHIRT': 'inventoryslot_shirt',
+    'TABARD': 'inventoryslot_tabard', 'WRIST': 'inventoryslot_wrists', 'HANDS': 'inventoryslot_hands',
+    'WAIST': 'inventoryslot_waist', 'LEGS': 'inventoryslot_legs', 'FEET': 'inventoryslot_feet',
+    'FINGER_1': 'inventoryslot_finger', 'FINGER_2': 'inventoryslot_finger', 
+    'TRINKET_1': 'inventoryslot_trinket', 'TRINKET_2': 'inventoryslot_trinket',
+    'MAIN_HAND': 'inventoryslot_mainhand', 'OFF_HAND': 'inventoryslot_offhand', 'RANGED': 'inventoryslot_ranged'
+}
 
 def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     """
@@ -18,6 +41,11 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     POWER_COLORS = {
         "Warrior": "#e74c3c", "Rogue": "#f1c40f",
     }
+    QUALITY_COLORS = {
+        "POOR": "#9d9d9d", "COMMON": "#ffffff", "UNCOMMON": "#1eff00",
+        "RARE": "#0070dd", "EPIC": "#a335ee", "LEGENDARY": "#ff8000"
+    }
+    
     last_updated_iso = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
     status_color = "#2ecc71" if realm_data.get('status') == "Up" else "#e74c3c"
@@ -49,12 +77,12 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     <script>const whTooltips = {{colorLinks: false, iconizeLinks: false, renameLinks: false}};</script>
     <script src="https://wow.zamimg.com/widgets/power.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Roboto:wght@400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Marcellus&display=swap');
 
         body {{ 
             cursor: url('https://wow.zamimg.com/images/wow/cursor/pass.png'), auto;
             background: radial-gradient(circle at top, #1f1f1f 0%, #0a0a0a 100%);
-            color: #eee; font-family: 'Roboto', sans-serif; 
+            color: #eee; font-family: 'Marcellus', serif; 
             display: flex; flex-direction: column; align-items: center; 
             padding: 0 0 50px 0; margin: 0; min-height: 100vh;
             overflow-x: hidden;
@@ -69,6 +97,23 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         ::-webkit-scrollbar-thumb {{ background: #333; border-radius: 5px; }}
         ::-webkit-scrollbar-thumb:hover {{ background: #555; }}
 
+        /* --- CINEMATIC FLOATING EMBERS BACKGROUND --- */
+        .embers-container {{
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none; z-index: -1; overflow: hidden;
+        }}
+        .ember {{
+            position: absolute; bottom: -20px; border-radius: 50%;
+            opacity: 0; animation: floatEmber ease-in-out infinite;
+        }}
+        @keyframes floatEmber {{
+            0% {{ transform: translateY(0) scale(0.5) translateX(0); opacity: 0; }}
+            10% {{ opacity: 1; transform: translateY(-10vh) scale(1) translateX(15px); }}
+            50% {{ transform: translateY(-50vh) scale(1.3) translateX(-30px); opacity: 0.9; }}
+            80% {{ opacity: 0.4; }}
+            100% {{ transform: translateY(-110vh) scale(0.2) translateX(40px); opacity: 0; }}
+        }}
+
         .navbar {{
             position: sticky; top: 0; width: 100%; z-index: 100;
             background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(12px);
@@ -77,8 +122,8 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         }}
         
         .realm-status {{
-            color: #bbb; font-family: 'Roboto', sans-serif;
-            font-size: 14px; font-weight: bold; letter-spacing: 0.5px;
+            color: #bbb; font-family: 'Marcellus', serif;
+            font-size: 15px; font-weight: bold; letter-spacing: 0.5px;
             padding: 6px 15px; border-right: 2px solid #333; margin-right: 5px;
             display: flex; align-items: center; gap: 6px; flex-wrap: wrap; justify-content: center;
         }}
@@ -114,10 +159,10 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         .header {{ text-align: center; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 20px; }}
         .header h2 {{ font-family: 'Cinzel', serif; margin: 0; font-size: 38px; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }}
         
-        .badge-container {{ display: flex; justify-content: center; gap: 10px; margin-top: 12px; }}
+        .badge-container {{ display: flex; justify-content: center; gap: 10px; margin-top: 12px; font-family: 'Marcellus', serif; }}
         .badge {{
             background: rgba(0,0,0,0.7); border: 1px solid #444;
-            padding: 5px 14px; border-radius: 20px; font-size: 13px; 
+            padding: 5px 14px; border-radius: 20px; font-size: 14px; 
             font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #ddd;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
         }}
@@ -138,10 +183,16 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         }}
         .info-box h3 {{ font-family: 'Cinzel', serif; color: #ffd100; font-size: 18px; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 8px; text-shadow: 1px 1px 2px #000; }}
         
-        .resource-bar {{
+        /* Glassy Liquid Bars CSS */
+        .resource-bar, .xp-container {{
             position: relative; background: #0a0a0a; border: 1px solid #000;
             border-radius: 4px; height: 22px; margin-bottom: 12px; overflow: hidden;
             box-shadow: 0 1px 0 rgba(255,255,255,0.1);
+        }}
+        .resource-bar::after, .xp-container::after {{
+            content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 40%;
+            background: linear-gradient(to bottom, rgba(255,255,255,0.25) 0%, rgba(255,255,255,0) 100%);
+            pointer-events: none; z-index: 5;
         }}
         .bar-fill {{ 
             height: 100%; position: absolute; left: 0; top: 0; width: 100%; 
@@ -151,13 +202,13 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         @keyframes fillBar {{ 0% {{ transform: scaleX(0); opacity: 0.5; }} 100% {{ transform: scaleX(1); opacity: 1; }} }}
         .fill-hp {{ background: linear-gradient(to right, #1d8348, #2ecc71); }}
         .bar-text {{
-            position: absolute; width: 100%; text-align: center; font-size: 12px; font-weight: 700; line-height: 22px;
+            position: absolute; width: 100%; text-align: center; font-size: 13px; font-weight: 700; line-height: 22px;
             color: #fff; text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000; z-index: 2;
         }}
 
-        .stat-row {{ display: flex; justify-content: space-between; font-size: 14px; margin-bottom: 10px; align-items: center; }}
+        .stat-row {{ display: flex; justify-content: space-between; font-size: 15px; margin-bottom: 10px; align-items: center; }}
         .stat-label {{ color: #bbb; display: flex; align-items: center; gap: 6px; }}
-        .stat-val {{ font-weight: 700; text-shadow: 1px 1px 2px #000; font-size: 15px; }}
+        .stat-val {{ font-weight: 700; text-shadow: 1px 1px 2px #000; font-size: 16px; }}
         .stat-str {{ color: #ff4d4d; }} .stat-agi {{ color: #2ecc71; }} .stat-sta {{ color: #f1c40f; }} .stat-int {{ color: #3498db; }} .stat-spi {{ color: #9b59b6; }}
 
         .gear-section {{ flex: 1; }} 
@@ -177,15 +228,25 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         .icon-POOR {{ border-color: #9d9d9d !important; }} .icon-COMMON {{ border-color: #ffffff !important; }} .icon-UNCOMMON {{ border-color: #1eff00 !important; }}
         .icon-RARE {{ border-color: #0070dd !important; }} .icon-EPIC {{ border-color: #a335ee !important; }} .icon-LEGENDARY {{ border-color: #ff8000 !important; }}
 
-        .item-slot a {{ text-decoration: none; font-weight: 700; font-size: 13px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; z-index: 2; text-shadow: 1px 1px 2px #000; }}
+        .item-slot a {{ text-decoration: none; font-weight: 700; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; z-index: 2; text-shadow: 1px 1px 2px #000; }}
         .item-slot a:hover {{ text-decoration: underline; }}
+
+        /* Breathing Auras CSS for High-Tier Gear */
+        @keyframes shimmer {{ 0% {{ left: -100%; }} 20% {{ left: 200%; }} 100% {{ left: 200%; }} }}
+        @keyframes pulseEpic {{ 
+            0%, 100% {{ box-shadow: 0 0 8px rgba(163,53,238,0.4), inset 0 0 5px rgba(163,53,238,0.2); }} 
+            50% {{ box-shadow: 0 0 20px rgba(163,53,238,0.85), inset 0 0 12px rgba(163,53,238,0.5); }} 
+        }}
+        @keyframes pulseLeg {{ 
+            0%, 100% {{ box-shadow: 0 0 10px rgba(255,128,0,0.5), inset 0 0 5px rgba(255,128,0,0.2); }} 
+            50% {{ box-shadow: 0 0 25px rgba(255,128,0,1), inset 0 0 15px rgba(255,128,0,0.6); }} 
+        }}
 
         .border-EPIC::after, .border-LEGENDARY::after {{
             content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%;
             background: linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.15) 50%, rgba(255,255,255,0) 100%);
             transform: skewX(-25deg); animation: shimmer 4s infinite; z-index: 1; pointer-events: none;
         }}
-        @keyframes shimmer {{ 0% {{ left: -100%; }} 20% {{ left: 200%; }} 100% {{ left: 200%; }} }}
 
         .bg-POOR {{ background: linear-gradient(90deg, rgba(157,157,157,0.08) 0%, rgba(20,20,20,0.85) 60%) !important; }}
         .bg-COMMON {{ background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(20,20,20,0.85) 60%) !important; }}
@@ -198,8 +259,8 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         .border-COMMON {{ border-left: 3px solid #ffffff !important; }} .border-COMMON:hover {{ border-color: #ffffff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.1); transform: translateX(3px); }}
         .border-UNCOMMON {{ border-left: 3px solid #1eff00 !important; }} .border-UNCOMMON:hover {{ border-color: #1eff00; box-shadow: 0 0 12px rgba(30, 255, 0, 0.3), inset 0 0 8px rgba(30, 255, 0, 0.1); transform: translateX(3px); }}
         .border-RARE {{ border-left: 3px solid #0070dd !important; }} .border-RARE:hover {{ border-color: #0070dd; box-shadow: 0 0 12px rgba(0, 112, 221, 0.3), inset 0 0 8px rgba(0, 112, 221, 0.1); transform: translateX(3px); }}
-        .border-EPIC {{ border-left: 3px solid #a335ee !important; }} .border-EPIC:hover {{ border-color: #a335ee; box-shadow: 0 0 12px rgba(163, 53, 238, 0.4), inset 0 0 8px rgba(163, 53, 238, 0.1); transform: translateX(3px); }}
-        .border-LEGENDARY {{ border-left: 3px solid #ff8000 !important; }} .border-LEGENDARY:hover {{ border-color: #ff8000; box-shadow: 0 0 12px rgba(255, 128, 0, 0.4), inset 0 0 8px rgba(255, 128, 0, 0.1); transform: translateX(3px); }}
+        .border-EPIC {{ border-left: 3px solid #a335ee !important; animation: pulseEpic 3s infinite ease-in-out; }} .border-EPIC:hover {{ transform: translateX(3px); }}
+        .border-LEGENDARY {{ border-left: 3px solid #ff8000 !important; animation: pulseLeg 3s infinite ease-in-out; }} .border-LEGENDARY:hover {{ transform: translateX(3px); }}
 
         .empty-slot {{ opacity: 0.6; border-left: 3px solid #333 !important; background: rgba(10, 10, 10, 0.4); }}
         .empty-slot:hover {{ transform: none; background: rgba(10, 10, 10, 0.4); border-color: #333; box-shadow: none; }}
@@ -211,7 +272,7 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         
         .POOR {{ color: #9d9d9d !important; }} .COMMON {{ color: #ffffff !important; }} .UNCOMMON {{ color: #1eff00 !important; }} .RARE {{ color: #0070dd !important; }} .EPIC {{ color: #a335ee !important; }} .LEGENDARY {{ color: #ff8000 !important; }}
         
-        /* --- TIMELINE UI --- */
+        /* --- CONNECTED TIMELINE UI --- */
         .timeline-container {{
             width: 100%; max-width: 900px;
             background: linear-gradient(145deg, rgba(22,22,22,0.95), rgba(26,26,26,0.95));
@@ -225,23 +286,28 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
             text-shadow: 1px 1px 2px #000;
         }}
         .timeline-feed {{
-            display: flex; flex-direction: column; gap: 12px; margin-top: 20px;
+            position: relative; padding-left: 20px; margin-left: 10px; border-left: 2px solid #333;
+            display: flex; flex-direction: column; gap: 15px; margin-top: 25px;
         }}
         .timeline-event {{
-            display: flex; align-items: center; background: rgba(0,0,0,0.5);
-            border-left: 3px solid #555; padding: 10px 15px; border-radius: 6px;
+            position: relative; display: flex; align-items: center; background: rgba(0,0,0,0.5);
+            padding: 10px 15px; border-radius: 6px; border: 1px solid #222;
             gap: 15px; font-size: 14px; transition: background 0.3s ease;
         }}
-        .timeline-event:hover {{ background: rgba(255,255,255,0.05); border-color: #ffd100; }}
-        .event-date {{ color: #888; font-size: 12px; min-width: 50px; font-weight: bold; }}
-        .event-char {{ font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 1px; font-size: 15px; }}
-        .event-action {{ color: #aaa; font-style: italic; font-size: 13px; }}
+        .timeline-event:hover {{ background: rgba(255,255,255,0.05); border-color: #555; }}
+        .timeline-node {{
+            position: absolute; left: -27px; top: 50%; transform: translateY(-50%);
+            width: 12px; height: 12px; border-radius: 50%; border: 2px solid #1a1a1a; z-index: 2;
+        }}
+        .event-date {{ color: #888; font-size: 13px; min-width: 50px; font-weight: bold; }}
+        .event-char {{ font-weight: bold; font-family: 'Cinzel', serif; letter-spacing: 1px; font-size: 16px; }}
+        .event-action {{ color: #aaa; font-style: italic; font-size: 14px; }}
         .event-item {{
             display: flex; align-items: center; background: rgba(20,20,20,0.8);
             padding: 4px 12px; border-radius: 4px; border: 1px solid #333; gap: 10px;
         }}
         .event-item img {{ width: 24px; height: 24px; border-radius: 4px; border: 1px solid #111; }}
-        .event-item a {{ text-decoration: none; font-weight: 700; font-size: 13px; text-shadow: 1px 1px 2px #000;}}
+        .event-item a {{ text-decoration: none; font-weight: 700; font-size: 14px; text-shadow: 1px 1px 2px #000;}}
         .event-item a:hover {{ text-decoration: underline; }}
 
         .dashboard-footer {{ text-align: center; padding: 40px; color: #666; font-size: 14px; width: 100%; border-top: 1px solid #222; margin-top: 40px; }}
@@ -263,6 +329,25 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     </style>
 </head>
 <body>
+
+    <div class="embers-container">
+"""
+    
+    # Generate 150 random, drifting ember particles for an ultra-immersive fire effect
+    for _ in range(150):
+        left = random.uniform(0, 100)
+        size = random.uniform(2, 8)
+        duration = random.uniform(3, 18)
+        delay = random.uniform(0, 15)
+        # Randomize colors between hot yellow, orange, and deep red
+        colors = ["#ffdd00", "#ff9900", "#ff4400"]
+        color = random.choice(colors)
+        # Add depth of field with random blurring
+        blur = random.uniform(0, 2)
+        
+        html += f'        <div class="ember" style="left: {left:.2f}%; width: {size:.1f}px; height: {size:.1f}px; background: {color}; box-shadow: 0 0 {size*2:.1f}px {color}, 0 0 {size*4:.1f}px #ff4400; animation-duration: {duration:.2f}s; animation-delay: {delay:.2f}s; filter: blur({blur:.1f}px);"></div>\n'
+        
+    html += f"""    </div>
 
     <div class="navbar">
         {nav_links}
@@ -297,6 +382,33 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         intellect = st.get('intellect', {}).get('effective', 0)
         spirit = st.get('spirit', {}).get('effective', 0)
 
+        # --- Use Blizzard's official equipped item level ---
+        avg_ilvl = p.get('equipped_item_level', 0)
+
+        # --- Calculate Experience & Rested (with TBC Fallback) ---
+        xp = p.get('experience', 0)
+        rested_xp = p.get('rested_experience', 0)
+        max_xp = p.get('next_level_experience', p.get('experience_max', 0))
+        
+        # Fallback to TBC XP table if API omits the max XP and character is under 70
+        if max_xp <= 0 and isinstance(level, int) and level < 70:
+            max_xp = TBC_XP.get(level, 0)
+        
+        if max_xp <= 0:
+            max_xp = 1
+            xp_percent = 100
+            rested_percent = 0
+            xp_label = "Max Level"
+        else:
+            xp_percent = min((xp / max_xp) * 100, 100)
+            rested_percent = min(((xp + rested_xp) / max_xp) * 100, 100)
+            
+            if rested_xp > 0:
+                xp_label = f"{xp:,} / {max_xp:,} XP (+{rested_xp:,} Rested)"
+            else:
+                xp_label = f"{xp:,} / {max_xp:,} XP"
+        # -----------------------------------------------------------
+
         render_url = char_info.get("render_url", "")
         portrait_html = f'<div class="character-portrait"><img src="{render_url}" alt="{name} Render" style="box-shadow: 0 0 25px {class_hex}40, 0 6px 12px rgba(0,0,0,0.8); border-color: {class_hex};"></div>' if render_url else ''
 
@@ -309,9 +421,19 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
             {guild_html}
             <div class="badge-container">
                 <span class="badge">Level {level}</span>
+                <span class="badge" style="color: #ff8000; border-color: #ff8000; text-shadow: 0 0 5px rgba(255,128,0,0.5);">iLvl {avg_ilvl}</span>
                 <span class="badge">{race}</span>
                 <span class="badge" style="color: {class_hex}; border-color: {class_hex};">{c_class}</span>
             </div>
+            
+            <div class="xp-container" style="margin-top: 20px; width: 100%; max-width: 600px; margin-left: auto; margin-right: auto; height: 16px;">
+                <div class="xp-fill-rested" style="position: absolute; top: 0; left: 0; width: {rested_percent}%; height: 100%; background: linear-gradient(to bottom, #3498db 0%, #2980b9 50%, #1f618d 100%); opacity: 0.9;"></div>
+                <div class="xp-fill" style="position: absolute; top: 0; left: 0; width: {xp_percent}%; height: 100%; background: linear-gradient(to bottom, #9b59b6 0%, #8e44ad 50%, #732d91 100%);"></div>
+                <div class="xp-text" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; text-align: center; color: white; font-size: 12px; font-weight: bold; line-height: 16px; text-shadow: 1px 1px 0 #000, -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000;">
+                    {xp_label}
+                </div>
+            </div>
+            
         </div>
         
         <div class="card-content">
@@ -366,9 +488,11 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
                         {new_tag}
                     </div>"""
             else:
+                # Fallback to authentic Blizzard empty-slot textures!
+                empty_icon = EMPTY_SLOT_ICONS.get(slot, 'inv_misc_questionmark')
                 html += f"""
                     <div class="item-slot empty-slot">
-                        <img src="https://wow.zamimg.com/images/wow/icons/large/inv_misc_questionmark.jpg" alt="Empty">
+                        <img src="https://wow.zamimg.com/images/wow/icons/large/{empty_icon}.jpg" alt="Empty">
                         <span>Empty Slot</span>
                     </div>"""
 
@@ -379,36 +503,33 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
     </div>
     """
     
-    # --- RENDER TIMELINE FEED ---
     if timeline_data:
         html += """
     <div class="timeline-container">
         <h2 class="timeline-title">📜 Recent Activity</h2>
         <div class="timeline-feed">
 """
-        # Render the 20 most recent timeline events
         for event in timeline_data[:20]:
             char_name = event.get("character", "Unknown")
             c_class = event.get("class", "Unknown")
             ts = event.get("timestamp", "")
             
-            # Identify the type of event, defaulting to "item" for backward compatibility with older logs
             event_type = event.get("type", "item") 
-            
             class_hex = CLASS_COLORS.get(c_class, "#ffd100")
             
-            # Format date beautifully (e.g., "Mar 14")
             try:
                 dt = datetime.fromisoformat(ts.replace('Z', '+00:00'))
                 date_str = dt.strftime("%b %d")
             except Exception:
                 date_str = ts[:10]
             
-            # Route A: Render a Level-Up Event
             if event_type == "level_up":
                 level = event.get("level", "??")
+                node_color = "#ffd100"
+                
                 html += f"""
-            <div class="timeline-event" style="border-left-color: {class_hex};">
+            <div class="timeline-event">
+                <div class="timeline-node" style="background: {node_color}; box-shadow: 0 0 10px {node_color};"></div>
                 <span class="event-date">{date_str}</span>
                 <span class="event-char" style="color: {class_hex};">{char_name}</span>
                 <span class="event-action">reached</span>
@@ -418,7 +539,6 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
                 </div>
             </div>"""
             
-            # Route B: Render an Item Upgrade Event
             else:
                 item = event.get("item", {})
                 item_name = item.get("name", "Unknown")
@@ -426,8 +546,11 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
                 quality = item.get("quality", "COMMON")
                 img_src = item.get("icon_data", "")
                 
+                node_color = QUALITY_COLORS.get(quality, "#ffffff")
+                
                 html += f"""
             <div class="timeline-event">
+                <div class="timeline-node" style="background: {node_color}; box-shadow: 0 0 8px {node_color};"></div>
                 <span class="event-date">{date_str}</span>
                 <span class="event-char" style="color: {class_hex};">{char_name}</span>
                 <span class="event-action">acquired</span>
