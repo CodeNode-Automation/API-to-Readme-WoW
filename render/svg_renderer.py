@@ -11,17 +11,6 @@ TBC_XP = {
     60: 494000, 61: 517000, 62: 550000, 63: 587000, 64: 632000, 65: 684000, 66: 745000, 67: 815000, 68: 895000, 69: 985000
 }
 
-# Authentic Blizzard UI textures for empty equipment slots
-EMPTY_SLOT_ICONS = {
-    'HEAD': 'inventoryslot_head', 'NECK': 'inventoryslot_neck', 'SHOULDER': 'inventoryslot_shoulder',
-    'BACK': 'inventoryslot_chest', 'CHEST': 'inventoryslot_chest', 'SHIRT': 'inventoryslot_shirt',
-    'TABARD': 'inventoryslot_tabard', 'WRIST': 'inventoryslot_wrists', 'HANDS': 'inventoryslot_hands',
-    'WAIST': 'inventoryslot_waist', 'LEGS': 'inventoryslot_legs', 'FEET': 'inventoryslot_feet',
-    'FINGER_1': 'inventoryslot_finger', 'FINGER_2': 'inventoryslot_finger', 
-    'TRINKET_1': 'inventoryslot_trinket', 'TRINKET_2': 'inventoryslot_trinket',
-    'MAIN_HAND': 'inventoryslot_mainhand', 'OFF_HAND': 'inventoryslot_offhand', 'RANGED': 'inventoryslot_ranged'
-}
-
 def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=None):
     """
     Generates an SVG character card based on profile, equipment, and core stats.
@@ -217,14 +206,12 @@ def generate_equipment_svg(profile, equipped_dict, stats_data, portrait_base64=N
             text_anchor = 'text-anchor="start"'
             y_text = y - 5
 
-        # Render empty slot placeholder with authentic background textures
+        # Render empty slot placeholder with text fallback for GitHub README compatibility
         if not data:
             empty_label = "Empty" if is_bottom else "Empty Slot"
-            empty_icon = EMPTY_SLOT_ICONS.get(slot_key, 'inv_misc_questionmark')
-            empty_url = f"https://wow.zamimg.com/images/wow/icons/large/{empty_icon}.jpg"
             return f"""
         <rect x="{x_img}" y="{y - 25}" width="35" height="35" fill="#111" stroke="#333" stroke-dasharray="3,3" rx="4" filter="url(#shadow)"/>
-        <image x="{x_img}" y="{y - 25}" width="35" height="35" href="{empty_url}" opacity="0.25" />
+        <text x="{x_img + 17.5}" y="{y - 3}" font-family="Arial, sans-serif" font-size="20" fill="#444" text-anchor="middle" font-weight="bold">?</text>
         <text x="{x_text}" y="{y_text}" font-family="Arial, sans-serif" font-size="12" fill="#666" {text_anchor} font-style="italic">{empty_label}</text>
         """
             
