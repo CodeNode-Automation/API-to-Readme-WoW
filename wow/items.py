@@ -68,13 +68,23 @@ async def process_equipment(session, token, equipment, char_name):
                 base64_data = fallback_base64
                 is_fallback = True
 
+            # --- Extract Enchants and Gems for Actual Wowhead Stats ---
+            enchants = item.get('enchantments', [])
+            ench_str = "&ench=" + ":".join([str(e.get('enchantment_id')) for e in enchants]) if enchants else ""
+            
+            sockets = item.get('sockets', [])
+            gems_str = "&gems=" + ":".join([str(s.get('item', {}).get('id')) for s in sockets if s.get('item')]) if sockets else ""
+            
+            tooltip_params = f"item={item_id}{ench_str}{gems_str}"
+
             equipped_dict[slot_type] = {
                 "name": item_name,
                 "icon_data": base64_data,
                 "quality": quality_type,
                 "is_fallback": is_fallback,
                 "item_id": item_id,
-                "item_level": item_level
+                "item_level": item_level,
+                "tooltip_params": tooltip_params
             }
 
     return equipped_dict

@@ -7,6 +7,7 @@
             "is_fallback": false,
             "item_id": 29927,
             "item_level": 0,
+            "tooltip_params": "item=29927",
             "is_new": false
         },
         "NECK": {
@@ -16,6 +17,7 @@
             "is_fallback": false,
             "item_id": 28027,
             "item_level": 0,
+            "tooltip_params": "item=28027",
             "is_new": false
         },
         "SHOULDER": {
@@ -25,6 +27,7 @@
             "is_fallback": false,
             "item_id": 28075,
             "item_level": 0,
+            "tooltip_params": "item=28075",
             "is_new": false
         },
         "SHIRT": {
@@ -34,6 +37,7 @@
             "is_fallback": false,
             "item_id": 6096,
             "item_level": 0,
+            "tooltip_params": "item=6096",
             "is_new": false
         },
         "CHEST": {
@@ -43,6 +47,7 @@
             "is_fallback": false,
             "item_id": 28052,
             "item_level": 0,
+            "tooltip_params": "item=28052",
             "is_new": false
         },
         "WAIST": {
@@ -52,6 +57,7 @@
             "is_fallback": false,
             "item_id": 25982,
             "item_level": 0,
+            "tooltip_params": "item=25982",
             "is_new": false
         },
         "LEGS": {
@@ -61,6 +67,7 @@
             "is_fallback": false,
             "item_id": 25711,
             "item_level": 0,
+            "tooltip_params": "item=25711",
             "is_new": false
         },
         "FEET": {
@@ -70,6 +77,7 @@
             "is_fallback": false,
             "item_id": 25516,
             "item_level": 0,
+            "tooltip_params": "item=25516",
             "is_new": false
         },
         "WRIST": {
@@ -79,6 +87,7 @@
             "is_fallback": false,
             "item_id": 11875,
             "item_level": 0,
+            "tooltip_params": "item=11875",
             "is_new": false
         },
         "HANDS": {
@@ -88,6 +97,7 @@
             "is_fallback": false,
             "item_id": 25613,
             "item_level": 0,
+            "tooltip_params": "item=25613",
             "is_new": false
         },
         "FINGER_1": {
@@ -97,6 +107,7 @@
             "is_fallback": false,
             "item_id": 24154,
             "item_level": 0,
+            "tooltip_params": "item=24154",
             "is_new": false
         },
         "FINGER_2": {
@@ -106,6 +117,7 @@
             "is_fallback": false,
             "item_id": 27734,
             "item_level": 0,
+            "tooltip_params": "item=27734",
             "is_new": false
         },
         "TRINKET_1": {
@@ -115,6 +127,7 @@
             "is_fallback": false,
             "item_id": 28109,
             "item_level": 0,
+            "tooltip_params": "item=28109",
             "is_new": false
         },
         "TRINKET_2": {
@@ -124,6 +137,7 @@
             "is_fallback": false,
             "item_id": 28040,
             "item_level": 0,
+            "tooltip_params": "item=28040",
             "is_new": false
         },
         "BACK": {
@@ -133,6 +147,7 @@
             "is_fallback": false,
             "item_id": 25489,
             "item_level": 0,
+            "tooltip_params": "item=25489",
             "is_new": false
         },
         "MAIN_HAND": {
@@ -142,6 +157,7 @@
             "is_fallback": false,
             "item_id": 25985,
             "item_level": 0,
+            "tooltip_params": "item=25985",
             "is_new": false
         },
         "RANGED": {
@@ -151,6 +167,7 @@
             "is_fallback": false,
             "item_id": 28063,
             "item_level": 0,
+            "tooltip_params": "item=28063",
             "is_new": false
         },
         "TABARD": {
@@ -160,6 +177,7 @@
             "is_fallback": false,
             "item_id": 5976,
             "item_level": 0,
+            "tooltip_params": "item=5976",
             "is_new": false
         },
         "level": 65
@@ -172,6 +190,7 @@
             "is_fallback": false,
             "item_id": 5254,
             "item_level": 0,
+            "tooltip_params": "item=5254",
             "is_new": false
         },
         "SHIRT": {
@@ -181,6 +200,7 @@
             "is_fallback": false,
             "item_id": 23345,
             "item_level": 0,
+            "tooltip_params": "item=23345",
             "is_new": false
         },
         "CHEST": {
@@ -190,6 +210,7 @@
             "is_fallback": false,
             "item_id": 6552,
             "item_level": 0,
+            "tooltip_params": "item=6552&ench=1587",
             "is_new": false
         },
         "WAIST": {
@@ -199,6 +220,7 @@
             "is_fallback": false,
             "item_id": 15399,
             "item_level": 0,
+            "tooltip_params": "item=15399",
             "is_new": false
         },
         "LEGS": {
@@ -208,6 +230,7 @@
             "is_fallback": false,
             "item_id": 6607,
             "item_level": 0,
+            "tooltip_params": "item=6607&ench=93:105",
             "is_new": false
         },
         "FEET": {
@@ -217,6 +240,7 @@
             "is_fallback": false,
             "item_id": 2949,
             "item_level": 0,
+            "tooltip_params": "item=2949",
             "is_new": false
         },
         "WRIST": {
@@ -226,6 +250,7 @@
             "is_fallback": false,
             "item_id": 3202,
             "item_level": 0,
+            "tooltip_params": "item=3202",
             "is_new": false
         },
         "HANDS": {
@@ -235,6 +260,7 @@
             "is_fallback": false,
             "item_id": 9780,
             "item_level": 0,
+            "tooltip_params": "item=9780&ench=76:84",
             "is_new": false
         },
         "FINGER_1": {
@@ -244,6 +270,7 @@
             "is_fallback": false,
             "item_id": 12006,
             "item_level": 0,
+            "tooltip_params": "item=12006&ench=76:69",
             "is_new": false
         },
         "FINGER_2": {
@@ -253,6 +280,7 @@
             "is_fallback": false,
             "item_id": 6748,
             "item_level": 0,
+            "tooltip_params": "item=6748",
             "is_new": false
         },
         "BACK": {
@@ -262,6 +290,7 @@
             "is_fallback": false,
             "item_id": 6575,
             "item_level": 0,
+            "tooltip_params": "item=6575&ench=75:72",
             "is_new": false
         },
         "MAIN_HAND": {
@@ -271,6 +300,7 @@
             "is_fallback": false,
             "item_id": 6679,
             "item_level": 0,
+            "tooltip_params": "item=6679",
             "is_new": false
         },
         "RANGED": {
@@ -280,6 +310,7 @@
             "is_fallback": false,
             "item_id": 3037,
             "item_level": 0,
+            "tooltip_params": "item=3037",
             "is_new": false
         },
         "TABARD": {
@@ -289,6 +320,7 @@
             "is_fallback": false,
             "item_id": 5976,
             "item_level": 0,
+            "tooltip_params": "item=5976",
             "is_new": false
         },
         "level": 30
@@ -301,6 +333,7 @@
             "is_fallback": false,
             "item_id": 4709,
             "item_level": 0,
+            "tooltip_params": "item=4709",
             "is_new": false
         },
         "CHEST": {
@@ -310,6 +343,7 @@
             "is_fallback": false,
             "item_id": 20575,
             "item_level": 0,
+            "tooltip_params": "item=20575",
             "is_new": false
         },
         "WAIST": {
@@ -319,6 +353,7 @@
             "is_fallback": false,
             "item_id": 5609,
             "item_level": 0,
+            "tooltip_params": "item=5609",
             "is_new": false
         },
         "LEGS": {
@@ -328,6 +363,7 @@
             "is_fallback": false,
             "item_id": 15312,
             "item_level": 0,
+            "tooltip_params": "item=15312&ench=92",
             "is_new": false
         },
         "FEET": {
@@ -337,6 +373,7 @@
             "is_fallback": false,
             "item_id": 4788,
             "item_level": 0,
+            "tooltip_params": "item=4788",
             "is_new": false
         },
         "WRIST": {
@@ -346,6 +383,7 @@
             "is_fallback": false,
             "item_id": 14561,
             "item_level": 0,
+            "tooltip_params": "item=14561",
             "is_new": false
         },
         "HANDS": {
@@ -355,6 +393,7 @@
             "is_fallback": false,
             "item_id": 5629,
             "item_level": 0,
+            "tooltip_params": "item=5629",
             "is_new": false
         },
         "FINGER_1": {
@@ -364,6 +403,7 @@
             "is_fallback": false,
             "item_id": 5622,
             "item_level": 0,
+            "tooltip_params": "item=5622",
             "is_new": false
         },
         "FINGER_2": {
@@ -373,6 +413,7 @@
             "is_fallback": false,
             "item_id": 1076,
             "item_level": 0,
+            "tooltip_params": "item=1076",
             "is_new": false
         },
         "BACK": {
@@ -382,6 +423,7 @@
             "is_fallback": false,
             "item_id": 6575,
             "item_level": 0,
+            "tooltip_params": "item=6575&ench=70",
             "is_new": false
         },
         "MAIN_HAND": {
@@ -391,6 +433,7 @@
             "is_fallback": false,
             "item_id": 5187,
             "item_level": 0,
+            "tooltip_params": "item=5187",
             "is_new": false
         },
         "level": 27

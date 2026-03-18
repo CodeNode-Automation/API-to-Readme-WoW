@@ -138,30 +138,50 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         }}
         .navbar a:hover {{ background: rgba(255, 255, 255, 0.1); color: #fff; transform: translateY(-2px); }}
         
+        /* --- DYNAMIC FACTION THEMES (ULTRA SHARP CSS GRADIENTS) --- */
         .char-card {{ 
-            background: linear-gradient(145deg, rgba(22,22,22,0.95), rgba(26,26,26,0.95)),
-                        repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px);
-            border: 1px solid #333; border-radius: 12px; 
-            padding: 25px; width: 100%; max-width: 900px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 20px rgba(0,0,0,0.8);
+            border-radius: 12px; padding: 25px; width: 100%; max-width: 900px; 
             margin-top: 50px; scroll-margin-top: 110px;
             opacity: 0; transform: translateY(40px);
             animation: fadeInUp 0.8s cubic-bezier(0.25, 0.8, 0.25, 1) forwards;
             transition: transform 0.4s ease, box-shadow 0.4s ease;
+            box-sizing: border-box;
         }}
+        
+        .faction-alliance {{
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px),
+                        radial-gradient(circle at top right, rgba(0, 112, 221, 0.25), transparent 60%),
+                        linear-gradient(145deg, rgba(12, 18, 35, 0.95), rgba(8, 12, 20, 0.95));
+            border: 1px solid #1a3a5a;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 40px rgba(0, 112, 221, 0.15);
+        }}
+        .faction-alliance:hover {{
+            transform: translateY(-4px) !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,1), 0 0 15px rgba(0, 112, 221, 0.3), inset 0 0 30px rgba(0, 112, 221, 0.3);
+            border-color: #3FC7EB;
+        }}
+
+        .faction-horde {{
+            background: repeating-linear-gradient(45deg, transparent, transparent 2px, rgba(0,0,0,0.15) 2px, rgba(0,0,0,0.15) 4px),
+                        radial-gradient(circle at top right, rgba(198, 0, 0, 0.25), transparent 60%),
+                        linear-gradient(145deg, rgba(35, 12, 12, 0.95), rgba(20, 8, 8, 0.95));
+            border: 1px solid #5a1818;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8), inset 0 0 40px rgba(198, 0, 0, 0.15);
+        }}
+        .faction-horde:hover {{
+            transform: translateY(-4px) !important;
+            box-shadow: 0 15px 40px rgba(0,0,0,1), 0 0 15px rgba(198, 0, 0, 0.3), inset 0 0 30px rgba(198, 0, 0, 0.3);
+            border-color: #ff4d4d;
+        }}
+        
         @keyframes fadeInUp {{ to {{ opacity: 1; transform: translateY(0); }} }}
         
-        .char-card:hover {{
-            transform: translateY(-4px) !important;
-            box-shadow: 0 15px 40px rgba(0,0,0,1), 0 0 15px rgba(255,255,255,0.03), inset 0 0 20px rgba(0,0,0,0.8);
-        }}
-        
-        .header {{ text-align: center; margin-bottom: 25px; border-bottom: 1px solid #333; padding-bottom: 20px; }}
+        .header {{ text-align: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 20px; }}
         .header h2 {{ font-family: 'Cinzel', serif; margin: 0; font-size: 38px; letter-spacing: 2px; text-shadow: 0 2px 4px rgba(0,0,0,0.8); }}
         
-        .badge-container {{ display: flex; justify-content: center; gap: 10px; margin-top: 12px; font-family: 'Marcellus', serif; }}
+        .badge-container {{ display: flex; justify-content: center; gap: 10px; margin-top: 12px; font-family: 'Marcellus', serif; flex-wrap: wrap; }}
         .badge {{
-            background: rgba(0,0,0,0.7); border: 1px solid #444;
+            background: rgba(0,0,0,0.7); border: 1px solid rgba(255,255,255,0.2);
             padding: 5px 14px; border-radius: 20px; font-size: 14px; 
             font-weight: 600; letter-spacing: 1px; text-transform: uppercase; color: #ddd;
             box-shadow: inset 0 2px 4px rgba(0,0,0,0.6);
@@ -178,10 +198,11 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         .character-portrait img:hover {{ transform: scale(1.03) rotateY(2deg); }}
 
         .info-box {{ 
-            background: rgba(0, 0, 0, 0.5); border: 1px solid #333; 
+            background: rgba(0, 0, 0, 0.6); border: 1px solid rgba(255,255,255,0.1); 
             border-radius: 8px; padding: 18px; box-shadow: inset 0 0 10px rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
         }}
-        .info-box h3 {{ font-family: 'Cinzel', serif; color: #ffd100; font-size: 18px; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid #444; padding-bottom: 8px; text-shadow: 1px 1px 2px #000; }}
+        .info-box h3 {{ font-family: 'Cinzel', serif; color: #ffd100; font-size: 18px; margin-top: 0; margin-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 8px; text-shadow: 1px 1px 2px #000; }}
         
         /* Glassy Liquid Bars CSS */
         .resource-bar, .xp-container {{
@@ -216,9 +237,10 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         
         .item-slot {{ 
             position: relative; overflow: hidden; 
-            display: flex; align-items: center; background: rgba(20, 20, 20, 0.85); 
+            display: flex; align-items: center; background: rgba(20, 20, 20, 0.9); 
             padding: 8px 12px; border-radius: 6px; border: 1px solid #333; 
             min-width: 0; transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            backdrop-filter: blur(5px);
         }}
         
         .item-slot img {{ 
@@ -248,12 +270,12 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
             transform: skewX(-25deg); animation: shimmer 4s infinite; z-index: 1; pointer-events: none;
         }}
 
-        .bg-POOR {{ background: linear-gradient(90deg, rgba(157,157,157,0.08) 0%, rgba(20,20,20,0.85) 60%) !important; }}
-        .bg-COMMON {{ background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(20,20,20,0.85) 60%) !important; }}
-        .bg-UNCOMMON {{ background: linear-gradient(90deg, rgba(30,255,0,0.08) 0%, rgba(20,20,20,0.85) 60%) !important; }}
-        .bg-RARE {{ background: linear-gradient(90deg, rgba(0,112,221,0.1) 0%, rgba(20,20,20,0.85) 60%) !important; }}
-        .bg-EPIC {{ background: linear-gradient(90deg, rgba(163,53,238,0.12) 0%, rgba(20,20,20,0.85) 60%) !important; }}
-        .bg-LEGENDARY {{ background: linear-gradient(90deg, rgba(255,128,0,0.15) 0%, rgba(20,20,20,0.85) 60%) !important; }}
+        .bg-POOR {{ background: linear-gradient(90deg, rgba(157,157,157,0.08) 0%, rgba(20,20,20,0.9) 60%) !important; }}
+        .bg-COMMON {{ background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(20,20,20,0.9) 60%) !important; }}
+        .bg-UNCOMMON {{ background: linear-gradient(90deg, rgba(30,255,0,0.08) 0%, rgba(20,20,20,0.9) 60%) !important; }}
+        .bg-RARE {{ background: linear-gradient(90deg, rgba(0,112,221,0.1) 0%, rgba(20,20,20,0.9) 60%) !important; }}
+        .bg-EPIC {{ background: linear-gradient(90deg, rgba(163,53,238,0.12) 0%, rgba(20,20,20,0.9) 60%) !important; }}
+        .bg-LEGENDARY {{ background: linear-gradient(90deg, rgba(255,128,0,0.15) 0%, rgba(20,20,20,0.9) 60%) !important; }}
 
         .border-POOR {{ border-left: 3px solid #9d9d9d !important; }} .border-POOR:hover {{ border-color: #9d9d9d; box-shadow: 0 0 12px rgba(157, 157, 157, 0.3), inset 0 0 8px rgba(157, 157, 157, 0.1); transform: translateX(3px); }}
         .border-COMMON {{ border-left: 3px solid #ffffff !important; }} .border-COMMON:hover {{ border-color: #ffffff; box-shadow: 0 0 12px rgba(255, 255, 255, 0.3), inset 0 0 8px rgba(255, 255, 255, 0.1); transform: translateX(3px); }}
@@ -262,13 +284,12 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         .border-EPIC {{ border-left: 3px solid #a335ee !important; animation: pulseEpic 3s infinite ease-in-out; }} .border-EPIC:hover {{ transform: translateX(3px); }}
         .border-LEGENDARY {{ border-left: 3px solid #ff8000 !important; animation: pulseLeg 3s infinite ease-in-out; }} .border-LEGENDARY:hover {{ transform: translateX(3px); }}
 
-        .empty-slot {{ opacity: 0.6; border-left: 3px solid #333 !important; background: rgba(10, 10, 10, 0.4); }}
-        .empty-slot:hover {{ transform: none; background: rgba(10, 10, 10, 0.4); border-color: #333; box-shadow: none; }}
+        .empty-slot {{ opacity: 0.6; border-left: 3px solid #333 !important; background: rgba(10, 10, 10, 0.7); }}
+        .empty-slot:hover {{ transform: none; background: rgba(10, 10, 10, 0.7); border-color: #333; box-shadow: none; }}
         .empty-slot img {{ filter: grayscale(100%) opacity(50%); border-color: #222; }}
         .empty-slot span {{ color: #666; font-size: 13px; font-weight: 700; font-style: italic; }}
 
         .new-badge {{ background-color: #e60000; color: white; font-size: 9px; font-weight: bold; padding: 2px 6px; border-radius: 4px; margin-left: auto; z-index: 2; box-shadow: 0 0 8px #e60000; animation: pulse 1.5s infinite; }}
-        @keyframes pulse {{ 0% {{ box-shadow: 0 0 0 0 rgba(230, 0, 0, 0.7); }} 70% {{ box-shadow: 0 0 0 5px rgba(230, 0, 0, 0); }} 100% {{ box-shadow: 0 0 0 0 rgba(230, 0, 0, 0); }} }}
         
         .POOR {{ color: #9d9d9d !important; }} .COMMON {{ color: #ffffff !important; }} .UNCOMMON {{ color: #1eff00 !important; }} .RARE {{ color: #0070dd !important; }} .EPIC {{ color: #a335ee !important; }} .LEGENDARY {{ color: #ff8000 !important; }}
         
@@ -312,19 +333,43 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
 
         .dashboard-footer {{ text-align: center; padding: 40px; color: #666; font-size: 14px; width: 100%; border-top: 1px solid #222; margin-top: 40px; }}
 
+        /* --- MOBILE OPTIMIZATIONS --- */
         @media (max-width: 800px) {{
-            .navbar {{ flex-direction: column; gap: 12px; padding: 12px; }}
-            .realm-status {{ width: 100%; justify-content: center; border-right: none; border-bottom: 1px solid #333; padding-bottom: 12px; margin-right: 0; }}
-            .nav-characters {{ gap: 8px; }}
-            .navbar a {{ padding: 6px 14px; font-size: 14px; }}
-            .card-content {{ flex-direction: column; }}
-            .sidebar {{ flex: auto; width: 100%; box-sizing: border-box; }}
-            .character-portrait img {{ max-width: 250px; }}
-            .timeline-event {{ flex-direction: column; align-items: flex-start; gap: 8px; }}
+            .navbar {{ flex-direction: column; gap: 10px; padding: 10px; }}
+            .realm-status {{ width: 100%; justify-content: center; border-right: none; border-bottom: 1px solid #333; padding-bottom: 10px; margin-right: 0; font-size: 13px; }}
+            .nav-characters {{ gap: 6px; }}
+            .navbar a {{ padding: 5px 12px; font-size: 13px; }}
+            
+            .char-card {{ padding: 15px; margin-top: 30px; }}
+            .header {{ margin-bottom: 15px; padding-bottom: 15px; }}
+            .header h2 {{ font-size: 28px; }}
+            .badge {{ font-size: 11px; padding: 4px 10px; }}
+            
+            .card-content {{ flex-direction: column; gap: 20px; }}
+            .sidebar {{ flex: auto; width: 100%; box-sizing: border-box; gap: 15px; }}
+            .character-portrait img {{ max-width: 160px; }} 
+            .info-box {{ padding: 15px; }}
+            
+            .grid {{ grid-template-columns: 1fr 1fr; gap: 8px; }}
+            .item-slot {{ padding: 6px 8px; }}
+            .item-slot img {{ width: 26px; height: 26px; margin-right: 6px; }}
+            .item-slot a {{ font-size: 11px; }}
+            .new-badge {{ font-size: 8px; padding: 1px 4px; }}
+            
+            .timeline-container {{ padding: 15px; margin-top: 30px; }}
+            .timeline-title {{ font-size: 20px; padding-bottom: 10px; }}
+            .timeline-feed {{ margin-left: 5px; padding-left: 15px; margin-top: 15px; gap: 10px; }}
+            .timeline-event {{ flex-direction: column; align-items: flex-start; gap: 8px; padding: 10px; }}
+            .timeline-node {{ left: -22px; width: 10px; height: 10px; }}
             .event-item {{ width: 100%; box-sizing: border-box; }}
         }}
+        
         @media (max-width: 480px) {{
-            .grid {{ grid-template-columns: 1fr; }}
+            .header h2 {{ font-size: 24px; }}
+            .item-slot a {{ font-size: 10px; }} 
+            .item-slot img {{ width: 22px; height: 22px; margin-right: 4px; }}
+            .stat-row {{ font-size: 13px; }}
+            .stat-val {{ font-size: 14px; }}
         }}
     </style>
 </head>
@@ -382,6 +427,11 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         intellect = st.get('intellect', {}).get('effective', 0)
         spirit = st.get('spirit', {}).get('effective', 0)
 
+        # --- Faction Theme Extraction (Now distinctly visible!) ---
+        faction_obj = p.get('faction', {})
+        faction = faction_obj.get('type', 'ALLIANCE').upper() 
+        faction_class = "faction-horde" if faction == "HORDE" else "faction-alliance"
+
         # --- Use Blizzard's official equipped item level ---
         avg_ilvl = p.get('equipped_item_level', 0)
 
@@ -415,7 +465,7 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
         guild_html = f'<div style="color: {class_hex}; font-size: 16px; font-weight: 700; margin-top: 5px; letter-spacing: 1px; text-shadow: 1px 1px 2px #000;">&lt;{guild}&gt;</div>' if guild else ''
 
         html += f"""
-    <div id="{name.lower()}" class="char-card" style="border-top: 3px solid {class_hex}; animation-delay: {delay_seconds}s;">
+    <div id="{name.lower()}" class="char-card {faction_class}" style="border-top: 3px solid {class_hex}; animation-delay: {delay_seconds}s;">
         <div class="header">
             <h2 style="color: {class_hex};">{name}</h2>
             {guild_html}
@@ -478,13 +528,25 @@ def generate_html_dashboard(roster_data, realm_data=None, timeline_data=None):
                 name_txt = data.get("name", "Unknown")
                 img_src = data.get("icon_data", "")
                 
+                # Retrieve advanced Tooltip specific stats/enchants/gems
+                tooltip_params = data.get("tooltip_params", f"item={item_id}")
+                
+                # Check if the item has enchants or gems applied
+                has_enchant = "ench=" in tooltip_params
+                
+                # Create a glowing "E" badge if the item is enchanted
+                enchant_badge = '<div style="position: absolute; bottom: -4px; right: 8px; background: #000; border: 1px solid #1eff00; color: #1eff00; font-size: 9px; font-weight: bold; border-radius: 3px; padding: 0 4px; box-shadow: 0 0 5px #1eff00; z-index: 5;">E</div>' if has_enchant else ''
+                
                 is_new = data.get("is_new", False)
                 new_tag = '<span class="new-badge">NEW!</span>' if is_new else ''
                 
                 html += f"""
                     <div class="item-slot border-{quality} bg-{quality}">
-                        <img src="{img_src}" alt="icon" class="icon-{quality}">
-                        <a href="https://www.wowhead.com/wotlk/item={item_id}" class="{quality}" target="_blank" rel="noopener noreferrer">{name_txt}</a>
+                        <div style="position: relative;">
+                            <img src="{img_src}" alt="icon" class="icon-{quality}">
+                            {enchant_badge}
+                        </div>
+                        <a href="https://www.wowhead.com/wotlk/item={item_id}" class="{quality}" data-wowhead="domain=wotlk&{tooltip_params}" target="_blank" rel="noopener noreferrer">{name_txt}</a>
                         {new_tag}
                     </div>"""
             else:
