@@ -68,7 +68,7 @@
             "item_id": 29345,
             "item_level": 0,
             "tooltip_params": "item=29345",
-            "is_new": true
+            "is_new": false
         },
         "FEET": {
             "name": "Ikeyen's Boots",
@@ -158,7 +158,7 @@
             "item_id": 25950,
             "item_level": 0,
             "tooltip_params": "item=25950",
-            "is_new": true
+            "is_new": false
         },
         "RANGED": {
             "name": "Talonbranch Wand",
@@ -168,7 +168,7 @@
             "item_id": 31761,
             "item_level": 0,
             "tooltip_params": "item=31761",
-            "is_new": true
+            "is_new": false
         },
         "TABARD": {
             "name": "Guild Tabard",
