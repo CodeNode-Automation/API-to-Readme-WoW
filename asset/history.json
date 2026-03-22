@@ -128,7 +128,7 @@
             "item_id": 26055,
             "item_level": 0,
             "tooltip_params": "item=26055",
-            "is_new": true
+            "is_new": false
         },
         "TRINKET_2": {
             "name": "Vengeance of the Illidari",
