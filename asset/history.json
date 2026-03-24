@@ -8,7 +8,7 @@
             "item_id": 25974,
             "item_level": 0,
             "tooltip_params": "item=25974",
-            "is_new": true
+            "is_new": false
         },
         "NECK": {
             "name": "Lunatic's Choker",
@@ -68,7 +68,7 @@
             "item_id": 31783,
             "item_level": 0,
             "tooltip_params": "item=31783",
-            "is_new": true
+            "is_new": false
         },
         "FEET": {
             "name": "Ikeyen's Boots",
