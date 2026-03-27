@@ -57,7 +57,7 @@
         <text x="365" y="240" font-family="Arial, sans-serif" font-size="14" fill="#00ff00" font-weight="bold" text-anchor="end">4891</text>
         
         <text x="235" y="265" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Mana:</text>
-        <text x="365" y="265" font-family="Arial, sans-serif" font-size="14" fill="#00ccff" font-weight="bold" text-anchor="end">7205</text>
+        <text x="365" y="265" font-family="Arial, sans-serif" font-size="14" fill="#00ccff" font-weight="bold" text-anchor="end">6875</text>
         
         <text x="235" y="295" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Strength:</text>
         <text x="365" y="295" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">32</text>
@@ -69,10 +69,10 @@
         <text x="365" y="345" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">261</text>
         
         <text x="235" y="370" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Intellect:</text>
-        <text x="365" y="370" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">377</text>
+        <text x="365" y="370" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">355</text>
         
         <text x="235" y="395" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Spirit:</text>
-        <text x="365" y="395" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">232</text>
+        <text x="365" y="395" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">227</text>
         
         <rect x="20" y="95" width="35" height="35" fill="#333" stroke="#1eff00" stroke-opacity="0.8" filter="url(#shadow)"/>
         <image x="20" y="95" width="35" height="35" href="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAcFBgIECAMJ/8QANxAAAQMCBAMGAwYHAQAAAAAAAQIDBAURAAYSIQcTMRQiQVFhgRVCcRYXMpGx0RgjJCYzcqHh/8QAGgEBAAMBAQEAAAAAAAAAAAAABAIDBQYBAP/EACoRAAEDAwMDAwQDAAAAAAAAAAEAAgMEESEFEjETQVEigfAUMpGxwdHh/9oADAMBAAIRAxEAPwBEZKpCahIqkuruKlvl9pbjrpKlLUpJWpSlE7k6t/PridyJw/j1nL+YZMWIhbsanrkMJNitbhJ0AXI2CUk/UjzxqUtqUclOT0RzHRWJRjsuae6CE6SkW3NkoJ28TbDG4czlZcdkNJjx9LraEMrkJJU3pvZSUA7qHqbD1xzlTNJckHv+rfykSMF2XGO/vwufsjt1B6uRqZSaWqpVCUtLLcQN3Wpd+lrX/THVX8PLX3X8r+h+2/aPiPa7Hlc7Vfs+rryrd3/bvemJfJS41KdkyadDjsy5j2ubMW0gyX0n5Cu3dT6JA64Y+n+0b3+fViUmqmRxEYtbKT9Js+7uvnxnhuoNVyTTKtSzTahFcLLkMt2Wld/w2tf9euLvnjJrNLyxSJb8fkvFhp2QgI31C3MB8eihf1GOis6ORqo5Hk1CHHelw3tcOYhpAksJHyBdu8n0UD0wus7B+twGnTGaXGZK0urZFlKK7AkoJNvbb6DEXan1nMcMAco1RTdFzS44SszvSE06TS5VIcVFfD7q23WrpUlSUhaVJUDcEadvLrgxI1ZmUnJiJzkftCaNKEd9wDulRSUBJPUXSsG/mLb4MNp5JAzaM2+fpTka0m/C0OH1QmRo0Hks/EXjZiOX5KtLAWvdKE2ITudz19sXPLtXkVaaiCKa2ytd9J597kGxB7u2FXw0qbbLyYzqlJDL3PSb23tYAe+GxTsrZhzLXHZmTmg+4lvtISHkIWST3kpCyNRBBNh+2C6pGN1gLHyqZIHVFOQDkcZsp+m8S26TLVFzDlSU8tCu+qG8UOpANrhC+vUf+Ybf3scN/u7+L/aJfZ+b2fsXLHxDm6v8fJvq138bWtvhF8aM7ZhlUFmhZxyfEhVZlTYhVF1tTEiOlJSrum3eBAN9wO90uBaqJo8c5NVmJDL/AMRKricpUi4TsnVsNNvDyI/4KFjGsDpBYnHPz+10FLp08kYYXXLRcnz44+eUw6jxOj1KptQqFkKVJcc3aTKk63lgkblCL6ff98a2Y5U2lwFyKvQGIMh3+UzHZeUdQPzb+v6Y0OCud8zwqO5Scl5YjP1ly6ZlSYbU/JkJFyNSiLpAFgN7bHYHHrXaRm+kVeI9nt5YUlsyG23JCFqR1skhBOkk2Njbb3xRJG7eWAWaPyVj6jTTzPDQfSeRjHHul7n6oS5EeYX2DT3kEsvliUrS+EKICVpsAoXGxwYr3EyptPSFR2SSHXQ8og7bAptgx1lOwCMWFkaVzt5ULlY9mktu3F30qCfQg4bmXc50jL9PAqDrrsl83S1G77lrenT6+hwqoEZC4kFKiTqjSF38QQTa35Y0GlvJTf8ABqT7nB6ilbUj1fLK+GYxYC6WTxSm5uy69SI8992DGdbEmPNaBkBs2Asoi4STtfr7dcEz3uWKH3xH18sshVgU6rk3t74S3C1b/wBrY8dKjeU06ws3+UpKrnzsU3ti2sREI4jSKhz1BaKQZqUhZuXCnlfnYqVv54yqmhbu2A4GfK6DSdYfRB5Db7vaxHB4Pn/Vf1cUZuUcus0iRPfagyXXBGjwmgJBbFwbqAuUg7X6+3Sm5iznSMwU8inuutSWDdTUnuOWt69fr6jFD4nuvqzbIjqVvEbbjpsfAJube5JxV3VvKTf8elPuMLi0+N4bKTnlYzqhzCWgYWxmk9pkuO3F2EpCvUk4Me8+MhESclJI0xo67+JJIvf88GNWP0jb4QH3Jv5WUKU0y3HZdFlMQnwQdiFKUdvr4YhlvFw3Kt7dBgwY9aAAvnE3V/4US6dRqwiTLcQ5IfQ4lHfGhhJQQVHxKjewA6b3xPUvMMdLFVY0UnszywUyitKZOrlAaR8xbv4WsDv54MGBviHULj3sksedgAVY4pyoNUzJImRHUatDaVALvqsnqPXwt6YpKHi2q4Vv0tgwYRTRhkYb2ColcS8uUzNlsvMSG2hdb8OOEgG5KkqG1vPwwYMGIyydN2ByvGDcF//Z" />
@@ -152,8 +152,8 @@
         
         <rect x="20" y="528" width="560" height="14" rx="4" fill="#111111" stroke="#333333" stroke-width="1" filter="url(#shadow)"/>
     
-        <rect x="20" y="528" width="277.82013422818795" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
+        <rect x="20" y="528" width="337.3364832214765" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
         <rect x="20" y="528" width="560" height="6" rx="3" fill="#ffffff" opacity="0.15" pointer-events="none"/>
-        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">369,600 / 745,000 XP</text>
+        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">448,778 / 745,000 XP</text>
     
 </svg>
