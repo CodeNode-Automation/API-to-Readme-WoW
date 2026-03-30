@@ -1,5 +1,28 @@
 [
     {
+        "timestamp": "2026-03-30T14:55:07.196313Z",
+        "character": "Thert",
+        "class": "Mage",
+        "type": "item",
+        "item": {
+            "name": "Feathered Wrist Cuffs",
+            "icon_data": "data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEASABIAAD/2wBDAAUDBAQEAwUEBAQFBQUGBwwIBwcHBw8LCwkMEQ8SEhEPERETFhwXExQaFRERGCEYGh0dHx8fExciJCIeJBweHx7/2wBDAQUFBQcGBw4ICA4eFBEUHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh4eHh7/wAARCAA4ADgDASIAAhEBAxEB/8QAHAAAAgIDAQEAAAAAAAAAAAAAAAYFBwIECAMB/8QANBAAAQMDAgMFBgUFAAAAAAAAAQIDBAAFEQYhEjFBBxMiUWEUFUJxgZEII1KhwUNiorHR/8QAFwEAAwEAAAAAAAAAAAAAAAAAAAECA//EAB0RAAMBAQACAwAAAAAAAAAAAAABEQIDITFBUVL/2gAMAwEAAhEDEQA/AON5cmRLlPSpT7r8h9anHXXVlS3FqOSpRO5JJJJNeVbUG3zZyymJGcdIGTwjYfWsxarh7UYy4rjTqVcJDieHB+tAGlRTnYdFOuuh2co92NwhPXyyT0pvhaKYeQFewIbwfhAP3PWrWaKiXpvRD90koalXSDCKseBbgK8YPT6V6a07Or9pxpyZ3PtttR4vamd0pSTgFXln/lWGnQBJK0sFJSclXUfWmHS92e066iBf2fedlWtIK1pHeRcf1ASMKSCcny574o1hoS0c4QpL8GcxLjrW0/HdS42tC1IUlSTkEFJBBBHMEEUV1l+KnsZsaez6NrvSAjqdioLk32VvhblMkjLvDxEJUnmcc988qKgo59XqQ2O6C1sxG5VujoSlTavCV5SCpWRvkk9cirq0NC01rHC4hEmMg8T8NwBDqQQQcY+IemfnXPtzSHp7D53DsZtQPmcYNTejb9ddHX9m+Wt1xCkD8xCThLg32I6iqWXKK/BeNy0HI0ZfocS4OiXbbknit8/GeJQAy0vGwcScj1/an236aQzH72UEMoHwqHiUf4p8uV3tHat2LI7p6OzKWwl6MW2SA1NQAsbcgMlPPoonrgUFD17Jn2pn3g4tUlB7txpIIwU+fr+/2rTn5UFrwWF7ytiCphtLawjIOBkD7UgaynRlqnLWWm0+BhCFb/DlWB15j/VQ121RJVlJeDCDvwp50kXq7OydmirHmrerjJpYWmNWon6ca01NllaInEykE442iCB08JHH88AUVVunJSWEXW5Lcw0w3guc8qxyFFYP2aIgbGwi4WRp4Ed7CWW3BjcoVuD99qY0wm22lJURwYISrHPFJGkrki23dJkZMSQksyBn4FdfmNj9KZ78ZNtlqjrdLjR8TDoOzrZ3SoY8wR96vnqKMnSLh7BdWLt1qmadKvy3FKKSVYCVj4vqD/iKru/y3Yuq7sxG4kJXILmAcnKhk/uax7L5SYq505ecIWUg+vAc/wAUu6k1AyzdpTqUF19xWccWQk+ppc2k6w0TTqghBflqykbkKNLV51TspiE2g9OLoB6UvXO5TLi6XJTpV5JGyR8hWnV67fkSz9khNu0uUx7OSltk44m0DAUfM+ZzRUfRWLdLMnG3GllDiFIUCQUqGCCDg0w2nUaBaPc95YdlRGzxRXG1AOxlf2k9PSiikBvu6qhQYLUWzx18CFFQS8Ns+Z/Uf42pRkvOSJDj7qipxxRUo+poooA86+8Kv0nr08udFFAGaWXlKSlLTiipQSAEnJJ5D5miiigD/9k=",
+            "quality": "UNCOMMON",
+            "is_fallback": false,
+            "item_id": 25961,
+            "item_level": 0,
+            "tooltip_params": "item=25961",
+            "is_new": true
+        }
+    },
+    {
+        "timestamp": "2026-03-30T14:55:07.196313Z",
+        "character": "Thert",
+        "class": "Mage",
+        "type": "level_up",
+        "level": 67
+    },
+    {
         "timestamp": "2026-03-23T23:58:47.789593Z",
         "character": "Thert",
         "class": "Mage",
