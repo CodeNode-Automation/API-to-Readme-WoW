@@ -88,7 +88,7 @@
             "item_id": 25961,
             "item_level": 0,
             "tooltip_params": "item=25961",
-            "is_new": true
+            "is_new": false
         },
         "HANDS": {
             "name": "Feralfen Mystic's Handwraps",
