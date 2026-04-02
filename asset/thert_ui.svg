@@ -57,7 +57,7 @@
         <text x="365" y="240" font-family="Arial, sans-serif" font-size="14" fill="#00ff00" font-weight="bold" text-anchor="end">5216</text>
         
         <text x="235" y="265" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Mana:</text>
-        <text x="365" y="265" font-family="Arial, sans-serif" font-size="14" fill="#00ccff" font-weight="bold" text-anchor="end">7367</text>
+        <text x="365" y="265" font-family="Arial, sans-serif" font-size="14" fill="#00ccff" font-weight="bold" text-anchor="end">7037</text>
         
         <text x="235" y="295" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Strength:</text>
         <text x="365" y="295" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">32</text>
@@ -69,7 +69,7 @@
         <text x="365" y="345" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">271</text>
         
         <text x="235" y="370" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Intellect:</text>
-        <text x="365" y="370" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">381</text>
+        <text x="365" y="370" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">359</text>
         
         <text x="235" y="395" font-family="Arial, sans-serif" font-size="14" fill="#bbbbbb">Spirit:</text>
         <text x="365" y="395" font-family="Arial, sans-serif" font-size="14" fill="#ffffff" font-weight="bold" text-anchor="end">238</text>
@@ -152,8 +152,8 @@
         
         <rect x="20" y="528" width="560" height="14" rx="4" fill="#111111" stroke="#333333" stroke-width="1" filter="url(#shadow)"/>
     
-        <rect x="20" y="528" width="194.88137423312884" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
+        <rect x="20" y="528" width="223.9147975460123" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
         <rect x="20" y="528" width="560" height="6" rx="3" fill="#ffffff" opacity="0.15" pointer-events="none"/>
-        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">283,622 / 815,000 XP</text>
+        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">325,876 / 815,000 XP</text>
     
 </svg>
