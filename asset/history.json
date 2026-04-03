@@ -78,7 +78,7 @@
             "item_id": 27919,
             "item_level": 0,
             "tooltip_params": "item=27919",
-            "is_new": true
+            "is_new": false
         },
         "WRIST": {
             "name": "Feathered Wrist Cuffs",
@@ -98,7 +98,7 @@
             "item_id": 29317,
             "item_level": 0,
             "tooltip_params": "item=29317",
-            "is_new": true
+            "is_new": false
         },
         "FINGER_1": {
             "name": "Witching Band",
