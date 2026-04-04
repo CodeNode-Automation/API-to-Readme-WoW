@@ -152,8 +152,8 @@
         
         <rect x="20" y="528" width="560" height="14" rx="4" fill="#111111" stroke="#333333" stroke-width="1" filter="url(#shadow)"/>
     
-        <rect x="20" y="528" width="68.86560893854748" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
+        <rect x="20" y="528" width="93.91356424581006" height="14" rx="4" fill="#8a2be2" stroke="#4b0082" stroke-width="1"/>
         <rect x="20" y="528" width="560" height="6" rx="3" fill="#ffffff" opacity="0.15" pointer-events="none"/>
-        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">110,062 / 895,000 XP</text>
+        <text x="300" y="539" font-family="Arial, sans-serif" font-size="10" fill="#ffffff" font-weight="bold" text-anchor="middle" filter="url(#shadow)">150,094 / 895,000 XP</text>
     
 </svg>
