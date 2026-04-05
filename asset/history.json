@@ -334,7 +334,7 @@
             "item_id": 4048,
             "item_level": 0,
             "tooltip_params": "item=4048",
-            "is_new": true
+            "is_new": false
         },
         "NECK": {
             "name": "Basalt Necklace of the Gorilla",
@@ -344,7 +344,7 @@
             "item_id": 12028,
             "item_level": 0,
             "tooltip_params": "item=12028&ench=95:106",
-            "is_new": true
+            "is_new": false
         },
         "SHOULDER": {
             "name": "Scaled Leather Shoulders of the Owl",
@@ -354,7 +354,7 @@
             "item_id": 9834,
             "item_level": 0,
             "tooltip_params": "item=9834&ench=96:100",
-            "is_new": true
+            "is_new": false
         },
         "CHEST": {
             "name": "Pathfinder Vest of the Eagle",
@@ -364,7 +364,7 @@
             "item_id": 15346,
             "item_level": 0,
             "tooltip_params": "item=15346&ench=350:353",
-            "is_new": true
+            "is_new": false
         },
         "WAIST": {
             "name": "Scaled Leather Belt of the Owl",
@@ -374,7 +374,7 @@
             "item_id": 9827,
             "item_level": 0,
             "tooltip_params": "item=9827&ench=95:99",
-            "is_new": true
+            "is_new": false
         },
         "LEGS": {
             "name": "Guardian Pants",
@@ -384,7 +384,7 @@
             "item_id": 5962,
             "item_level": 0,
             "tooltip_params": "item=5962",
-            "is_new": true
+            "is_new": false
         },
         "FEET": {
             "name": "Scaled Leather Boots of the Eagle",
@@ -394,7 +394,7 @@
             "item_id": 9828,
             "item_level": 0,
             "tooltip_params": "item=9828&ench=96:103",
-            "is_new": true
+            "is_new": false
         },
         "WRIST": {
             "name": "Infiltrator Bracers of the Eagle",
@@ -404,7 +404,7 @@
             "item_id": 7410,
             "item_level": 0,
             "tooltip_params": "item=7410&ench=94:102",
-            "is_new": true
+            "is_new": false
         },
         "HANDS": {
             "name": "Hillman's Leather Gloves",
@@ -414,7 +414,7 @@
             "item_id": 4247,
             "item_level": 0,
             "tooltip_params": "item=4247",
-            "is_new": true
+            "is_new": false
         },
         "FINGER_1": {
             "name": "The Queen's Jewel",
@@ -424,7 +424,7 @@
             "item_id": 13094,
             "item_level": 0,
             "tooltip_params": "item=13094",
-            "is_new": true
+            "is_new": false
         },
         "BACK": {
             "name": "Amy's Blanket",
@@ -434,7 +434,7 @@
             "item_id": 13005,
             "item_level": 0,
             "tooltip_params": "item=13005",
-            "is_new": true
+            "is_new": false
         },
         "MAIN_HAND": {
             "name": "Magician Staff of the Eagle",
@@ -444,7 +444,7 @@
             "item_id": 2077,
             "item_level": 0,
             "tooltip_params": "item=2077&ench=97:105",
-            "is_new": true
+            "is_new": false
         },
         "level": 27
     }
